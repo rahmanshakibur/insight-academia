@@ -54,8 +54,8 @@ const html = `<!DOCTYPE html>
   <link rel="apple-touch-icon" href="data:image/png;base64,${faviconB64}">
 
   <!-- Primary SEO Meta Tags -->
-  <title>Insight Academia - সহজ শেখা, সেরা প্রস্তুতি | প্রতিষ্ঠাতা: তারেকুল ইসলাম রাজিব</title>
-  <meta name="title" content="Insight Academia - সহজ শেখা, সেরা প্রস্তুতি | প্রতিষ্ঠাতা: তারেকুল ইসলাম রাজিব">
+  <title>Insight Academia</title>
+  <meta name="title" content="Insight Academia">
   <meta name="description" content="ইনসাইট একাডেমিয়া (Insight Academia) - সহজ শেখা, সেরা প্রস্তুতি। প্রতিষ্ঠাতা ও সিইও: তারেকুল ইসলাম রাজিব। প্ল্যাটফর্ম আর্কিটেক্ট ও ডেভেলপার: মোঃ সাকিবুর রহমান। এসএসসি ও এইচএসসি স্পেশাল ব্যাচ, লাইভ ক্লাস এবং লেকচার শিট।">
   <meta name="keywords" content="Insight Academia, ইনসাইট একাডেমিয়া, Tarequl Islam Rajib, তারেকুল ইসলাম রাজিব, Md. Sakibur Rahman, মোঃ সাকিবুর রহমান, Code Cafe by Sakib, SSC Math, HSC ICT, এসএসসি ও এইচএসসি প্রস্তুতি">
   <meta name="author" content="Tarequl Islam Rajib (Founder), Md. Sakibur Rahman (Lead Software Engineer)">
