@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://insightacademia.com/sitemap.xml
+Sitemap: https://insight-academia-alpha.vercel.app/sitemap.xml
