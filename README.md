@@ -9,10 +9,15 @@
 
 ## 📌 Executive Leadership & Technical Credits
 
+* **Established:** **04 October 2015 (০৪ অক্টোবর ২০১৫)**
+
 * **Founder & CEO:** **Tarequl Islam Rajib**  
   * *Instructor (English)*, Founder & CEO, Insight Academia  
   * MBA, University of Dhaka  
   * [Facebook Profile](https://www.facebook.com/tarequl.islam.71619533) | [YouTube Channel](https://www.youtube.com/@InsightAcademia-k2v)
+
+* **Co-Founder:** **Farukul Islam Noyon**  
+  * Co-Founder, Insight Academia  
 
 * **Lead Software Engineer & Platform Architect:** **Md. Sakibur Rahman**  
   * *Instructor (SSC Math & HSC ICT)*, Insight Academia  
