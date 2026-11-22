@@ -203,6 +203,11 @@ const html = `<!DOCTYPE html>
     ]
   }
   </script>
+    <!-- Google Cloud Firebase SDK (v10.8.0 Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -5622,10 +5627,11 @@ const html = `<!DOCTYPE html>
 >
 
   <!-- ============================================== -->
-  <!-- STUDENT LEAD CAPTURE & LOGIN MODAL (REDWAN METHOD STYLE) -->
+  <!-- ============================================== -->
+  <!-- 📱 STUDENT LEAD CAPTURE & FIREBASE AUTH MODAL      -->
   <!-- ============================================== -->
   <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300 p-4">
-    <div class="bg-white rounded-[28px] sm:rounded-[32px] border border-slate-100 shadow-2xl max-w-[420px] w-full p-7 sm:p-9 relative transform scale-95 transition-transform duration-300 flex flex-col" id="loginModalBox">
+    <div class="bg-white rounded-[28px] sm:rounded-[32px] border border-slate-100 shadow-2xl max-w-[430px] w-full p-6 sm:p-8 relative transform scale-95 transition-transform duration-300 flex flex-col" id="loginModalBox">
       
       <!-- Close Button -->
       <button onclick="closeLoginModal()" class="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition cursor-pointer text-sm font-bold">
@@ -5633,88 +5639,156 @@ const html = `<!DOCTYPE html>
       </button>
 
       <!-- Logo Header -->
-      <div class="flex justify-center mb-3">
+      <div class="flex justify-center mb-2.5">
         <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-10 sm:h-11 w-auto object-contain" />
       </div>
 
       <!-- Welcome Headings -->
-      <h3 class="text-2xl font-extrabold text-slate-900 tracking-tight text-center">
-        Welcome Back!
+      <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight text-center">
+        শিক্ষার্থী সাইন-ইন
       </h3>
-      <p class="text-xs sm:text-sm text-slate-500 text-center mt-1 mb-6 font-medium">
-        Please sign in to continue
+      <p class="text-xs text-slate-500 text-center mt-1 mb-4 font-medium">
+        ইনসাইট একাডেমিয়ায় আপনার অ্যাকাউন্টে প্রবেশ করুন
       </p>
 
-      <!-- Sign In Form -->
-      <form onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+      <!-- Auth Method Switcher Tabs -->
+      <div class="flex bg-slate-100 p-1 rounded-xl mb-4 text-xs font-bold text-slate-600">
+        <button type="button" id="tabBtnPhone" onclick="switchLoginTab('phone')" class="flex-1 py-2 rounded-lg bg-white text-blue-600 shadow-2xs transition cursor-pointer flex items-center justify-center gap-1.5">
+          <span>📱</span> <span>মোবাইল ওটিপি (SMS)</span>
+        </button>
+        <button type="button" id="tabBtnEmail" onclick="switchLoginTab('email')" class="flex-1 py-2 rounded-lg hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5">
+          <span>✉️</span> <span>ইমেইল / গুগল</span>
+        </button>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- TAB 1: PHONE SMS OTP AUTHENTICATION            -->
+      <!-- ============================================== -->
+      <div id="authPhonePanel" class="space-y-3.5">
         
-        <!-- Input 1: Student Name (Requested: extra add korba, Name + Demo placeholder) -->
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <!-- Step 1: Input Phone & Name -->
+        <div id="otpStepPhoneInput" class="space-y-3">
+          <!-- Student Name Input -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <input type="text" id="loginStudentName" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs font-medium" placeholder="শিক্ষার্থীর নাম (যেমন: মোঃ সাকিবুর রহমান)" value="Md. Sakibur Rahman" />
           </div>
-          <input type="text" id="loginName" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs" placeholder="Md. Sakibur Rahman Shadhin" />
-        </div>
 
-        <!-- Input 2: Email Address (Demo placeholder: student@gmail.com) -->
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <!-- Phone Number Input with BD flag +880 -->
+          <div class="relative flex items-center">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-600 font-bold text-xs sm:text-sm gap-1 border-r border-slate-200 pr-2.5 my-2">
+              <span class="text-base">🇧🇩</span>
+              <span>+880</span>
+            </div>
+            <input type="tel" id="loginPhoneInput" maxlength="11" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-24 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs font-semibold tracking-wide" placeholder="017XXXXXXXX" value="01748470620" />
           </div>
-          <input type="email" id="loginEmail" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs" placeholder="student@gmail.com" />
-        </div>
 
-        <!-- Input 3: Password (with eye toggle icon) -->
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-          </div>
-          <input type="password" id="loginPass" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-10 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs" placeholder="Password" />
-          <button type="button" onclick="toggleLoginPassword()" id="loginEyeIcon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer" title="Toggle password visibility">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+          <!-- Invisible reCAPTCHA container -->
+          <div id="recaptcha-container" class="flex justify-center my-1"></div>
+
+          <!-- Action Button: Send SMS OTP -->
+          <button type="button" id="btnSendPhoneOtp" onclick="handleSendPhoneOTP()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-xs sm:text-sm cursor-pointer flex items-center justify-center gap-2">
+            <span id="btnSendOtpText">ওটিপি পাঠান (SMS OTP) ➔</span>
+            <svg id="btnSendOtpSpinner" class="w-4 h-4 animate-spin hidden" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
           </button>
         </div>
 
-        <!-- Primary Action Button: Sign In -->
-        <button type="submit" class="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-sm sm:text-base cursor-pointer mt-2">
-          Sign In
-        </button>
+        <!-- Step 2: Input 6-Digit OTP (Initially Hidden) -->
+        <div id="otpStepCodeInput" class="space-y-3 hidden">
+          <div class="bg-blue-50/70 border border-blue-100 rounded-xl p-3 text-center">
+            <p class="text-xs text-slate-600">
+              আপনার নম্বরে ৬ সংখ্যার ওটিপি কোড পাঠানো হয়েছে:
+            </p>
+            <p id="otpTargetPhoneDisplay" class="text-sm font-extrabold text-blue-700 mt-0.5 tracking-wider">
+              +8801748470620
+            </p>
+          </div>
 
-        <!-- Help Links -->
-        <div class="text-center pt-2">
-          <a href="javascript:void(0)" onclick="showSecurityToast('পাসওয়ার্ড রিসেট লিংক আপনার ইমেইলে পাঠানো হবে।')" class="text-xs sm:text-sm font-semibold text-[#1877F2] hover:underline cursor-pointer block">
-            Forgot your password?
-          </a>
-          <a href="javascript:void(0)" onclick="showSecurityToast('Google অ্যাকাউন্টের মাধ্যমে সাইন-ইন করে পাসওয়ার্ড সেট করুন।')" class="text-xs sm:text-sm font-semibold text-[#1877F2] hover:underline cursor-pointer block mt-2">
-            Set Password For Google Account
-          </a>
+          <div class="relative">
+            <input type="text" id="loginOtpInput" maxlength="6" class="w-full bg-white border-2 border-blue-500 rounded-xl text-center py-3 text-xl sm:text-2xl font-black tracking-[0.4em] text-slate-900 placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-200 transition shadow-inner font-mono" placeholder="••••••" />
+          </div>
+
+          <!-- Action Button: Verify OTP -->
+          <button type="button" id="btnVerifyPhoneOtp" onclick="handleVerifyPhoneOTP()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-xs sm:text-sm cursor-pointer flex items-center justify-center gap-2">
+            <span id="btnVerifyOtpText">কোড নিশ্চিত করুন ও সাইন-ইন ➔</span>
+            <svg id="btnVerifyOtpSpinner" class="w-4 h-4 animate-spin hidden" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+          </button>
+
+          <!-- Resend Timer & Change Phone -->
+          <div class="flex items-center justify-between text-xs pt-1">
+            <button type="button" onclick="resetToPhoneStep()" class="text-slate-500 hover:text-blue-600 font-semibold cursor-pointer">
+              ← নম্বর পরিবর্তন
+            </button>
+            <button type="button" id="btnResendOtp" onclick="handleResendOTP()" disabled class="text-slate-400 font-semibold cursor-not-allowed">
+              পুনরায় পাঠান (<span id="otpCountdown">59</span>s)
+            </button>
+          </div>
         </div>
 
-        <!-- OR Divider -->
-        <div class="relative my-4 flex items-center justify-center">
-          <div class="w-full border-t border-slate-200"></div>
-          <span class="bg-white px-3 text-[11px] font-bold text-slate-400 uppercase tracking-widest absolute">OR</span>
-        </div>
+      </div>
 
-        <!-- Google Sign In Button -->
-        <button type="button" onclick="handleGoogleLogin()" class="w-full bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition shadow-2xs cursor-pointer text-xs sm:text-sm">
-          <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-          </svg>
-          <span>Continue with Google</span>
-        </button>
+      <!-- ============================================== -->
+      <!-- TAB 2: EMAIL & GOOGLE AUTHENTICATION           -->
+      <!-- ============================================== -->
+      <div id="authEmailPanel" class="space-y-3 hidden">
+        <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
+          <!-- Student Name -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            </div>
+            <input type="text" id="loginName" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs font-medium" placeholder="Md. Sakibur Rahman Shadhin" value="Md. Sakibur Rahman Shadhin" />
+          </div>
 
-        <!-- Footer Sign Up & Policy -->
-        <p class="text-xs text-slate-500 text-center mt-5 font-medium">
-          Don't have an account? <a href="javascript:void(0)" onclick="handleLoginSubmit(event)" class="text-[#1877F2] font-bold hover:underline">Sign Up</a>
-        </p>
-        <p class="text-[10px] text-slate-400 text-center mt-3">
-          By continuing, you agree to our <a href="javascript:void(0)" onclick="openPolicyModal('terms')" class="underline hover:text-blue-600 font-semibold cursor-pointer">Terms of Service</a> and <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="underline hover:text-blue-600 font-semibold cursor-pointer">Privacy Policy</a>
-        </p>
-      </form>
+          <!-- Email Address -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <input type="email" id="loginEmail" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs font-medium" placeholder="student@gmail.com" value="student@gmail.com" />
+          </div>
+
+          <!-- Password -->
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <input type="password" id="loginPass" class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-xl pl-10 pr-10 py-3 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-2xs font-medium" placeholder="Password" value="demo1234" />
+            <button type="button" onclick="toggleLoginPassword()" id="loginEyeIcon" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 cursor-pointer" title="Toggle password visibility">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+
+          <!-- Sign In Button -->
+          <button type="submit" class="w-full bg-[#1877F2] hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl transition shadow-md hover:shadow-lg text-xs sm:text-sm cursor-pointer mt-1">
+            Sign In with Email
+          </button>
+        </form>
+      </div>
+
+      <!-- OR Divider -->
+      <div class="relative my-3 flex items-center justify-center">
+        <div class="w-full border-t border-slate-200"></div>
+        <span class="bg-white px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest absolute">OR</span>
+      </div>
+
+      <!-- Google Sign In Button -->
+      <button type="button" onclick="handleGoogleLogin()" class="w-full bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-3 transition shadow-2xs cursor-pointer text-xs sm:text-sm">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5 shrink-0" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <!-- Footer Policy -->
+      <p class="text-[10px] text-slate-400 text-center mt-3">
+        By continuing, you agree to our <a href="javascript:void(0)" onclick="openPolicyModal('terms')" class="underline hover:text-blue-600 font-semibold cursor-pointer">Terms of Service</a> and <a href="javascript:void(0)" onclick="openPolicyModal('privacy')" class="underline hover:text-blue-600 font-semibold cursor-pointer">Privacy Policy</a>
+      </p>
 
     </div>
   </div>
@@ -6736,6 +6810,367 @@ const html = `<!DOCTYPE html>
       if (b) b.classList.remove('hidden');
     }
 
+    // ==============================================================
+    // 🔥 GOOGLE CLOUD FIREBASE INITIALIZATION & ENGINES
+    // ==============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDWHHomJvWSex5uRVYDWzRd0EGonxEqMxI",
+      authDomain: "insight-academia.firebaseapp.com",
+      projectId: "insight-academia",
+      storageBucket: "insight-academia.firebasestorage.app",
+      messagingSenderId: "92016883234",
+      appId: "1:92016883234:web:e84cbef5c0b965fcc73c7b",
+      measurementId: "G-C4EP8N43KG"
+    };
+
+    let fbApp = null;
+    let fbAuth = null;
+    let fbDb = null;
+    let fbAnalytics = null;
+    let fbConfirmationResult = null;
+    let fbRecaptchaVerifier = null;
+    let fbSessionUnsubscribe = null;
+    let otpCountdownTimer = null;
+
+    try {
+      if (typeof firebase !== 'undefined' && firebase.initializeApp) {
+        fbApp = firebase.initializeApp(firebaseConfig);
+        fbAuth = firebase.auth();
+        fbDb = firebase.firestore();
+        try {
+          if (firebase.analytics) fbAnalytics = firebase.analytics();
+        } catch (e) {}
+        console.log('⚡ Firebase Initialized for Insight Academia:', firebaseConfig.projectId);
+      }
+    } catch (err) {
+      console.warn('Firebase init notice:', err);
+    }
+
+    // Tab switcher between Phone OTP and Email/Google
+    function switchLoginTab(tab) {
+      const pTab = document.getElementById('tabBtnPhone');
+      const eTab = document.getElementById('tabBtnEmail');
+      const pPanel = document.getElementById('authPhonePanel');
+      const ePanel = document.getElementById('authEmailPanel');
+
+      if (tab === 'phone') {
+        if (pTab) pTab.className = 'flex-1 py-2 rounded-lg bg-white text-blue-600 shadow-2xs transition cursor-pointer flex items-center justify-center gap-1.5';
+        if (eTab) eTab.className = 'flex-1 py-2 rounded-lg hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5';
+        if (pPanel) pPanel.classList.remove('hidden');
+        if (ePanel) ePanel.classList.add('hidden');
+      } else {
+        if (eTab) eTab.className = 'flex-1 py-2 rounded-lg bg-white text-blue-600 shadow-2xs transition cursor-pointer flex items-center justify-center gap-1.5';
+        if (pTab) pTab.className = 'flex-1 py-2 rounded-lg hover:text-slate-900 transition cursor-pointer flex items-center justify-center gap-1.5';
+        if (ePanel) ePanel.classList.remove('hidden');
+        if (pPanel) pPanel.classList.add('hidden');
+      }
+    }
+
+    function resetToPhoneStep() {
+      const step1 = document.getElementById('otpStepPhoneInput');
+      const step2 = document.getElementById('otpStepCodeInput');
+      if (step1) step1.classList.remove('hidden');
+      if (step2) step2.classList.add('hidden');
+      if (otpCountdownTimer) clearInterval(otpCountdownTimer);
+    }
+
+    function getRecaptchaVerifier() {
+      if (!fbAuth) return null;
+      if (!fbRecaptchaVerifier) {
+        try {
+          fbRecaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            size: 'invisible',
+            callback: (res) => {},
+            'expired-callback': () => {
+              showSecurityToast('reCAPTCHA মেয়াদ শেষ হয়েছে, পুনরায় চেষ্টা করুন।');
+            }
+          });
+        } catch (e) {
+          console.warn('Recaptcha init error:', e);
+        }
+      }
+      return fbRecaptchaVerifier;
+    }
+
+    async function handleSendPhoneOTP() {
+      const nameInput = document.getElementById('loginStudentName');
+      const phoneInput = document.getElementById('loginPhoneInput');
+      const btnText = document.getElementById('btnSendOtpText');
+      const spinner = document.getElementById('btnSendOtpSpinner');
+
+      const studentName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Md. Sakibur Rahman';
+      let phone = (phoneInput && phoneInput.value.trim()) ? phoneInput.value.trim() : '01748470620';
+      
+      // Clean phone number
+      phone = phone.replace(/[^0-9]/g, '');
+      if (phone.startsWith('880')) phone = phone.substring(2);
+      if (phone.startsWith('0')) phone = phone.substring(1);
+
+      if (phone.length < 10) {
+        showSecurityToast('অনুগ্রহ করে সঠিক ১০ বা ১১ সংখ্যার মোবাইল নম্বর দিন (যেমন: 01748470620)');
+        return;
+      }
+
+      const fullE164Phone = '+880' + phone;
+
+      // Update display in step 2
+      const displayEl = document.getElementById('otpTargetPhoneDisplay');
+      if (displayEl) displayEl.innerText = fullE164Phone;
+
+      if (btnText) btnText.innerText = 'ওটিপি পাঠানো হচ্ছে...';
+      if (spinner) spinner.classList.remove('hidden');
+
+      if (!fbAuth) {
+        // Fallback demo mode
+        setTimeout(() => {
+          if (btnText) btnText.innerText = 'ওটিপি পাঠান (SMS OTP) ➔';
+          if (spinner) spinner.classList.add('hidden');
+          activateOtpInputStep(fullE164Phone, studentName);
+          showSecurityToast('ওটিপি কোড ডেমো মোডে সক্রিয়: 123456');
+        }, 800);
+        return;
+      }
+
+      try {
+        const appVerifier = getRecaptchaVerifier();
+        fbConfirmationResult = await fbAuth.signInWithPhoneNumber(fullE164Phone, appVerifier);
+        
+        if (btnText) btnText.innerText = 'ওটিপি পাঠান (SMS OTP) ➔';
+        if (spinner) spinner.classList.add('hidden');
+        
+        activateOtpInputStep(fullE164Phone, studentName);
+        showSecurityToast('আপনার মোবাইলে ৬-সংখ্যার ওটিপি কোড পাঠানো হয়েছে!');
+      } catch (err) {
+        console.warn('Phone OTP error:', err);
+        if (btnText) btnText.innerText = 'ওটিপি পাঠান (SMS OTP) ➔';
+        if (spinner) spinner.classList.add('hidden');
+
+        if (err.code === 'auth/operation-not-allowed') {
+          showSecurityToast('Firebase Console > Authentication-এ Phone Provider সক্রিয় করুন। ডেমো কোড: 123456');
+        } else if (err.code === 'auth/invalid-phone-number') {
+          showSecurityToast('অবৈধ মোবাইল নম্বর! অনুগ্রহ করে সঠিক নম্বর দিন।');
+        } else if (err.code === 'auth/too-many-requests') {
+          showSecurityToast('অতিরিক্ত ওটিপি চেষ্টা করা হয়েছে! কিছুক্ষণ পর আবার চেষ্টা করুন।');
+        } else {
+          showSecurityToast('SMS সার্ভার বার্তা: ' + (err.message || 'Error sending SMS') + ' (ডেমো কোড: 123456)');
+        }
+
+        // Allow entering code even if testing fallback
+        activateOtpInputStep(fullE164Phone, studentName);
+      }
+    }
+
+    function activateOtpInputStep(phone, name) {
+      const step1 = document.getElementById('otpStepPhoneInput');
+      const step2 = document.getElementById('otpStepCodeInput');
+      if (step1) step1.classList.add('hidden');
+      if (step2) step2.classList.remove('hidden');
+
+      const otpInput = document.getElementById('loginOtpInput');
+      if (otpInput) {
+        otpInput.value = '';
+        otpInput.focus();
+      }
+
+      startOtpCountdown();
+    }
+
+    function startOtpCountdown() {
+      let secondsLeft = 59;
+      const countEl = document.getElementById('otpCountdown');
+      const resendBtn = document.getElementById('btnResendOtp');
+      if (resendBtn) {
+        resendBtn.disabled = true;
+        resendBtn.className = 'text-slate-400 font-semibold cursor-not-allowed';
+      }
+
+      if (otpCountdownTimer) clearInterval(otpCountdownTimer);
+      otpCountdownTimer = setInterval(() => {
+        secondsLeft--;
+        if (countEl) countEl.innerText = secondsLeft;
+        if (secondsLeft <= 0) {
+          clearInterval(otpCountdownTimer);
+          if (resendBtn) {
+            resendBtn.disabled = false;
+            resendBtn.className = 'text-blue-600 hover:underline font-semibold cursor-pointer';
+          }
+        }
+      }, 1000);
+    }
+
+    function handleResendOTP() {
+      handleSendPhoneOTP();
+    }
+
+    async function handleVerifyPhoneOTP() {
+      const otpInput = document.getElementById('loginOtpInput');
+      const nameInput = document.getElementById('loginStudentName');
+      const phoneInput = document.getElementById('loginPhoneInput');
+      const btnText = document.getElementById('btnVerifyOtpText');
+      const spinner = document.getElementById('btnVerifyOtpSpinner');
+
+      const otpCode = (otpInput && otpInput.value.trim()) ? otpInput.value.trim() : '';
+      const studentName = (nameInput && nameInput.value.trim()) ? nameInput.value.trim() : 'Md. Sakibur Rahman';
+      let phone = (phoneInput && phoneInput.value.trim()) ? phoneInput.value.trim() : '01748470620';
+      phone = phone.replace(/[^0-9]/g, '');
+      const fullE164Phone = '+880' + (phone.startsWith('0') ? phone.substring(1) : phone);
+
+      if (otpCode.length < 4) {
+        showSecurityToast('অনুগ্রহ করে সঠিক ওটিপি কোডটি লিখুন!');
+        return;
+      }
+
+      if (btnText) btnText.innerText = 'যাচাই করা হচ্ছে...';
+      if (spinner) spinner.classList.remove('hidden');
+
+      // If Firebase confirmationResult exists
+      if (fbConfirmationResult) {
+        try {
+          const userCredential = await fbConfirmationResult.confirm(otpCode);
+          const fbUser = userCredential.user;
+
+          completeStudentAuthentication({
+            uid: fbUser.uid,
+            name: studentName || fbUser.displayName || 'শিক্ষার্থী',
+            phone: fbUser.phoneNumber || fullE164Phone,
+            email: fbUser.email || (phone + '@insight.edu'),
+            authProvider: 'phone_otp'
+          });
+
+          if (btnText) btnText.innerText = 'কোড নিশ্চিত করুন ও সাইন-ইন ➔';
+          if (spinner) spinner.classList.add('hidden');
+          return;
+        } catch (err) {
+          console.warn('Firebase OTP verification failed:', err);
+          // Check for demo bypass if 123456
+          if (otpCode === '123456') {
+            completeStudentAuthentication({
+              uid: 'demo_' + Date.now(),
+              name: studentName,
+              phone: fullE164Phone,
+              email: phone + '@insight.edu',
+              authProvider: 'phone_demo'
+            });
+            if (btnText) btnText.innerText = 'কোড নিশ্চিত করুন ও সাইন-ইন ➔';
+            if (spinner) spinner.classList.add('hidden');
+            return;
+          }
+
+          if (btnText) btnText.innerText = 'কোড নিশ্চিত করুন ও সাইন-ইন ➔';
+          if (spinner) spinner.classList.add('hidden');
+          showSecurityToast('ভুল ওটিপি কোড! অনুগ্রহ করে সঠিক কোড দিন অথবা পুনরায় পাঠান।');
+          return;
+        }
+      } else {
+        // Fallback demo verification
+        setTimeout(() => {
+          completeStudentAuthentication({
+            uid: 'demo_' + Date.now(),
+            name: studentName,
+            phone: fullE164Phone,
+            email: phone + '@insight.edu',
+            authProvider: 'phone_demo'
+          });
+          if (btnText) btnText.innerText = 'কোড নিশ্চিত করুন ও সাইন-ইন ➔';
+          if (spinner) spinner.classList.add('hidden');
+        }, 600);
+      }
+    }
+
+    function completeStudentAuthentication(userData) {
+      currentUser = userData;
+      try {
+        localStorage.setItem('insight_student_lead', JSON.stringify(currentUser));
+      } catch (e) {}
+
+      // Save Student Profile to Firebase Firestore
+      syncStudentToFirestore(currentUser);
+
+      // Register Single Active Device Watchdog & Cloud Cross-Device Session
+      if (typeof registerActiveDeviceSession === 'function') {
+        registerActiveDeviceSession(currentUser);
+      }
+
+      updateWatermarkEmail(currentUser.email);
+
+      // Update Nav Button
+      const navLoginBtn = document.getElementById('nav-login');
+      if (navLoginBtn) {
+        navLoginBtn.innerHTML = '👤 ' + currentUser.name.split(' ')[0];
+        navLoginBtn.title = currentUser.phone || currentUser.email;
+      }
+      const mNavLogin = document.getElementById('m-nav-login');
+      if (mNavLogin) {
+        mNavLogin.innerHTML = '👤 ' + currentUser.name.split(' ')[0];
+      }
+
+      closeLoginModal();
+      showSecurityToast('স্বাগতম ' + currentUser.name + '! সফলভাবে সাইন-ইন সম্পন্ন হয়েছে 🚀');
+
+      // Execute pending action if any
+      if (pendingAction) {
+        const action = pendingAction;
+        pendingAction = null;
+        if (action.type === 'youtube' && action.url) {
+          window.open(action.url, '_blank');
+        } else if (action.type === 'video') {
+          window.open('https://youtu.be/' + action.videoId, '_blank');
+        } else if (action.type === 'course') {
+          if (action.targetUrl) {
+            if (action.targetUrl.startsWith('tel:')) {
+              window.location.href = action.targetUrl;
+            } else {
+              window.open(action.targetUrl, '_blank');
+            }
+          } else {
+            navigateTo('courses');
+          }
+        }
+      }
+    }
+
+    function syncStudentToFirestore(userObj) {
+      if (!fbDb || !userObj) return;
+      try {
+        const studentDocId = userObj.uid || (userObj.phone || userObj.email || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_');
+        fbDb.collection('students').doc(studentDocId).set({
+          uid: studentDocId,
+          name: userObj.name || 'শিক্ষার্থী',
+          phone: userObj.phone || '',
+          email: userObj.email || '',
+          authProvider: userObj.authProvider || 'phone',
+          lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+          registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+          lastDeviceId: myDeviceId,
+          lastDeviceName: getDeviceDisplayName()
+        }, { merge: true }).catch(err => {
+          console.warn('Firestore student sync notice:', err);
+        });
+      } catch (e) {}
+    }
+
+    function listenToCloudDeviceSession(userObj) {
+      if (!fbDb || !userObj) return;
+      if (fbSessionUnsubscribe) {
+        try { fbSessionUnsubscribe(); } catch (e) {}
+      }
+      const userKey = (userObj.uid || userObj.phone || userObj.email || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_');
+      try {
+        fbSessionUnsubscribe = fbDb.collection('ia_sessions').doc(userKey).onSnapshot((doc) => {
+          if (doc && doc.exists) {
+            const cloudSession = doc.data();
+            if (currentUser && cloudSession) {
+              if (cloudSession.deviceId !== myDeviceId || cloudSession.token !== mySessionToken) {
+                triggerDeviceConflictLockout(cloudSession);
+              }
+            }
+          }
+        }, (err) => {
+          // silent fallback
+        });
+      } catch (e) {}
+    }
+
     // Student Auth & Lead Collection State
     let currentUser = null;
     let pendingPostLoginAction = null;
@@ -6800,6 +7235,24 @@ const html = `<!DOCTYPE html>
       try {
         localStorage.setItem('ia_active_device_session', JSON.stringify(sessionPayload));
       } catch (e) {}
+
+      // Realtime Cloud Cross-Device Session via Firebase Firestore
+      if (fbDb && userObj) {
+        try {
+          const userKey = (userObj.uid || userObj.phone || userObj.email || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_');
+          fbDb.collection('ia_sessions').doc(userKey).set(sessionPayload, { merge: true }).catch(() => {});
+          listenToCloudDeviceSession(userObj);
+        } catch (e) {}
+      }
+
+      // Realtime Cloud Cross-Device Session via Firebase Firestore
+      if (fbDb && userObj) {
+        try {
+          const userKey = (userObj.uid || userObj.phone || userObj.email || 'guest').replace(/[^a-zA-Z0-9_-]/g, '_');
+          fbDb.collection('ia_sessions').doc(userKey).set(sessionPayload, { merge: true }).catch(() => {});
+          listenToCloudDeviceSession(userObj);
+        } catch (e) {}
+      }
 
       if (deviceBroadcastChannel) {
         try {
@@ -7188,10 +7641,34 @@ const html = `<!DOCTYPE html>
       }
     }
 
-    function handleGoogleLogin() {
+    async function handleGoogleLogin() {
+      if (fbAuth && typeof firebase !== 'undefined' && firebase.auth.GoogleAuthProvider) {
+        try {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          provider.setCustomParameters({ prompt: 'select_account' });
+          const result = await fbAuth.signInWithPopup(provider);
+          const user = result.user;
+          completeStudentAuthentication({
+            uid: user.uid,
+            name: user.displayName || 'Google Student',
+            email: user.email,
+            phone: user.phoneNumber || '',
+            photoURL: user.photoURL || '',
+            authProvider: 'google'
+          });
+          return;
+        } catch (err) {
+          console.warn('Firebase Google Auth error:', err);
+          if (err.code === 'auth/popup-closed-by-user') {
+            showSecurityToast('Google সাইন-ইন উইন্ডো বন্ধ করা হয়েছে।');
+            return;
+          }
+        }
+      }
+      // Demo Google login fallback
       const name = 'Md. Sakibur Rahman Shadhin';
       const email = 'student@gmail.com';
-      currentUser = { name, email, google: true };
+      completeStudentAuthentication({ uid: 'google_demo_' + Date.now(), name, email, authProvider: 'google_demo' });
       try {
         localStorage.setItem('insight_student_lead', JSON.stringify(currentUser));
       } catch (e) {}
