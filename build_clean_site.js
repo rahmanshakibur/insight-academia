@@ -3,6 +3,7 @@ const path = require('path');
 
 const dir = 'C:\\Users\\USER\\.gemini\\antigravity\\brain\\8f789559-8856-403a-8367-ceb7cce3f27e';
 const logoB64 = fs.readFileSync(path.join(dir, 'logo_base64.txt'), 'utf8').trim();
+const faviconB64 = fs.readFileSync(path.join(dir, 'favicon_base64.txt'), 'utf8').trim();
 const teacherB64 = fs.readFileSync(path.join(dir, 'teacher_sakib_base64.txt'), 'utf8').trim();
 const teacherSakibB64 = teacherB64;
 const teacherRajibB64 = fs.readFileSync(path.join(dir, 'teacher_rajib_base64.txt'), 'utf8').trim();
@@ -46,6 +47,11 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicon (Official Insight Academia Book & IA Brand Icon) -->
+  <link rel="icon" type="image/png" href="data:image/png;base64,${faviconB64}">
+  <link rel="shortcut icon" type="image/png" href="data:image/png;base64,${faviconB64}">
+  <link rel="apple-touch-icon" href="data:image/png;base64,${faviconB64}">
 
   <!-- Primary SEO Meta Tags -->
   <title>Insight Academia - সহজ শেখা, সেরা প্রস্তুতি | প্রতিষ্ঠাতা: তারেকুল ইসলাম রাজিব</title>

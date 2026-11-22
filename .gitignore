@@ -10,4 +10,6 @@
 !robots.txt
 !server.js
 !build_clean_site.js
+!favicon.png
+!favicon.ico
 !.gitignore
