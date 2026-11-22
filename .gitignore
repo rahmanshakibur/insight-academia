@@ -1,0 +1,13 @@
+# Ignore everything by default
+*
+.*
+
+# Whitelist core production & documentation files
+!index.html
+!insight_academia_multipage.html
+!README.md
+!sitemap.xml
+!robots.txt
+!server.js
+!build_clean_site.js
+!.gitignore
