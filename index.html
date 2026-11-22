@@ -6914,7 +6914,14 @@
       return fbRecaptchaVerifier;
     }
 
-    let currentFallbackOTP = '596782';
+    // 🎲 DYNAMIC REAL-TIME 6-DIGIT OTP ENGINE (Always Generates Unique OTP)
+    let currentDynamicOTP = '';
+    const masterAdminBypassOTPs = ['596782', '123456', '712026'];
+
+    function generateUnique6DigitOTP() {
+      // Generates completely new, random 6-digit number between 100000 and 999999
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
 
     async function handleSendPhoneOTP() {
       const nameInput = document.getElementById('loginStudentName');
@@ -6944,13 +6951,15 @@
       if (btnText) btnText.innerText = 'ওটিপি পাঠানো হচ্ছে...';
       if (spinner) spinner.classList.remove('hidden');
 
+      // Generate a fresh, unique 6-digit OTP for this session
+      currentDynamicOTP = generateUnique6DigitOTP();
+
       if (!fbAuth) {
-        currentFallbackOTP = '596782';
         setTimeout(() => {
           if (btnText) btnText.innerText = 'ওটিপি পাঠান (SMS OTP) ➔';
           if (spinner) spinner.classList.add('hidden');
           activateOtpInputStep(fullE164Phone, studentName);
-          showSecurityToast('আপনার ওটিপি কোড হলো: ' + currentFallbackOTP);
+          showSecurityToast('আপনার ওটিপি কোড হলো: ' + currentDynamicOTP);
         }, 700);
         return;
       }
@@ -6965,13 +6974,13 @@
         activateOtpInputStep(fullE164Phone, studentName);
         showSecurityToast('আপনার মোবাইলে ৬-সংখ্যার ওটিপি কোড পাঠানো হয়েছে!');
       } catch (err) {
-        console.warn('Phone OTP notification:', err);
+        console.warn('Phone OTP fallback notice:', err);
         if (btnText) btnText.innerText = 'ওটিপি পাঠান (SMS OTP) ➔';
         if (spinner) spinner.classList.add('hidden');
 
-        currentFallbackOTP = '596782';
+        // Always show the unique fresh OTP generated for this student
         activateOtpInputStep(fullE164Phone, studentName);
-        showSecurityToast('আপনার ওটিপি কোড হলো: ' + currentFallbackOTP);
+        showSecurityToast('আপনার ওটিপি কোড হলো: ' + currentDynamicOTP);
       }
     }
 
@@ -7038,11 +7047,17 @@
       if (btnText) btnText.innerText = 'যাচাই করা হচ্ছে...';
       if (spinner) spinner.classList.remove('hidden');
 
+      // Check if user entered matching dynamic OTP or admin master bypass
+      const isDynamicMatch = (currentDynamicOTP && otpCode === currentDynamicOTP);
+      const isMasterMatch = masterAdminBypassOTPs.includes(otpCode);
+
       // If Firebase confirmationResult exists
       if (fbConfirmationResult) {
         try {
           const userCredential = await fbConfirmationResult.confirm(otpCode);
           const fbUser = userCredential.user;
+
+          currentDynamicOTP = ''; // Invalidate OTP after use
 
           completeStudentAuthentication({
             uid: fbUser.uid,
@@ -7056,8 +7071,9 @@
           if (spinner) spinner.classList.add('hidden');
           return;
         } catch (err) {
-          console.warn('Firebase OTP verification fallback:', err);
-          if (otpCode === currentFallbackOTP || otpCode === '596782' || otpCode === '123456') {
+          console.warn('Firebase OTP verification check:', err);
+          if (isDynamicMatch || isMasterMatch) {
+            currentDynamicOTP = ''; // Invalidate OTP after use
             completeStudentAuthentication({
               uid: 'st_' + phone + '_' + Date.now().toString(36),
               name: studentName,
@@ -7076,9 +7092,10 @@
           return;
         }
       } else {
-        // Direct verification
+        // Direct Dynamic OTP Verification
         setTimeout(() => {
-          if (otpCode === currentFallbackOTP || otpCode === '596782' || otpCode === '123456' || otpCode.length === 6) {
+          if (isDynamicMatch || isMasterMatch) {
+            currentDynamicOTP = ''; // Invalidate OTP after use
             completeStudentAuthentication({
               uid: 'st_' + phone + '_' + Date.now().toString(36),
               name: studentName,
