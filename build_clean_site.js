@@ -5000,6 +5000,11 @@ const html = `<!DOCTYPE html>
                   Login
                 </button>
 
+                <!-- Phone SMS OTP Button -->
+                <button type="button" onclick="openLoginModal()" class="w-full mt-2 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                  <span>📱</span><span>মোবাইল ওটিপি (SMS OTP) দিয়ে সাইন-ইন</span>
+                </button>
+
                 <!-- Social Login Label -->
                 <p class="text-[12px] text-slate-500 font-medium text-center pt-2.5">
                   or login with social platforms
@@ -7776,7 +7781,15 @@ const html = `<!DOCTYPE html>
     }
 
     function openLoginModal() {
-      navigateTo('login');
+      const modal = document.getElementById('loginModal');
+      const box = document.getElementById('loginModalBox');
+      if (modal) {
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+      }
+      if (box) {
+        box.classList.remove('scale-95');
+        box.classList.add('scale-100');
+      }
     }
 
     let currentAuthMode = 'register';
@@ -7986,6 +7999,10 @@ const html = `<!DOCTYPE html>
 
     function handleSocialAuth(provider) {
       if (provider === 'google') {
+        handleGoogleLogin();
+        return;
+      }
+      if (provider === 'google_old') {
         currentUser = {
           name: 'Google Student',
           email: 'student.google@gmail.com',
@@ -8052,7 +8069,7 @@ const html = `<!DOCTYPE html>
     }
 
     function handleNavLoginClick() {
-      navigateTo('login');
+      openLoginModal();
     }
 
     function logoutUser() {
