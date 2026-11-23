@@ -2810,15 +2810,7 @@ const html = `<!DOCTYPE html>
         <!-- Brand & Logo -->
         <div class="h-16 px-5 border-b border-emerald-200/70 flex items-center justify-between bg-white/60">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-sm">
-              IA
-            </div>
-            <div>
-              <div class="text-sm font-black text-slate-900 tracking-tight flex items-center gap-1.5">
-                <span>Insight Academia</span>
-              </div>
-              
-            </div>
+            <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-9 w-auto object-contain" />
           </div>
           <button type="button" onclick="closeAdminSidebar()" class="md:hidden p-1.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-emerald-100/70 transition text-base font-bold cursor-pointer" title="মেনু বন্ধ করুন">✕</button>
         </div>
