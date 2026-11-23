@@ -4125,6 +4125,33 @@ const html = `<!DOCTYPE html>
                 </div>
               </div>
 
+                            <!-- Card 3: Ikra Islam -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherIkraB64}" alt="Ikra Islam" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Ikra Islam</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-emerald-50/90 border border-emerald-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookSscEngB64}" alt="ইংরেজি পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-emerald-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-emerald-900" data-i18n="subject_english">ইংরেজি (English)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - English, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Founder, Parrot English School</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">Dept. of English, ULAB</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@ParrotEnglishSchool" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/ikra.islam.16100" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
               <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div class="flex flex-col items-center text-center">
                   <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
@@ -4260,6 +4287,33 @@ const html = `<!DOCTYPE html>
                     <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                   </a>
                   <a href="https://www.facebook.com/abdulaziz.anik.14" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 5: Ikra Islam -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherIkraB64}" alt="Ikra Islam" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Ikra Islam</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-emerald-50/90 border border-emerald-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookHscEngB64}" alt="এইচএসসি ইংরেজি পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-emerald-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-emerald-900" data-i18n="subject_english">ইংরেজি (English)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - English, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Founder, Parrot English School</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">Dept. of English, ULAB</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@ParrotEnglishSchool" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/ikra.islam.16100" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
                   </a>
                 </div>
