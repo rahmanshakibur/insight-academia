@@ -4934,7 +4934,7 @@
               <div class="space-y-3.5">
                 <!-- Username Field -->
                 <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-[#3FA0F7] focus-within:bg-white transition">
-                  <input type="text" id="authRegUsername" placeholder="Username" value="Md. Rakib Hasan" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                  <input type="text" id="authRegUsername" placeholder="আপনার পুরো নাম (Full Name)" value="" autocomplete="name" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   <span class="absolute right-4 text-slate-700 pointer-events-none">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                   </span>
@@ -4942,7 +4942,7 @@
 
                 <!-- Email Field -->
                 <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-[#3FA0F7] focus-within:bg-white transition">
-                  <input type="email" id="authRegEmail" placeholder="Email" value="rakib@gmail.com" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                  <input type="email" id="authRegEmail" placeholder="ইমেইল এড্রেস (Email Address)" value="" autocomplete="email" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   <span class="absolute right-4 text-slate-700 pointer-events-none">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                   </span>
@@ -4950,7 +4950,7 @@
 
                 <!-- Password Field -->
                 <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-[#3FA0F7] focus-within:bg-white transition">
-                  <input type="password" id="authRegPassword" placeholder="Password" value="123456" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                  <input type="password" id="authRegPassword" placeholder="পাসওয়ার্ড তৈরি করুন" value="" autocomplete="new-password" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   <button type="button" onclick="togglePasswordVisibility('authRegPassword', 'regLockIcon')" class="absolute right-4 text-slate-700 hover:text-slate-900 cursor-pointer" title="পাসওয়ার্ড দেখুন / লুকান">
                     <svg id="regLockIcon" class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                   </button>
@@ -4987,7 +4987,7 @@
               <div class="space-y-3.5">
                 <!-- Username Field -->
                 <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-[#3FA0F7] focus-within:bg-white transition">
-                  <input type="text" id="authLoginUsername" placeholder="Username" value="01748470620" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                  <input type="text" id="authLoginUsername" placeholder="মোবাইল নম্বর বা ইমেইল" value="" autocomplete="username" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   <span class="absolute right-4 text-slate-700 pointer-events-none">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
                   </span>
@@ -4995,7 +4995,7 @@
 
                 <!-- Password Field -->
                 <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3.5 focus-within:ring-2 focus-within:ring-[#3FA0F7] focus-within:bg-white transition">
-                  <input type="password" id="authLoginPassword" placeholder="Password" value="123456" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                  <input type="password" id="authLoginPassword" placeholder="পাসওয়ার্ড লিখুন" value="" autocomplete="current-password" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   <button type="button" onclick="togglePasswordVisibility('authLoginPassword', 'loginLockIcon')" class="absolute right-4 text-slate-700 hover:text-slate-900 cursor-pointer" title="পাসওয়ার্ড দেখুন / লুকান">
                     <svg id="loginLockIcon" class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
                   </button>
@@ -5011,11 +5011,6 @@
                 <!-- Login Button (Halka Akashi) -->
                 <button type="button" onclick="handleAuthSubmit('login')" class="w-full mt-2 py-3.5 bg-[#3FA0F7] hover:bg-[#2992F0] active:scale-[0.99] text-white font-extrabold text-sm rounded-xl shadow-md hover:shadow-lg transition cursor-pointer">
                   Login
-                </button>
-
-                <!-- Phone SMS OTP Button -->
-                <button type="button" onclick="openLoginModal()" class="w-full mt-2 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-sm hover:shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
-                  <span>📱</span><span>মোবাইল ওটিপি (SMS OTP) দিয়ে সাইন-ইন</span>
                 </button>
 
                 <!-- Social Login Label -->
@@ -5080,15 +5075,15 @@
                 <h2 class="text-2xl font-extrabold text-[#222B45] text-center tracking-tight mb-6">Registration</h2>
                 <div class="space-y-3">
                   <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3">
-                    <input type="text" id="mAuthRegUsername" placeholder="Username" value="Md. Rakib Hasan" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                    <input type="text" id="mAuthRegUsername" placeholder="আপনার পুরো নাম (Full Name)" value="" autocomplete="name" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                     <span class="absolute right-4 text-slate-700 pointer-events-none"><svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg></span>
                   </div>
                   <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3">
-                    <input type="email" id="mAuthRegEmail" placeholder="Email" value="rakib@gmail.com" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                    <input type="email" id="mAuthRegEmail" placeholder="ইমেইল এড্রেস (Email Address)" value="" autocomplete="email" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                     <span class="absolute right-4 text-slate-700 pointer-events-none"><svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg></span>
                   </div>
                   <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3">
-                    <input type="password" id="mAuthRegPassword" placeholder="Password" value="123456" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                    <input type="password" id="mAuthRegPassword" placeholder="পাসওয়ার্ড তৈরি করুন" value="" autocomplete="new-password" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   </div>
                   <button type="button" onclick="handleAuthSubmit('register')" class="w-full mt-2 py-3 bg-[#3FA0F7] hover:bg-[#2992F0] text-white font-extrabold text-sm rounded-xl shadow-md transition cursor-pointer">Register</button>
                   <p class="text-[11px] text-slate-500 font-medium text-center pt-2">or register with social platforms</p>
@@ -5112,11 +5107,11 @@
                 <h2 class="text-2xl font-extrabold text-[#222B45] text-center tracking-tight mb-6">Login</h2>
                 <div class="space-y-3">
                   <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3">
-                    <input type="text" id="mAuthLoginUsername" placeholder="Username" value="01748470620" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                    <input type="text" id="mAuthLoginUsername" placeholder="মোবাইল নম্বর বা ইমেইল" value="" autocomplete="username" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                     <span class="absolute right-4 text-slate-700 pointer-events-none"><svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg></span>
                   </div>
                   <div class="relative flex items-center bg-[#ECEFF4] rounded-xl px-4 py-3">
-                    <input type="password" id="mAuthLoginPassword" placeholder="Password" value="123456" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
+                    <input type="password" id="mAuthLoginPassword" placeholder="পাসওয়ার্ড লিখুন" value="" autocomplete="current-password" class="w-full bg-transparent text-sm text-slate-800 placeholder-slate-400 focus:outline-none pr-8 font-medium" />
                   </div>
                   <div class="text-right">
                     <button type="button" onclick="handleForgotPassword()" class="text-xs text-slate-600 hover:text-[#3FA0F7] font-medium transition cursor-pointer">Forgot Password?</button>
@@ -7476,12 +7471,19 @@
     try {
       const savedUser = localStorage.getItem('insight_student_lead');
       if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        setTimeout(() => {
-          if (currentUser) {
-            checkSingleDeviceSession();
-          }
-        }, 150);
+        const parsed = JSON.parse(savedUser);
+        if (parsed && (parsed.name === 'মোঃ রাকিব হাসান' || parsed.name === 'Md. Rakib Hasan' || parsed.email === 'rakib@gmail.com')) {
+          localStorage.removeItem('insight_student_lead');
+          currentUser = null;
+        } else if (parsed && parsed.name) {
+          currentUser = parsed;
+          setTimeout(() => {
+            if (currentUser) {
+              if (typeof updateNavUser === 'function') updateNavUser(currentUser);
+              checkSingleDeviceSession();
+            }
+          }, 150);
+        }
       }
     } catch(e) {}
 
@@ -7807,15 +7809,8 @@
     }
 
     function openLoginModal() {
-      const modal = document.getElementById('loginModal');
-      const box = document.getElementById('loginModalBox');
-      if (modal) {
-        modal.classList.remove('opacity-0', 'pointer-events-none');
-      }
-      if (box) {
-        box.classList.remove('scale-95');
-        box.classList.add('scale-100');
-      }
+      navigateTo('login');
+      switchAuthMode('login');
     }
 
     let currentAuthMode = 'register';
@@ -7984,41 +7979,108 @@
     // Uses global currentUser state
     function handleAuthSubmit(mode) {
       if (mode === 'login') {
-        const username = document.getElementById('authLoginUsername')?.value || document.getElementById('mAuthLoginUsername')?.value || '01748470620';
+        const loginInput = (document.getElementById('authLoginUsername')?.value || document.getElementById('mAuthLoginUsername')?.value || '').trim();
+        const password = document.getElementById('authLoginPassword')?.value || document.getElementById('mAuthLoginPassword')?.value || '';
+
+        if (!loginInput) {
+          showToast('অনুগ্রহ করে মোবাইল নম্বর, ইমেইল বা আপনার নাম লিখুন', 'warning');
+          return;
+        }
+
+        let displayName = '';
+        let userEmail = '';
+        let userPhone = '';
+
+        let regUsers = [];
+        try { regUsers = JSON.parse(localStorage.getItem('ia_registered_students') || '[]'); } catch (e) { regUsers = []; }
+        const matchedUser = regUsers.find(u => 
+          (u.email && u.email.toLowerCase() === loginInput.toLowerCase()) ||
+          (u.name && u.name.toLowerCase() === loginInput.toLowerCase()) ||
+          (u.phone && u.phone === loginInput)
+        );
+
+        if (matchedUser) {
+          displayName = matchedUser.name;
+          userEmail = matchedUser.email;
+          userPhone = matchedUser.phone || '01748470620';
+        } else {
+          if (loginInput.includes('@')) {
+            userEmail = loginInput;
+            const rawPrefix = loginInput.split('@')[0].replace(/[._-]/g, ' ');
+            displayName = rawPrefix.replace(/w/g, l => l.toUpperCase());
+          } else if (/^[0-9+]+$/.test(loginInput)) {
+            userPhone = loginInput;
+            userEmail = loginInput.replace(/[^0-9]/g, '') + '@insight.edu';
+            try {
+              const saved = JSON.parse(localStorage.getItem('insight_student_lead') || '{}');
+              if (saved.phone === loginInput && saved.name && !saved.name.includes('রাকিব হাসান')) {
+                displayName = saved.name;
+              }
+            } catch (e) {}
+            if (!displayName) {
+              displayName = 'শিক্ষার্থী (' + loginInput.slice(-4) + ')';
+            }
+          } else {
+            displayName = loginInput;
+            userEmail = loginInput.replace(/[^a-zA-Z0-9]/g, '').toLowerCase() + '@insight.edu';
+          }
+        }
+
         currentUser = {
-          name: 'মোঃ রাকিব হাসান',
-          phone: username,
-          email: username.includes('@') ? username : username.replace(/[^0-9]/g, '') + '@insight.edu',
+          name: displayName,
+          phone: userPhone || '01748470620',
+          email: userEmail || 'student@insight.edu',
           role: 'স্টুডেন্ট'
         };
         try { localStorage.setItem('insight_student_lead', JSON.stringify(currentUser)); } catch (e) {}
         if (typeof registerActiveDeviceSession === 'function') registerActiveDeviceSession(currentUser);
         if (typeof updateWatermarkEmail === 'function') updateWatermarkEmail(currentUser.email);
-        showToast('স্বাগতম, মোঃ রাকিব হাসান! আপনার লগইন সফল হয়েছে 🎉');
+        showToast('স্বাগতম, ' + displayName + '! আপনার লগইন সফল হয়েছে 🎉');
         updateNavUser(currentUser);
         executePostLoginAction();
       } else {
-        const username = document.getElementById('authRegUsername')?.value || document.getElementById('mAuthRegUsername')?.value || 'নতুন শিক্ষার্থী';
-        const email = document.getElementById('authRegEmail')?.value || document.getElementById('mAuthRegEmail')?.value || 'student@insight.edu';
+        const username = (document.getElementById('authRegUsername')?.value || document.getElementById('mAuthRegUsername')?.value || '').trim();
+        const email = (document.getElementById('authRegEmail')?.value || document.getElementById('mAuthRegEmail')?.value || '').trim();
+        const password = document.getElementById('authRegPassword')?.value || document.getElementById('mAuthRegPassword')?.value || '';
+
+        if (!username) {
+          showToast('অনুগ্রহ করে আপনার পুরো নাম লিখুন', 'warning');
+          return;
+        }
+
+        const displayName = username;
+        const userEmail = email || (username.replace(/[^a-zA-Z0-9]/g, '').toLowerCase() + '@insight.edu');
         currentUser = {
-          name: username,
-          email: email,
+          name: displayName,
+          email: userEmail,
           phone: '01748470620',
           role: 'স্টুডেন্ট'
         };
-        try { localStorage.setItem('insight_student_lead', JSON.stringify(currentUser)); } catch (e) {}
+        try {
+          localStorage.setItem('insight_student_lead', JSON.stringify(currentUser));
+          let regUsers = [];
+          try { regUsers = JSON.parse(localStorage.getItem('ia_registered_students') || '[]'); } catch (e) { regUsers = []; }
+          const existingIdx = regUsers.findIndex(u => (u.email && u.email.toLowerCase() === userEmail.toLowerCase()) || (u.name && u.name.toLowerCase() === displayName.toLowerCase()));
+          if (existingIdx >= 0) {
+            regUsers[existingIdx] = { name: displayName, email: userEmail, password: password };
+          } else {
+            regUsers.push({ name: displayName, email: userEmail, password: password });
+          }
+          localStorage.setItem('ia_registered_students', JSON.stringify(regUsers));
+        } catch (e) {}
+
         if (typeof registerActiveDeviceSession === 'function') registerActiveDeviceSession(currentUser);
         if (typeof updateWatermarkEmail === 'function') updateWatermarkEmail(currentUser.email);
-        showToast('অভিনন্দন ' + username + '! আপনার অ্যাকাউন্ট তৈরি সফল হয়েছে 🎉');
+        showToast('অভিনন্দন ' + displayName + '! আপনার অ্যাকাউন্ট তৈরি সফল হয়েছে 🎉');
         updateNavUser(currentUser);
         executePostLoginAction();
       }
     }
 
     function quickDemoLogin() {
-      const userInput = document.getElementById('authLoginUsername') || document.getElementById('authLoginPhone');
-      const passInput = document.getElementById('authLoginPassword');
-      if (userInput) userInput.value = '01748470620';
+      const userInput = document.getElementById('authLoginUsername') || document.getElementById('mAuthLoginUsername');
+      const passInput = document.getElementById('authLoginPassword') || document.getElementById('mAuthLoginPassword');
+      if (userInput) userInput.value = 'ডেমো শিক্ষার্থী';
       if (passInput) passInput.value = '123456';
       handleAuthSubmit('login');
     }
@@ -8095,7 +8157,8 @@
     }
 
     function handleNavLoginClick() {
-      openLoginModal();
+      navigateTo('login');
+      switchAuthMode('login');
     }
 
     function logoutUser() {
