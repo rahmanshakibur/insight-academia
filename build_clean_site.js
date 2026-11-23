@@ -4320,6 +4320,152 @@ const html = `<!DOCTYPE html>
               </div>
             </div>
           </div>
+                  <!-- 3. ALL TEACHERS PANEL (UNIFIED - NO ONLINE/OFFLINE BARRIER) -->
+          <div id="panel-teachers-all" class="teacher-panel-content hidden mb-12">
+            <div class="mb-6 pb-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 uppercase tracking-tight">Faculty Members • সকল শিক্ষকবৃন্দ</h3>
+                <p class="text-xs text-slate-500 font-medium mt-1">ইনসাইট একাডেমিয়ার অভিজ্ঞ ও নিবেদিতপ্রাণ শিক্ষক মণ্ডলী</p>
+              </div>
+              <span class="px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200">সকল শিক্ষক</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <!-- Card 1: Tarequl Islam Rajib -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherRajibB64}" alt="Tarequl Islam Rajib" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Tarequl Islam Rajib</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-emerald-50/90 border border-emerald-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookSscEngB64}" alt="ইংরেজি পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-emerald-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-emerald-900" data-i18n="subject_english">ইংরেজি (English)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - English</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Founder & CEO, Insight Academia</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">MBA, University of Dhaka</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@InsightAcademia-k2v" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/tarequl.islam.71619533" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 2: Md. Sakibur Rahman Shadhin -->
+              <div id="teacher-card-sakib-all" class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherB64}" alt="Md. Sakibur Rahman Shadhin" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Md. Sakibur Rahman Shadhin</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-indigo-50/90 border border-indigo-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${ictBookB64}" alt="আইসিটি ও গণিত পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-indigo-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-indigo-900">আইসিটি ও সাধারণ গণিত</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - ICT & Math, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Founder & CEO, Code Cafe by Sakib</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">BSc in CSE, Southeast University</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@CodeCafebySakib" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/rahman.sakibur" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 3: Abdul Aziz Anik -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherAnikB64}" alt="Abdul Aziz Anik" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Abdul Aziz Anik</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-sky-50/90 border border-sky-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookHscPhysicsB64}" alt="এইচএসসি পদার্থবিজ্ঞান বই" class="w-5 h-7 object-cover rounded shadow-2xs border border-sky-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-sky-900" data-i18n="subject_physics_hsc">পদার্থবিজ্ঞান (Physics)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - Physics & Chemistry, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-700 mt-1">Founder, Aziz Physics Solution</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Ex-NDC, BUTEX</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@InsightAcademia-k2v" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/abdulaziz.anik.14" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 4: Ikra Islam -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherIkraB64}" alt="Ikra Islam" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Ikra Islam</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-emerald-50/90 border border-emerald-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookSscEngB64}" alt="ইংরেজি পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-emerald-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-emerald-900" data-i18n="subject_english">ইংরেজি (English)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - English, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Founder, Parrot English School</p>
+                    <p class="text-xs text-slate-500 font-medium mt-1">Dept. of English, ULAB</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@ParrotEnglishSchool" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/ikra.islam.16100" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 5: Shirajul Islam Noor Rifat -->
+              <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div class="flex flex-col items-center text-center">
+                  <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-inner">
+                    <img src="data:image/jpeg;base64,${teacherRifatB64}" alt="Shirajul Islam Noor Rifat" class="w-full h-full object-cover object-top" />
+                  </div>
+                  <div class="mt-5 w-full flex flex-col items-center">
+                    <h3 class="text-xl font-bold text-slate-900 tracking-tight">Shirajul Islam Noor Rifat</h3>
+                    <div class="mt-2.5 inline-flex items-center gap-2 bg-rose-50/90 border border-rose-200/90 px-3 py-1 rounded-xl shadow-2xs">
+                      <img src="data:image/jpeg;base64,${bookSscBanglaB64}" alt="বাংলা সাহিত্য পাঠ্যবই" class="w-5 h-7 object-cover rounded shadow-2xs border border-rose-200/90 shrink-0" />
+                      <span class="text-xs font-bold text-rose-900" data-i18n="subject_bangla">বাংলা (Bangla)</span>
+                    </div>
+                    <p class="text-xs font-semibold text-slate-800 mt-2.5">Instructor - Bangla, Insight Academia</p>
+                    <p class="text-xs font-semibold text-slate-600 mt-1">Dept. of Finance, University of Dhaka</p>
+                  </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-3">
+                  <a href="https://www.youtube.com/@InsightAcademia-k2v" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#EF4444] hover:bg-red-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="YouTube">
+                    <svg class="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  </a>
+                  <a href="https://www.facebook.com/sumijanjat" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-[#1877F2] hover:bg-blue-600 text-white flex items-center justify-center shadow-xs transition hover:scale-110 cursor-pointer" title="Facebook">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.5 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- END CONTAINER 1: ONLINE FACULTY -->
 
@@ -6833,10 +6979,9 @@ const html = `<!DOCTYPE html>
         hscPanel.classList.remove('hidden');
         btnHsc.className = 't-off-filter-btn px-6 py-3 rounded-2xl bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer';
       } else {
-        // all
-        sscPanel.classList.remove('hidden');
-        hscPanel.classList.remove('hidden');
-        btnAll.className = 't-off-filter-btn px-5 py-3 rounded-2xl bg-emerald-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer';
+        // all: seamlessly show unified all teachers panel without online/offline barrier
+        setTeacherMode('online');
+        switchTeacherPanel('all');
       }
     }
 
@@ -6916,27 +7061,33 @@ const html = `<!DOCTYPE html>
     function switchTeacherPanel(panelId) {
       const sscPanel = document.getElementById('panel-teachers-ssc');
       const hscPanel = document.getElementById('panel-teachers-hsc');
+      const allPanel = document.getElementById('panel-teachers-all');
       const btnSsc = document.getElementById('t-filter-ssc');
       const btnHsc = document.getElementById('t-filter-hsc');
       const btnAll = document.getElementById('t-filter-all');
 
-      btnSsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all flex items-center gap-2';
-      btnHsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all flex items-center gap-2';
-      btnAll.className = 't-filter-btn px-5 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all';
+      if (!btnSsc || !btnHsc || !btnAll) return;
+
+      btnSsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all flex items-center gap-2 cursor-pointer';
+      btnHsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all flex items-center gap-2 cursor-pointer';
+      btnAll.className = 't-filter-btn px-5 py-3 rounded-2xl bg-white text-slate-700 hover:text-blue-600 border border-slate-200 font-semibold text-xs sm:text-sm shadow-2xs transition-all cursor-pointer';
 
       if (panelId === 'ssc') {
-        sscPanel.classList.remove('hidden');
-        hscPanel.classList.add('hidden');
-        btnSsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2';
+        if (sscPanel) sscPanel.classList.remove('hidden');
+        if (hscPanel) hscPanel.classList.add('hidden');
+        if (allPanel) allPanel.classList.add('hidden');
+        btnSsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer';
       } else if (panelId === 'hsc') {
-        sscPanel.classList.add('hidden');
-        hscPanel.classList.remove('hidden');
-        btnHsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2';
+        if (sscPanel) sscPanel.classList.add('hidden');
+        if (hscPanel) hscPanel.classList.remove('hidden');
+        if (allPanel) allPanel.classList.add('hidden');
+        btnHsc.className = 't-filter-btn px-6 py-3 rounded-2xl bg-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer';
       } else {
-        // all
-        sscPanel.classList.remove('hidden');
-        hscPanel.classList.remove('hidden');
-        btnAll.className = 't-filter-btn px-5 py-3 rounded-2xl bg-slate-900 text-white font-bold text-xs sm:text-sm shadow-md transition-all';
+        // all: single unified panel without online/offline or SSC/HSC duplicate barriers
+        if (sscPanel) sscPanel.classList.add('hidden');
+        if (hscPanel) hscPanel.classList.add('hidden');
+        if (allPanel) allPanel.classList.remove('hidden');
+        btnAll.className = 't-filter-btn px-5 py-3 rounded-2xl bg-slate-900 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer';
       }
     }
 
