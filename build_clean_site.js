@@ -7529,6 +7529,19 @@ const html = `<!DOCTYPE html>
           }, 150);
         }
       }
+
+      // Purge orphaned or old test orders from earlier sessions
+      ['ssc_math', 'ssc_english', 'ei'].forEach(c => {
+        try {
+          const oStr = localStorage.getItem('insight_order_' + c);
+          if (oStr) {
+            const ord = JSON.parse(oStr);
+            if (ord && (ord.id === '#ORD-855414' || ord.id === 'ORD-855414' || ord.trxId === 'HGNH65416YH' || (ord.senderNumber && ord.senderNumber.includes('01748470620')))) {
+              localStorage.removeItem('insight_order_' + c);
+            }
+          }
+        } catch (e) {}
+      });
     } catch(e) {}
 
     function updateWatermarkEmail(email) {
@@ -8097,11 +8110,16 @@ const html = `<!DOCTYPE html>
         currentUser = {
           name: displayName,
           email: userEmail,
-          phone: '01748470620',
+          phone: '',
           role: 'স্টুডেন্ট'
         };
         try {
           localStorage.setItem('insight_student_lead', JSON.stringify(currentUser));
+          // Clear any stale demo orders from browser so fresh student starts completely clean!
+          ['ssc_math', 'ssc_english', 'ei'].forEach(c => {
+            localStorage.removeItem('insight_order_' + c);
+            localStorage.removeItem('insight_enrolled_' + c);
+          });
           let regUsers = [];
           try { regUsers = JSON.parse(localStorage.getItem('ia_registered_students') || '[]'); } catch (e) { regUsers = []; }
           const existingIdx = regUsers.findIndex(u => (u.email && u.email.toLowerCase() === userEmail.toLowerCase()) || (u.name && u.name.toLowerCase() === displayName.toLowerCase()));
@@ -8113,11 +8131,16 @@ const html = `<!DOCTYPE html>
           localStorage.setItem('ia_registered_students', JSON.stringify(regUsers));
         } catch (e) {}
 
+        // Fresh registration: do NOT run stale post-login actions!
+        pendingPostLoginAction = null;
+
         if (typeof registerActiveDeviceSession === 'function') registerActiveDeviceSession(currentUser);
         if (typeof updateWatermarkEmail === 'function') updateWatermarkEmail(currentUser.email);
         showToast('অভিনন্দন ' + displayName + '! আপনার অ্যাকাউন্ট তৈরি সফল হয়েছে 🎉');
         updateNavUser(currentUser);
-        executePostLoginAction();
+        setTimeout(() => {
+          navigateTo('home');
+        }, 900);
       }
     }
 
@@ -8201,11 +8224,13 @@ const html = `<!DOCTYPE html>
     }
 
     function handleNavLoginClick() {
+      pendingPostLoginAction = null;
       navigateTo('login');
       switchAuthMode('login');
     }
 
     function logoutUser() {
+      pendingPostLoginAction = null;
       if (currentUser) {
         try {
           const raw = localStorage.getItem('ia_active_device_session');
@@ -8942,22 +8967,50 @@ const html = `<!DOCTYPE html>
     function openOnlineStudentInfoModal(courseType) {
       currentEnrollingCourse = courseType || currentEnrollingCourse || 'ssc_math';
 
-      // 1. If already approved & enrolled, go to dashboard
-      if (localStorage.getItem('insight_enrolled_' + currentEnrollingCourse)) {
-        if (currentEnrollingCourse === 'ssc_math') switchSSCMathView('dashboard');
-        else if (currentEnrollingCourse === 'ssc_english') switchSSCEnglishView('dashboard');
-        showToast('স্বাগতম! আপনি ইতিমধ্যেই এই কোর্সে অ্যাক্সেস পেয়েছেন।', 'success');
-        return;
+      // Helper: check if order/enrollment actually belongs to current user
+      function belongsToCurrentStudent(studentData) {
+        if (!currentUser || !studentData) return false;
+        const curEmail = (currentUser.email || '').toLowerCase().trim();
+        const curName = (currentUser.name || '').toLowerCase().trim();
+        const curPhone = (currentUser.phone || '').trim();
+        const sEmail = (studentData.email || '').toLowerCase().trim();
+        const sName = (studentData.name || '').toLowerCase().trim();
+        const sPhone = (studentData.phone || '').trim();
+
+        if (curEmail && sEmail && curEmail === sEmail) return true;
+        if (curName && sName && curName === sName) return true;
+        if (curPhone && sPhone && curPhone === sPhone && !curPhone.includes('01748470620')) return true;
+        return false;
       }
 
-      // 2. If pending verification, show pending modal with exact 24hr notice
+      // 1. If already approved & enrolled, verify ownership
+      const enrolledStr = localStorage.getItem('insight_enrolled_' + currentEnrollingCourse);
+      if (enrolledStr) {
+        try {
+          const enr = JSON.parse(enrolledStr);
+          if (belongsToCurrentStudent(enr)) {
+            if (currentEnrollingCourse === 'ssc_math') switchSSCMathView('dashboard');
+            else if (currentEnrollingCourse === 'ssc_english') switchSSCEnglishView('dashboard');
+            showToast('স্বাগতম! আপনি ইতিমধ্যেই এই কোর্সে অ্যাক্সেস পেয়েছেন।', 'success');
+            return;
+          } else {
+            localStorage.removeItem('insight_enrolled_' + currentEnrollingCourse);
+          }
+        } catch(e) {}
+      }
+
+      // 2. If pending verification, ONLY show if the order belongs to current user!
       const pendingOrderStr = localStorage.getItem('insight_order_' + currentEnrollingCourse);
       if (pendingOrderStr) {
         try {
           const ord = JSON.parse(pendingOrderStr);
           if (ord && ord.status === 'pending') {
-            openPaymentPendingModal(ord);
-            return;
+            if (belongsToCurrentStudent(ord.student)) {
+              openPaymentPendingModal(ord);
+              return;
+            } else {
+              localStorage.removeItem('insight_order_' + currentEnrollingCourse);
+            }
           }
         } catch(e) {}
       }
@@ -10709,7 +10762,20 @@ const html = `<!DOCTYPE html>
     }
 
     function updateCourseEnrollNotice() {
-      const mathEnrolled = !!localStorage.getItem('insight_enrolled_ssc_math');
+      let mathEnrolled = false;
+      try {
+        const raw = localStorage.getItem('insight_enrolled_ssc_math');
+        if (raw) {
+          const student = JSON.parse(raw);
+          if (currentUser && student && (
+            (student.email && currentUser.email && student.email.toLowerCase() === currentUser.email.toLowerCase()) ||
+            (student.name && currentUser.name && student.name.toLowerCase() === currentUser.name.toLowerCase())
+          )) {
+            mathEnrolled = true;
+          }
+        }
+      } catch (e) {}
+
       const mathNotice = document.getElementById('alreadyEnrolledMathNotice');
       if (mathNotice) {
         if (mathEnrolled) mathNotice.classList.remove('hidden');
