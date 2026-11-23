@@ -289,8 +289,8 @@ const html = `<!DOCTYPE html>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center gap-2 group">
-        <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-10 sm:h-12 w-auto object-contain" />
+      <a href="javascript:void(0)" onclick="navigateTo('home')" class="flex items-center gap-2 group py-1">
+        <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-12 sm:h-16 lg:h-[68px] w-auto object-contain transition-transform duration-200 hover:scale-105" />
       </a>
 
       <!-- Desktop Navigation Links -->
@@ -2462,7 +2462,7 @@ const html = `<!DOCTYPE html>
 
         <!-- Center: Insight Academia Logo (User requirement: "just amader khetre amader logo hobe") -->
         <div class="text-center mb-3">
-          <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-12 sm:h-14 w-auto object-contain mx-auto" />
+          <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-14 sm:h-16 w-auto object-contain mx-auto" />
         </div>
 
         <!-- Headline & Subtitle -->
@@ -2810,7 +2810,7 @@ const html = `<!DOCTYPE html>
         <!-- Brand & Logo -->
         <div class="h-16 px-5 border-b border-emerald-200/70 flex items-center justify-between bg-white/60">
           <div class="flex items-center gap-2.5">
-            <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-9 w-auto object-contain" />
+            <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-11 w-auto object-contain" />
           </div>
           <button type="button" onclick="closeAdminSidebar()" class="md:hidden p-1.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-emerald-100/70 transition text-base font-bold cursor-pointer" title="মেনু বন্ধ করুন">✕</button>
         </div>
@@ -5201,7 +5201,7 @@ const html = `<!DOCTYPE html>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-slate-100">
         <!-- Col 1: Brand -->
         <div class="md:col-span-2">
-          <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-9 w-auto object-contain mb-3" />
+          <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-12 sm:h-14 w-auto object-contain mb-3" />
           <p class="text-xs text-slate-500 max-w-sm leading-relaxed">
             ইনসাইট একাডেমিয়া — সহজ শেখা, সেরা প্রস্তুতি। দীর্ঘ ১১+ বছর অফলাইন এবং ২+ বছর অনলাইন অভিজ্ঞতা নিয়ে শিক্ষার্থীদের আস্থার প্রতীক।
           </p>
@@ -5697,7 +5697,7 @@ const html = `<!DOCTYPE html>
 
       <!-- Logo Header -->
       <div class="flex justify-center mb-2.5">
-        <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-10 sm:h-11 w-auto object-contain" />
+        <img src="data:image/png;base64,${logoB64}" alt="Insight Academia" class="h-12 sm:h-14 w-auto object-contain" />
       </div>
 
       <!-- Welcome Headings -->
