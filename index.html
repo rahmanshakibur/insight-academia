@@ -8157,7 +8157,6 @@
             '<div class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">👤</div>' +
             '<span class="max-w-[120px] sm:max-w-[160px] truncate" title="' + user.name + '">' + user.name + '</span>' +
             '</div>' +
-            '<button type="button" onclick="simulateSecondDeviceLogin()" class="hidden md:inline-flex items-center gap-1 text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1.5 rounded-xl transition cursor-pointer shadow-2xs" title="একই একাউন্টে অন্য ডিভাইসের লগইন অনুকরণ করুন">📱 ২য় ডিভাইস টেস্ট</button>' +
             '<button type="button" onclick="logoutUser()" id="nav-logout-btn" class="bg-red-600 hover:bg-red-700 active:scale-95 text-white text-xs sm:text-sm font-extrabold px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-sm hover:shadow-md transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer group" title="লগআউট">' +
             '<svg class="w-4 h-4 text-white shrink-0 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
             '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>' +
@@ -8170,7 +8169,6 @@
         if (mSlot) {
           mSlot.innerHTML = '<div class="flex items-center gap-1.5">' +
             '<span class="text-xs font-bold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1 rounded-xl truncate max-w-[85px]">👤 ' + (user.name ? user.name.split(' ')[0] : 'স্টুডেন্ট') + '</span>' +
-            '<button type="button" onclick="simulateSecondDeviceLogin()" class="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-1 rounded-lg" title="২য় ডিভাইস টেস্ট">📱</button>' +
             '<button type="button" onclick="logoutUser()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-2 py-1 rounded-xl shadow-xs flex items-center gap-1">' +
             '<span>লগআউট</span>' +
             '</button>' +
