@@ -278,6 +278,68 @@ const html = `<!DOCTYPE html>
       z-index: 20 !important;
       transition: all 0.5s ease-in-out !important;
     }
+
+    /* Hourglass Sand / Silicon Trickle Animation */
+    @keyframes sandTrickle {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -24; }
+    }
+    .sand-stream {
+      stroke-dasharray: 4, 3;
+      animation: sandTrickle 0.4s linear infinite;
+    }
+    @keyframes fallGrain1 {
+      0% { transform: translateY(0); opacity: 0; }
+      20% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(22px); opacity: 0; }
+    }
+    @keyframes fallGrain2 {
+      0% { transform: translateY(0); opacity: 0; }
+      30% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(20px); opacity: 0; }
+    }
+    .grain-1 {
+      animation: fallGrain1 0.55s cubic-bezier(0.4, 0, 1, 1) infinite;
+    }
+    .grain-2 {
+      animation: fallGrain2 0.7s cubic-bezier(0.4, 0, 1, 1) infinite 0.2s;
+    }
+    .grain-3 {
+      animation: fallGrain1 0.6s cubic-bezier(0.4, 0, 1, 1) infinite 0.35s;
+    }
+    @keyframes bottomMoundPulse {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(1.08); }
+    }
+    .bottom-mound {
+      transform-origin: bottom center;
+      animation: bottomMoundPulse 2s ease-in-out infinite;
+    }
+    @keyframes topSandShift {
+      0%, 100% { transform: scaleY(1); opacity: 0.95; }
+      50% { transform: scaleY(0.96); opacity: 0.85; }
+    }
+    .top-sand {
+      transform-origin: top center;
+      animation: topSandShift 2.5s ease-in-out infinite;
+    }
+    @keyframes splashImpact {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .splash-point {
+      transform-origin: 32px 58.5px;
+      animation: splashImpact 0.7s ease-out infinite;
+    }
+    @keyframes hourglassPulseGlow {
+      0%, 100% { box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.8); }
+      50% { box-shadow: 0 14px 30px -4px rgba(245, 158, 11, 0.45), inset 0 2px 6px rgba(255, 255, 255, 0.95); }
+    }
+    .hourglass-glow-badge {
+      animation: hourglassPulseGlow 3s ease-in-out infinite;
+    }
   </style>
 </head>
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
@@ -2642,14 +2704,94 @@ const html = `<!DOCTYPE html>
     <div id="paymentPendingModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/75 backdrop-blur-xs opacity-0 pointer-events-none transition-all duration-300">
       <div id="paymentPendingModalBox" class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl scale-95 transition-all duration-300 text-center">
         
-        <!-- Animated Clock / Hourglass Icon -->
-        <div class="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-3.5 text-3xl shadow-xs">
-          ⏳
-        </div>
+        <!-- Large Animated Vintage Brass Hourglass with Falling Silicon/Sand Stream -->
+        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-b from-amber-50 via-orange-50/70 to-amber-100/90 border-2 border-amber-300/80 hourglass-glow-badge flex items-center justify-center mx-auto mb-4 select-none relative overflow-hidden">
+          <svg width="68" height="88" viewBox="0 0 64 84" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-sm">
+            <defs>
+              <linearGradient id="hgBrassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#92400E"/>
+                <stop offset="25%" stop-color="#D97706"/>
+                <stop offset="50%" stop-color="#FCD34D"/>
+                <stop offset="75%" stop-color="#B45309"/>
+                <stop offset="100%" stop-color="#78350F"/>
+              </linearGradient>
+              <linearGradient id="hgPillarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#78350F"/>
+                <stop offset="40%" stop-color="#FDE68A"/>
+                <stop offset="70%" stop-color="#D97706"/>
+                <stop offset="100%" stop-color="#92400E"/>
+              </linearGradient>
+              <linearGradient id="hgSandGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FDE68A"/>
+                <stop offset="40%" stop-color="#F59E0B"/>
+                <stop offset="100%" stop-color="#D97706"/>
+              </linearGradient>
+              <linearGradient id="hgGlassReflection" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6"/>
+                <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="hgGlassTint" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#E0F2FE" stop-opacity="0.5"/>
+                <stop offset="50%" stop-color="#F0F9FF" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#BAE6FD" stop-opacity="0.5"/>
+              </linearGradient>
+            </defs>
 
-        <span class="inline-block text-[11px] font-extrabold uppercase px-3 py-1 rounded-full bg-amber-100 text-amber-800 tracking-wider mb-2">
-          যাচাই প্রক্রিয়াধীন • Pending
-        </span>
+            <!-- Top Plate & Cap -->
+            <rect x="10" y="4" width="44" height="6" rx="3" fill="url(#hgBrassGrad)" stroke="#78350F" stroke-width="0.75"/>
+            <rect x="16" y="10" width="32" height="2.5" rx="1.25" fill="#92400E"/>
+
+            <!-- Bottom Plate & Cap -->
+            <rect x="16" y="71.5" width="32" height="2.5" rx="1.25" fill="#92400E"/>
+            <rect x="10" y="74" width="44" height="6" rx="3" fill="url(#hgBrassGrad)" stroke="#78350F" stroke-width="0.75"/>
+
+            <!-- Left & Right Brass Pillars -->
+            <rect x="12" y="10" width="3.5" height="64" rx="1.75" fill="url(#hgPillarGrad)" stroke="#78350F" stroke-width="0.5"/>
+            <rect x="48.5" y="10" width="3.5" height="64" rx="1.75" fill="url(#hgPillarGrad)" stroke="#78350F" stroke-width="0.5"/>
+
+            <!-- Glass Bulb Body -->
+            <path d="M18 12.5 C18 26, 28 35, 30.5 42 C28 49, 18 58, 18 71.5 L46 71.5 C46 58, 36 49, 33.5 42 C36 35, 46 26, 46 12.5 Z" 
+                  fill="url(#hgGlassTint)" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"/>
+
+            <!-- TOP BULB: Sand Draining -->
+            <g class="top-sand">
+              <path d="M19.5 22 C19.5 30, 28 36, 31 41.5 L33 41.5 C36 36, 44.5 30, 44.5 22 C40 24, 24 24, 19.5 22 Z" 
+                    fill="url(#hgSandGrad)"/>
+              <ellipse cx="32" cy="22" rx="12.5" ry="3.5" fill="#FDE68A" opacity="0.9"/>
+              <ellipse cx="32" cy="22.5" rx="9" ry="2" fill="#FEF3C7"/>
+            </g>
+
+            <!-- CENTER TRICKLE STREAM: Flowing Sand / Silicon Particles -->
+            <line x1="32" y1="41" x2="32" y2="60" stroke="#F59E0B" stroke-width="1.8" stroke-linecap="round" class="sand-stream"/>
+            <line x1="32" y1="41" x2="32" y2="60" stroke="#FEF3C7" stroke-width="0.7" stroke-linecap="round"/>
+
+            <!-- Falling Sand Particles -->
+            <circle cx="32" cy="42" r="1.1" fill="#FDE68A" class="grain-1"/>
+            <circle cx="31.8" cy="45" r="0.9" fill="#D97706" class="grain-2"/>
+            <circle cx="32.2" cy="43" r="1" fill="#FEF3C7" class="grain-3"/>
+
+            <!-- Impact Ripple at bottom apex -->
+            <ellipse cx="32" cy="58.5" rx="3" ry="1.2" fill="#FDE68A" class="splash-point"/>
+
+            <!-- BOTTOM BULB: Rising Sand Mound -->
+            <g class="bottom-mound">
+              <path d="M20 71.5 C20 68, 25 64, 32 58 C39 64, 44 68, 44 71.5 Z" 
+                    fill="url(#hgSandGrad)"/>
+              <ellipse cx="32" cy="59" rx="3" ry="1.2" fill="#FEF3C7"/>
+              <path d="M22 71.5 C24 67, 40 67, 42 71.5 Z" fill="#D97706" opacity="0.4"/>
+            </g>
+
+            <!-- Glass Sheen Highlights -->
+            <path d="M21 16 C20 22, 23 28, 26 33" stroke="url(#hgGlassReflection)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M26 51 C22 56, 20 62, 21 68" stroke="url(#hgGlassReflection)" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            <path d="M43 16 C44 22, 42 28, 38 33" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+            <path d="M38 51 C42 56, 44 62, 43 68" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round" fill="none"/>
+
+            <!-- Center Waist Ring -->
+            <rect x="29" y="41" width="6" height="2" rx="1" fill="#92400E" stroke="#FDE68A" stroke-width="0.5"/>
+          </svg>
+        </div>
 
         <h3 class="text-lg sm:text-xl font-black text-slate-900 mb-2">
           পেমেন্ট রিকোয়েস্ট সফলভাবে জমা হয়েছে!
