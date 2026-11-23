@@ -2801,8 +2801,11 @@ const html = `<!DOCTYPE html>
     <!-- ============================================================== -->
     <div id="adminOrdersModal" class="fixed inset-0 z-50 bg-[#0f172a]/80 backdrop-blur-md flex flex-col md:flex-row overflow-hidden opacity-0 pointer-events-none transition-all duration-300">
       
-      <!-- LEFT SIDEBAR: Deep Navy Blue Theme (User requested: "left side er bar ta tumi blue er moddhe dio") -->
-      <aside id="adminSidebar" class="w-full md:w-64 bg-[#edf9f0] border-r border-emerald-200/80 flex flex-col shrink-0 text-slate-800 z-30 transition-all duration-300">
+      <!-- Mobile Backdrop Overlay for Admin Sidebar Drawer -->
+      <div id="adminSidebarBackdrop" onclick="closeAdminSidebar()" class="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"></div>
+
+      <!-- LEFT SIDEBAR: Off-canvas Drawer on Mobile, Fixed Left Column on Desktop -->
+      <aside id="adminSidebar" class="fixed md:static inset-y-0 left-0 z-50 w-72 max-w-[85vw] md:w-64 bg-[#edf9f0] border-r border-emerald-200/80 flex flex-col shrink-0 text-slate-800 transition-transform duration-300 ease-in-out -translate-x-full md:translate-x-0 shadow-2xl md:shadow-none h-full">
         
         <!-- Brand & Logo -->
         <div class="h-16 px-5 border-b border-emerald-200/70 flex items-center justify-between bg-white/60">
@@ -2817,7 +2820,7 @@ const html = `<!DOCTYPE html>
               
             </div>
           </div>
-          <button type="button" onclick="closeAdminPanel()" class="md:hidden text-slate-400 hover:text-slate-800 text-lg cursor-pointer">✕</button>
+          <button type="button" onclick="closeAdminSidebar()" class="md:hidden p-1.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-emerald-100/70 transition text-base font-bold cursor-pointer" title="মেনু বন্ধ করুন">✕</button>
         </div>
 
         <!-- Admin Profile -->
@@ -2897,13 +2900,14 @@ const html = `<!DOCTYPE html>
         
         <!-- TOP HEADER BAR -->
         <header class="h-16 px-4 sm:px-6 bg-white border-b border-slate-200/80 flex items-center justify-between shrink-0 z-20">
-          <div class="flex items-center gap-3">
-            <button type="button" onclick="toggleAdminSidebar()" class="md:hidden p-2 rounded-xl text-slate-500 hover:bg-slate-100 cursor-pointer">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <!-- Mobile 3-Line Menu Button (Toggles Sidebar Drawer) -->
+            <button type="button" onclick="openAdminSidebar()" class="md:hidden p-2 rounded-xl text-slate-700 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 transition flex items-center justify-center cursor-pointer shadow-2xs active:scale-95 shrink-0" title="মেনু খুলুন (Sidebar Drawer)">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2 min-w-0">
               <span class="text-xs font-semibold text-slate-400 hidden sm:inline">Pages /</span>
-              <span id="adminHeaderBreadcrumb" class="text-xs sm:text-sm font-black text-slate-900">Analytics Dashboard</span>
+              <span id="adminHeaderBreadcrumb" class="text-xs sm:text-sm font-black text-slate-900 truncate">Analytics Dashboard</span>
             </div>
           </div>
 
@@ -9816,15 +9820,46 @@ const html = `<!DOCTYPE html>
       updateAdminNotifBadge();
     }
 
+    function openAdminSidebar() {
+      const sidebar = document.getElementById('adminSidebar');
+      const backdrop = document.getElementById('adminSidebarBackdrop');
+      if (sidebar) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+      }
+      if (backdrop) {
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+      }
+    }
+
+    function closeAdminSidebar() {
+      const sidebar = document.getElementById('adminSidebar');
+      const backdrop = document.getElementById('adminSidebarBackdrop');
+      if (sidebar) {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+      }
+      if (backdrop) {
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+      }
+    }
+
     function toggleAdminSidebar() {
       const sidebar = document.getElementById('adminSidebar');
-      if (sidebar) sidebar.classList.toggle('hidden');
+      if (sidebar && sidebar.classList.contains('translate-x-0')) {
+        closeAdminSidebar();
+      } else {
+        openAdminSidebar();
+      }
     }
 
     function showRealAdminPanel() {
       const modal = document.getElementById('adminOrdersModal');
       if (!modal) return;
 
+      closeAdminSidebar();
       ensureInitialAdminOrders();
       loadAdminStudents();
       modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -9837,6 +9872,7 @@ const html = `<!DOCTYPE html>
       if (modal) {
         modal.classList.add('opacity-0', 'pointer-events-none');
       }
+      closeAdminSidebar();
     }
 
     function adminLogout() {
@@ -9891,6 +9927,11 @@ const html = `<!DOCTYPE html>
       else if (tab === 'previous') renderPreviousOrders();
       else if (tab === 'deleted') renderDeletedOrders();
       else if (tab === 'students') renderAdminStudents();
+
+      // On mobile screens, automatically close the off-canvas drawer once tab is selected
+      if (typeof window !== 'undefined' && window.innerWidth < 768) {
+        closeAdminSidebar();
+      }
 
       updateAdminNotifBadge();
     }
