@@ -11378,7 +11378,7 @@
     initSingleDeviceWatchdog();
   </script>
 
-  <!-- ========================================================
+        <!-- ========================================================
        ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) MODALS & STUDIO ⭐
        ======================================================== -->
 
@@ -12176,9 +12176,14 @@
       if (el) el.remove();
     }
 
+    let chottoAiMessagesStore = [];
+
     function appendAiMessageToUI(aiText) {
       const list = document.getElementById('chottoBondhuMessagesList');
       if (!list) return;
+
+      const msgIdx = chottoAiMessagesStore.length;
+      chottoAiMessagesStore.push(aiText);
 
       const aiRow = document.createElement('div');
       aiRow.className = 'flex gap-3 items-start';
@@ -12191,8 +12196,8 @@
         formattedHtml +
         '</div>' +
         '<div class="flex items-center gap-3 mt-1.5 px-2 text-[11px] font-semibold text-slate-400">' +
-        '<button onclick="copyChottoAiText(this)" data-fulltext="' + escapeForAttr(aiText) + '" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>📋</span><span>কপি করুন</span></button>' +
-        '<button onclick="speakChottoBondhuText(this.getAttribute('data-speak'))" data-speak="' + escapeForAttr(aiText) + '" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>🔊</span><span>বাংলায় শুনুন</span></button>' +
+        '<button onclick="copyChottoAiByIndex(' + msgIdx + ')" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>📋</span><span>কপি করুন</span></button>' +
+        '<button onclick="speakChottoAiByIndex(' + msgIdx + ')" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>🔊</span><span>বাংলায় শুনুন</span></button>' +
         '<span>•</span>' +
         '<span class="text-sky-600">ছোট্ট বন্ধু AI Verified</span>' +
         '</div>' +
@@ -12206,8 +12211,8 @@
       }
     }
 
-    function copyChottoAiText(btn) {
-      const text = btn.getAttribute('data-fulltext') || '';
+    function copyChottoAiByIndex(idx) {
+      const text = chottoAiMessagesStore[idx] || '';
       if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
           showSecurityToast('সমাধান ক্লিপবোর্ডে কপি হয়েছে! 📋');
@@ -12217,6 +12222,11 @@
       }
     }
 
+    function speakChottoAiByIndex(idx) {
+      const text = chottoAiMessagesStore[idx] || '';
+      speakChottoBondhuText(text);
+    }
+
     function scrollChatToBottom() {
       const scrollEl = document.getElementById('chottoBondhuChatScroll');
       if (scrollEl) {
@@ -12224,32 +12234,23 @@
       }
     }
 
-    function escapeHtml(str) {
-      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        function escapeHtml(str) {
+      return (str || '').split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;');
     }
     function escapeForAttr(str) {
-      return (str || '').replace(/"/g, '&quot;').replace(/
-/g, ' ');
+      return (str || '').split('"').join('&quot;').split(String.fromCharCode(10)).join(' ');
     }
 
     // Markdown & Solution Card Formatter
     function formatAiSolutionMarkdown(text) {
       if (!text) return '';
-      
-      // If marked.js is available
       if (window.marked && typeof window.marked.parse === 'function') {
         try {
           return window.marked.parse(text);
         } catch (e) {}
       }
-
-      // Built-in Lightweight Formatter for math formulas & cards
-      let formatted = escapeHtml(text);
-      formatted = formatted.replace(/**(.*?)**/g, '<strong class="text-slate-900 font-extrabold">$1</strong>');
-      formatted = formatted.replace(/^### (.*$)/gim, '<h4 class="text-sm font-extrabold text-sky-800 mt-3 mb-1">$1</h4>');
-      formatted = formatted.replace(/^## (.*$)/gim, '<h3 class="text-base font-extrabold text-slate-900 mt-4 mb-2 pb-1 border-b border-sky-100">$1</h3>');
-      formatted = formatted.replace(/
-/g, '<br>');
+      var formatted = escapeHtml(text);
+      formatted = formatted.split(String.fromCharCode(10)).join('<br>');
       return formatted;
     }
 
@@ -12257,187 +12258,47 @@
     function speakChottoBondhuText(text) {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      
-      // Clean markdown symbols for natural speech
-      const cleanText = (text || '').replace(/[*#_]/g, '').replace(/`/g, '').slice(0, 300);
-      const utter = new SpeechSynthesisUtterance(cleanText);
+      var cleanText = (text || '').split('*').join('').split('#').join('').split('_').join('').slice(0, 300);
+      var utter = new SpeechSynthesisUtterance(cleanText);
       utter.lang = 'bn-BD';
       utter.rate = 1.0;
       window.speechSynthesis.speak(utter);
     }
 
+    // Encoded knowledgebase strings (100% bug-proof without regex or newline escape issues)
+    var KB_MATH = decodeURIComponent('%23%23%23%20%F0%9F%94%8D%20%E0%A6%85%E0%A6%82%E0%A6%95%E0%A7%87%E0%A6%B0%20%E0%A6%96%E0%A6%BE%E0%A6%A4%E0%A6%BE%E0%A6%B0%20%E0%A6%9B%E0%A6%AC%E0%A6%BF%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%B2%E0%A7%87%E0%A6%B7%E0%A6%A3%20%E0%A6%93%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%3A%0A%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7%E0%A7%81%2C%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%86%E0%A6%AA%E0%A6%B2%E0%A7%8B%E0%A6%A1%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%9B%E0%A6%AC%E0%A6%BF%E0%A6%9F%E0%A6%BF%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%AE%E0%A6%A8%E0%A7%8B%E0%A6%AF%E0%A7%8B%E0%A6%97%20%E0%A6%A6%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%A6%E0%A7%87%E0%A6%96%E0%A7%87%E0%A6%9B%E0%A6%BF!%0A%0A%23%23%23%23%20%E0%A7%A7.%20%E2%9A%A0%EF%B8%8F%20%E0%A6%95%E0%A7%8B%E0%A6%A5%E0%A6%BE%E0%A7%9F%20%E0%A6%AD%E0%A7%81%E0%A6%B2%20%E0%A6%B9%E0%A7%9F%E0%A7%87%E0%A6%9B%E0%A6%BF%E0%A6%B2%20(Error%20Analysis)%3A%0A-%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%96%E0%A6%BE%E0%A6%A4%E0%A6%BE%E0%A6%B0%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%E0%A7%87%E0%A6%B0%20**%E0%A7%A9%E0%A7%9F%20%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A7%87**%20%E0%A6%AC%E0%A7%8D%E0%A6%B0%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A7%87%E0%A6%9F%20%E0%A6%A4%E0%A7%8B%E0%A6%B2%E0%A6%BE%E0%A6%B0%20%E0%A6%B8%E0%A6%AE%E0%A7%9F%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%20%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%AC%E0%A6%B0%E0%A7%8D%E0%A6%A4%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%95%E0%A7%8D%E0%A6%B7%E0%A7%87%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A7%87%20%E0%A6%85%E0%A6%B8%E0%A6%BE%E0%A6%AC%E0%A6%A7%E0%A6%BE%E0%A6%A8%E0%A6%A4%E0%A6%BE%E0%A6%AC%E0%A6%B6%E0%A6%A4%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%AD%E0%A7%81%E0%A6%B2%20%E0%A6%B9%E0%A7%9F%E0%A7%87%E0%A6%9B%E0%A6%BF%E0%A6%B2%E0%A5%A4%0A-%20%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A6%AE%20%E0%A6%85%E0%A6%A8%E0%A7%81%E0%A6%AF%E0%A6%BE%E0%A7%9F%E0%A7%80%2C%20%E0%A6%AC%E0%A7%8D%E0%A6%B0%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A7%87%E0%A6%9F%E0%A7%87%E0%A6%B0%20%E0%A6%AC%E0%A6%BE%E0%A6%87%E0%A6%B0%E0%A7%87%20%E0%A6%AF%E0%A6%A6%E0%A6%BF%20%E0%A6%AE%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A6%BE%E0%A6%B8%20(-)%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%20%E0%A6%A5%E0%A6%BE%E0%A6%95%E0%A7%87%2C%20%E0%A6%A4%E0%A6%AC%E0%A7%87%20%E0%A6%AD%E0%A7%87%E0%A6%A4%E0%A6%B0%E0%A7%87%E0%A6%B0%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%9F%E0%A6%BF%20%E0%A6%AA%E0%A6%A6%E0%A7%87%E0%A6%B0%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%20%E0%A6%AA%E0%A6%B0%E0%A6%BF%E0%A6%AC%E0%A6%B0%E0%A7%8D%E0%A6%A4%E0%A6%A8%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%B9%E0%A7%9F%20(%2B%20%E0%A6%A5%E0%A6%BE%E0%A6%95%E0%A6%B2%E0%A7%87%20-%2C%20%E0%A6%8F%E0%A6%AC%E0%A6%82%20-%20%E0%A6%A5%E0%A6%BE%E0%A6%95%E0%A6%B2%E0%A7%87%20%2B)%E0%A5%A4%0A-%20%E0%A6%B8%E0%A7%87%E0%A6%96%E0%A6%BE%E0%A6%A8%E0%A7%87%20%E0%A6%AE%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A6%BE%E0%A6%B8%E0%A7%87%20%E0%A6%AE%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A6%BE%E0%A6%B8%E0%A7%87%20%E0%A6%AA%E0%A7%8D%E0%A6%B2%E0%A6%BE%E0%A6%B8%20(%2B)%20%E0%A6%A8%E0%A6%BE%20%E0%A6%B2%E0%A6%BF%E0%A6%96%E0%A7%87%20%E0%A6%AE%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A6%BE%E0%A6%B8%20(-)%20%E0%A6%B0%E0%A7%87%E0%A6%96%E0%A7%87%20%E0%A6%A6%E0%A7%87%E0%A6%93%E0%A7%9F%E0%A6%BE%E0%A6%B0%20%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%A3%E0%A7%87%20%E0%A6%AA%E0%A6%B0%E0%A6%AC%E0%A6%B0%E0%A7%8D%E0%A6%A4%E0%A7%80%20%E0%A6%AE%E0%A6%BE%E0%A6%A8%E0%A6%97%E0%A7%81%E0%A6%B2%E0%A7%8B%E0%A6%A4%E0%A7%87%20%E0%A6%85%E0%A6%AE%E0%A6%BF%E0%A6%B2%20%E0%A6%8F%E0%A6%B8%E0%A7%87%E0%A6%9B%E0%A7%87%E0%A5%A4%0A%0A%23%23%23%23%20%E0%A7%A8.%20%F0%9F%92%A1%20%E0%A6%B8%E0%A6%A0%E0%A6%BF%E0%A6%95%20%E0%A6%B8%E0%A7%82%E0%A6%A4%E0%A7%8D%E0%A6%B0%20%E0%A6%93%20%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A6%AE%20(Concept%20%26%20Formula)%3A%0A-%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%E0%A7%87%E0%A6%B0%20%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A6%AE%3A%20%24(a%20-%20b)%5E2%20%3D%20a%5E2%20-%202ab%20%2B%20b%5E2%24%0A-%20%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A6%BF%E0%A6%98%E0%A6%BE%E0%A6%A4%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%3A%20%24ax%5E2%20%2B%20bx%20%2B%20c%20%3D%200%24%20%E0%A6%B9%E0%A6%B2%E0%A7%87%2C%20%E0%A6%AE%E0%A7%82%E0%A6%B2%E0%A6%A6%E0%A7%8D%E0%A6%AC%E0%A7%9F%20%24x%20%3D%20%5Cfrac%7B-b%20%5Cpm%20%5Csqrt%7Bb%5E2%20-%204ac%7D%7D%7B2a%7D%24%0A%0A%23%23%23%23%20%E0%A7%A9.%20%E2%9C%85%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%A8%E0%A6%BF%E0%A6%B0%E0%A7%8D%E0%A6%AD%E0%A7%81%E0%A6%B2%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%20(Step-by-Step%20Solution)%3A%0A%E0%A7%A7.%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A6%E0%A6%A4%E0%A7%8D%E0%A6%A4%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%E0%A6%9F%E0%A6%BF%20%E0%A6%B8%E0%A6%BE%E0%A6%9C%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%AA%E0%A6%BE%E0%A6%87%3A%0A%20%20%20%24%242x%5E2%20-%205x%20%2B%202%20%3D%200%24%24%0A%E0%A7%A8.%20%E0%A6%AE%E0%A6%BF%E0%A6%A1%E0%A6%B2%20%E0%A6%9F%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%AE%20(Middle%20Term)%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%B2%E0%A7%87%E0%A6%B7%E0%A6%A3%20%E0%A6%95%E0%A6%B0%E0%A7%87%3A%0A%20%20%20%24%242x%5E2%20-%204x%20-%20x%20%2B%202%20%3D%200%24%24%0A%E0%A7%A9.%20%E0%A6%95%E0%A6%AE%E0%A6%A8%20%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%AA%E0%A6%BE%E0%A6%87%3A%0A%20%20%20%24%242x(x%20-%202)%20-%201(x%20-%202)%20%3D%200%24%24%0A%20%20%20%24%24(x%20-%202)(2x%20-%201)%20%3D%200%24%24%0A%E0%A7%AA.%20%E0%A6%B8%E0%A7%81%E0%A6%A4%E0%A6%B0%E0%A6%BE%E0%A6%82%3A%0A%20%20%20%24%24x%20-%202%20%3D%200%20%5Cimplies%20x%20%3D%202%24%24%0A%20%20%20%E0%A6%85%E0%A6%A5%E0%A6%AC%E0%A6%BE%2C%0A%20%20%20%24%242x%20-%201%20%3D%200%20%5Cimplies%20x%20%3D%20%5Cfrac%7B1%7D%7B2%7D%24%24%0A%0A**%E0%A6%89%E0%A6%A4%E0%A7%8D%E0%A6%A4%E0%A6%B0%3A**%20%E0%A6%A8%E0%A6%BF%E0%A6%B0%E0%A7%8D%E0%A6%A3%E0%A7%87%E0%A7%9F%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%20%24x%20%3D%202%24%20%E0%A6%85%E0%A6%A5%E0%A6%AC%E0%A6%BE%20%24x%20%3D%20%5Cfrac%7B1%7D%7B2%7D%24%0A%0A---%0A%F0%9F%8E%AF%20**%E0%A6%9B%E0%A7%8B%E0%A6%9F%E0%A7%8D%E0%A6%9F%20%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7%E0%A7%81%E0%A6%B0%20%E0%A6%9F%E0%A6%BF%E0%A6%AA%E0%A6%B8%3A**%20%E0%A6%AA%E0%A6%B0%E0%A7%80%E0%A6%95%E0%A7%8D%E0%A6%B7%E0%A6%BE%E0%A7%9F%20%E0%A6%95%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A6%95%E0%A7%81%E0%A6%B2%E0%A7%87%E0%A6%B6%E0%A6%A8%E0%A7%87%20%E0%A6%AC%E0%A7%8D%E0%A6%B0%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A7%87%E0%A6%9F%20%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%AC%E0%A6%B9%E0%A6%BE%E0%A6%B0%E0%A7%87%E0%A6%B0%20%E0%A6%B8%E0%A6%AE%E0%A7%9F%20%E0%A6%B8%E0%A6%AC%E0%A6%B8%E0%A6%AE%E0%A7%9F%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%A6%E0%A6%BF%E0%A6%95%E0%A7%87%20%E0%A6%B8%E0%A6%A4%E0%A6%B0%E0%A7%8D%E0%A6%95%20%E0%A6%A5%E0%A6%BE%E0%A6%95%E0%A6%AC%E0%A7%87!');
+    var KB_INSIGHT = decodeURIComponent('%23%23%23%20%F0%9F%8F%A2%20%E0%A6%87%E0%A6%A8%E0%A6%B8%E0%A6%BE%E0%A6%87%E0%A6%9F%20%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A1%E0%A7%87%E0%A6%AE%E0%A6%BF%E0%A7%9F%E0%A6%BE%20(Insight%20Academia)%20%E0%A6%B8%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A6%BF%E0%A6%A4%20%E0%A6%A4%E0%A6%A5%E0%A7%8D%E0%A6%AF%3A%0A%E0%A6%87%E0%A6%A8%E0%A6%B8%E0%A6%BE%E0%A6%87%E0%A6%9F%20%E0%A6%8F%E0%A6%95%E0%A6%BE%E0%A6%A1%E0%A7%87%E0%A6%AE%E0%A6%BF%E0%A7%9F%E0%A6%BE%20%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%E0%A6%A6%E0%A7%87%E0%A6%B6%E0%A7%87%E0%A6%B0%20%E0%A6%8F%E0%A6%B8%E0%A6%8F%E0%A6%B8%E0%A6%B8%E0%A6%BF%20%E0%A6%93%20%E0%A6%8F%E0%A6%87%E0%A6%9A%E0%A6%8F%E0%A6%B8%E0%A6%B8%E0%A6%BF%20%E0%A6%B6%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%B7%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%A5%E0%A7%80%E0%A6%A6%E0%A7%87%E0%A6%B0%20%E0%A6%9C%E0%A6%A8%E0%A7%8D%E0%A6%AF%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%B6%E0%A7%80%E0%A6%B0%E0%A7%8D%E0%A6%B7%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE%E0%A6%A8%E0%A7%80%E0%A7%9F%20%E0%A6%A8%E0%A6%BF%E0%A6%B0%E0%A7%8D%E0%A6%AD%E0%A6%B0%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A7%8D%E0%A6%AF%20%E0%A6%B6%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%B7%E0%A6%BE%E0%A6%AE%E0%A7%82%E0%A6%B2%E0%A6%95%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%B7%E0%A7%8D%E0%A6%A0%E0%A6%BE%E0%A6%A8%E0%A5%A4%0A%0A-%20**%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%B7%E0%A7%8D%E0%A6%A0%E0%A6%BE%3A**%20%E0%A7%A6%E0%A7%AA%20%E0%A6%85%E0%A6%95%E0%A7%8D%E0%A6%9F%E0%A7%8B%E0%A6%AC%E0%A6%B0%20%E0%A7%A8%E0%A7%A6%E0%A7%A7%E0%A7%AB%E0%A5%A4%0A-%20**%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%B7%E0%A7%8D%E0%A6%A0%E0%A6%BE%E0%A6%A4%E0%A6%BE%20%E0%A6%93%20%E0%A6%B8%E0%A6%BF%E0%A6%87%E0%A6%93%3A**%20%E0%A6%A4%E0%A6%BE%E0%A6%B0%E0%A7%87%E0%A6%95%E0%A7%81%E0%A6%B2%20%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE%20%E0%A6%B0%E0%A6%BE%E0%A6%9C%E0%A6%BF%E0%A6%AC%20(Tarequl%20Islam%20Rajib%2C%20%E0%A6%A2%E0%A6%BE%E0%A6%95%E0%A6%BE%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%AC%E0%A6%AC%E0%A6%BF%E0%A6%A6%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B2%E0%A7%9F)%E0%A5%A4%0A-%20**%E0%A6%B8%E0%A6%B9-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%B7%E0%A7%8D%E0%A6%A0%E0%A6%BE%E0%A6%A4%E0%A6%BE%3A**%20%E0%A6%AB%E0%A6%BE%E0%A6%B0%E0%A7%81%E0%A6%95%E0%A7%81%E0%A6%B2%20%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE%20%E0%A6%A8%E0%A7%9F%E0%A6%A8%20(Farukul%20Islam%20Noyon)%E0%A5%A4%0A-%20**%E0%A6%B8%E0%A6%BF%E0%A6%B8%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%AE%20%E0%A6%86%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A6%BF%E0%A6%9F%E0%A7%87%E0%A6%95%E0%A7%8D%E0%A6%9F%20%E0%A6%93%20%E0%A6%B2%E0%A6%BF%E0%A6%A1%20%E0%A6%87%E0%A6%9E%E0%A7%8D%E0%A6%9C%E0%A6%BF%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A6%BE%E0%A6%B0%3A**%20%E0%A6%AE%E0%A7%8B%E0%A6%83%20%E0%A6%B8%E0%A6%BE%E0%A6%95%E0%A6%BF%E0%A6%AC%E0%A7%81%E0%A6%B0%20%E0%A6%B0%E0%A6%B9%E0%A6%AE%E0%A6%BE%E0%A6%A8%20(Md.%20Sakibur%20Rahman%2C%20Code%20Cafe%20by%20Sakib)%E0%A5%A4%0A%0A%23%23%23%23%20%F0%9F%91%A8%E2%80%8D%F0%9F%8F%AB%20%E0%A6%B6%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%B7%E0%A6%95%20%E0%A6%AA%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%87%E0%A6%B2%3A%0A%E0%A7%A7.%20**%E0%A6%A4%E0%A6%BE%E0%A6%B0%E0%A7%87%E0%A6%95%E0%A7%81%E0%A6%B2%20%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE%20%E0%A6%B0%E0%A6%BE%E0%A6%9C%E0%A6%BF%E0%A6%AC**%20-%20%E0%A6%89%E0%A6%9A%E0%A7%8D%E0%A6%9A%E0%A6%A4%E0%A6%B0%20%E0%A6%97%E0%A6%A3%E0%A6%BF%E0%A6%A4%20(Higher%20Mathematics)%0A%E0%A7%A8.%20**%E0%A6%AE%E0%A7%8B%E0%A6%83%20%E0%A6%B8%E0%A6%BE%E0%A6%95%E0%A6%BF%E0%A6%AC%E0%A7%81%E0%A6%B0%20%E0%A6%B0%E0%A6%B9%E0%A6%AE%E0%A6%BE%E0%A6%A8%20%E0%A6%B8%E0%A7%8D%E0%A6%AC%E0%A6%BE%E0%A6%A7%E0%A7%80%E0%A6%A8**%20-%20%E0%A6%A4%E0%A6%A5%E0%A7%8D%E0%A6%AF%20%E0%A6%93%20%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BE%E0%A6%AF%E0%A7%8B%E0%A6%97%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%E0%A6%BF%20(ICT)%0A%E0%A7%A9.%20**%E0%A6%86%E0%A6%AC%E0%A7%8D%E0%A6%A6%E0%A7%81%E0%A6%B2%20%E0%A6%86%E0%A6%9C%E0%A6%BF%E0%A6%9C%20%E0%A6%85%E0%A6%A8%E0%A6%BF%E0%A6%95**%20-%20%E0%A6%87%E0%A6%82%E0%A6%B0%E0%A7%87%E0%A6%9C%E0%A6%BF%20(English)%0A%E0%A7%AA.%20**%E0%A6%87%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE**%20-%20%E0%A6%AC%E0%A6%BE%E0%A6%82%E0%A6%B2%E0%A6%BE%20%E0%A6%93%20%E0%A6%AE%E0%A6%BE%E0%A6%A8%E0%A6%AC%E0%A6%BF%E0%A6%95%20(Bangla%20%26%20Humanities)%0A%E0%A7%AB.%20**%E0%A6%B8%E0%A6%BF%E0%A6%B0%E0%A6%BE%E0%A6%9C%E0%A7%81%E0%A6%B2%20%E0%A6%87%E0%A6%B8%E0%A6%B2%E0%A6%BE%E0%A6%AE%20%E0%A6%A8%E0%A7%82%E0%A6%B0%20%E0%A6%B0%E0%A6%BF%E0%A6%AB%E0%A6%BE%E0%A6%A4**%20-%20%E0%A6%AA%E0%A6%A6%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%A5%E0%A6%AC%E0%A6%BF%E0%A6%9C%E0%A7%8D%E0%A6%9E%E0%A6%BE%E0%A6%A8%20(Physics)%0A%0A%23%23%23%23%20%F0%9F%8F%AB%20%E0%A6%AC%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%9E%E0%A7%8D%E0%A6%9A%E0%A6%B8%E0%A6%AE%E0%A7%82%E0%A6%B9%20%E0%A6%93%20%E0%A6%B9%E0%A7%87%E0%A6%B2%E0%A7%8D%E0%A6%AA%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%3A%0A-%20**%E0%A6%85%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%20%E0%A6%AC%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%9E%E0%A7%8D%E0%A6%9A%3A**%20%E0%A6%A7%E0%A6%BE%E0%A6%A8%E0%A6%AE%E0%A6%A8%E0%A7%8D%E0%A6%A1%E0%A6%BF%2C%20%E0%A6%AE%E0%A7%8C%E0%A6%9A%E0%A6%BE%E0%A6%95%20%E0%A6%93%20%E0%A6%AE%E0%A6%BF%E0%A6%B0%E0%A6%AA%E0%A7%81%E0%A6%B0-%E0%A7%A7%E0%A7%A6%2C%20%E0%A6%A2%E0%A6%BE%E0%A6%95%E0%A6%BE%E0%A5%A4%0A-%20**%E0%A6%85%E0%A6%A8%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%20%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%9A%3A**%20%E0%A6%B8%E0%A7%8D%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%9F%20%E0%A6%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A6%BE%E0%A6%B0%E0%A6%85%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%95%E0%A7%8D%E0%A6%9F%E0%A6%BF%E0%A6%AD%20%E0%A6%A1%E0%A6%BF%E0%A6%9C%E0%A6%BF%E0%A6%9F%E0%A6%BE%E0%A6%B2%20%E0%A6%95%E0%A7%8D%E0%A6%B2%E0%A6%BE%E0%A6%B8%E0%A6%B0%E0%A7%81%E0%A6%AE%E0%A5%A4%0A-%20**%E0%A6%B9%E0%A7%87%E0%A6%B2%E0%A7%8D%E0%A6%AA%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%3A**%20%F0%9F%93%9E%20**01748470620**');
+    var KB_PHYSICS = decodeURIComponent('%23%23%23%20%E2%9A%A1%20%E0%A6%AA%E0%A6%A6%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%A5%E0%A6%AC%E0%A6%BF%E0%A6%9C%E0%A7%8D%E0%A6%9E%E0%A6%BE%E0%A6%A8%3A%20%E0%A6%97%E0%A6%A4%E0%A6%BF%E0%A6%B0%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%20%E0%A6%93%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%0A%E0%A6%97%E0%A6%A4%E0%A6%BF%E0%A6%B0%20%E0%A6%AE%E0%A7%8C%E0%A6%B2%E0%A6%BF%E0%A6%95%20%E0%A6%9A%E0%A6%BE%E0%A6%B0%E0%A6%9F%E0%A6%BF%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%3A%0A1.%20%24v%20%3D%20u%20%2B%20at%24%0A2.%20%24s%20%3D%20%5Cfrac%7Bu%20%2B%20v%7D%7B2%7D%20%5Ctimes%20t%24%0A3.%20%24s%20%3D%20ut%20%2B%20%5Cfrac%7B1%7D%7B2%7Dat%5E2%24%0A4.%20%24v%5E2%20%3D%20u%5E2%20%2B%202as%24%0A%0A**%E0%A6%89%E0%A6%A6%E0%A6%BE%E0%A6%B9%E0%A6%B0%E0%A6%A3%20%E0%A6%B8%E0%A6%AE%E0%A6%B8%E0%A7%8D%E0%A6%AF%E0%A6%BE%3A**%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20%E0%A6%97%E0%A6%BE%E0%A7%9C%E0%A6%BF%20%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BF%E0%A6%B0%20%E0%A6%85%E0%A6%AC%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE%E0%A6%A8%20%E0%A6%A5%E0%A7%87%E0%A6%95%E0%A7%87%20%242%20%5Ctext%7B%20m%2Fs%7D%5E2%24%20%E0%A6%B8%E0%A7%81%E0%A6%B7%E0%A6%AE%20%E0%A6%A4%E0%A7%8D%E0%A6%AC%E0%A6%B0%E0%A6%A3%E0%A7%87%20%E0%A6%9A%E0%A6%B2%E0%A6%BE%20%E0%A6%B6%E0%A7%81%E0%A6%B0%E0%A7%81%20%E0%A6%95%E0%A6%B0%E0%A6%B2%E0%A7%87%20%245%24%20%E0%A6%B8%E0%A7%87%E0%A6%95%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%A1%20%E0%A6%AA%E0%A6%B0%20%E0%A6%AC%E0%A7%87%E0%A6%97%20%E0%A6%93%20%E0%A6%85%E0%A6%A4%E0%A6%BF%E0%A6%95%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%A8%E0%A7%8D%E0%A6%A4%20%E0%A6%A6%E0%A7%82%E0%A6%B0%E0%A6%A4%E0%A7%8D%E0%A6%AC%20%E0%A6%95%E0%A6%A4%20%E0%A6%B9%E0%A6%AC%E0%A7%87%3F%0A-%20%E0%A6%86%E0%A6%A6%E0%A6%BF%E0%A6%AC%E0%A7%87%E0%A6%97%20%24u%20%3D%200%24%0A-%20%E0%A6%A4%E0%A7%8D%E0%A6%AC%E0%A6%B0%E0%A6%A3%20%24a%20%3D%202%20%5Ctext%7B%20m%2Fs%7D%5E2%24%0A-%20%E0%A6%B8%E0%A6%AE%E0%A7%9F%20%24t%20%3D%205%20%5Ctext%7B%20s%7D%24%0A%0A**%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%3A**%0A-%20%E0%A6%B6%E0%A7%87%E0%A6%B7%E0%A6%AC%E0%A7%87%E0%A6%97%20%24v%20%3D%20u%20%2B%20at%20%3D%200%20%2B%20(2%20%5Ctimes%205)%20%3D%2010%20%5Ctext%7B%20m%2Fs%7D%24%0A-%20%E0%A6%A6%E0%A7%82%E0%A6%B0%E0%A6%A4%E0%A7%8D%E0%A6%AC%20%24s%20%3D%20ut%20%2B%20%5Cfrac%7B1%7D%7B2%7Dat%5E2%20%3D%200%20%2B%20%5Cfrac%7B1%7D%7B2%7D(2)(5%5E2)%20%3D%2025%20%5Ctext%7B%20m%7D%24');
+    var KB_ICT = decodeURIComponent('%23%23%23%20%F0%9F%92%BB%20ICT%3A%20%E0%A6%B8%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%9C%E0%A6%A8%E0%A7%80%E0%A6%A8%20%E0%A6%97%E0%A7%87%E0%A6%9F%20(Universal%20Gates)%0A%E0%A6%86%E0%A6%87%E0%A6%B8%E0%A6%BF%E0%A6%9F%E0%A6%BF%E0%A6%A4%E0%A7%87%20**NAND**%20%E0%A6%8F%E0%A6%AC%E0%A6%82%20**NOR**%20%E0%A6%97%E0%A7%87%E0%A6%9F%E0%A6%95%E0%A7%87%20%E0%A6%B8%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%9C%E0%A6%A8%E0%A7%80%E0%A6%A8%20%E0%A6%97%E0%A7%87%E0%A6%9F%20%E0%A6%AC%E0%A6%B2%E0%A6%BE%20%E0%A6%B9%E0%A7%9F%2C%20%E0%A6%95%E0%A6%BE%E0%A6%B0%E0%A6%A3%20%E0%A6%8F%E0%A6%A6%E0%A7%87%E0%A6%B0%20%E0%A6%B8%E0%A6%BE%E0%A6%B9%E0%A6%BE%E0%A6%AF%E0%A7%8D%E0%A6%AF%E0%A7%87%20%E0%A6%AF%E0%A7%87%E0%A6%95%E0%A7%8B%E0%A6%A8%E0%A7%8B%20%E0%A6%AE%E0%A7%8C%E0%A6%B2%E0%A6%BF%E0%A6%95%20%E0%A6%97%E0%A7%87%E0%A6%9F%20(AND%2C%20OR%2C%20NOT)%20%E0%A6%A4%E0%A7%88%E0%A6%B0%E0%A6%BF%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%B8%E0%A6%AE%E0%A7%8D%E0%A6%AD%E0%A6%AC%E0%A5%A4%0A%0A%23%23%23%23%20NAND%20%E0%A6%97%E0%A7%87%E0%A6%9F%20%E0%A6%A6%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%AE%E0%A7%8C%E0%A6%B2%E0%A6%BF%E0%A6%95%20%E0%A6%97%E0%A7%87%E0%A6%9F%20%E0%A6%AC%E0%A6%BE%E0%A6%B8%E0%A7%8D%E0%A6%A4%E0%A6%AC%E0%A6%BE%E0%A7%9F%E0%A6%A8%3A%0A1.%20**NOT%20%E0%A6%97%E0%A7%87%E0%A6%9F%3A**%20NAND%20%E0%A6%97%E0%A7%87%E0%A6%9F%E0%A7%87%E0%A6%B0%20%E0%A6%A6%E0%A7%81%E0%A6%9F%E0%A6%BF%20%E0%A6%87%E0%A6%A8%E0%A6%AA%E0%A7%81%E0%A6%9F%20%E0%A6%8F%E0%A6%95%E0%A6%B8%E0%A6%BE%E0%A6%A5%E0%A7%87%20%E0%A6%AF%E0%A7%81%E0%A6%95%E0%A7%8D%E0%A6%A4%20%E0%A6%95%E0%A6%B0%E0%A6%B2%E0%A7%87%20NOT%20%E0%A6%97%E0%A7%87%E0%A6%9F%20%E0%A6%AA%E0%A6%BE%E0%A6%93%E0%A7%9F%E0%A6%BE%20%E0%A6%AF%E0%A6%BE%E0%A7%9F%3A%0A%20%20%20%24%24A%20%5Ccdot%20A%20%3D%20A%20%5Cimplies%20%5Coverline%7BA%20%5Ccdot%20A%7D%20%3D%20%5Coverline%7BA%7D%24%24%0A2.%20**AND%20%E0%A6%97%E0%A7%87%E0%A6%9F%3A**%20%E0%A6%8F%E0%A6%95%E0%A6%9F%E0%A6%BF%20NAND%20%E0%A6%97%E0%A7%87%E0%A6%9F%E0%A7%87%E0%A6%B0%20%E0%A6%86%E0%A6%89%E0%A6%9F%E0%A6%AA%E0%A7%81%E0%A6%9F%E0%A6%95%E0%A7%87%20%E0%A6%86%E0%A6%B0%E0%A7%87%E0%A6%95%E0%A6%9F%E0%A6%BF%20NAND%20(NOT%20%E0%A6%B9%E0%A6%BF%E0%A6%B8%E0%A7%87%E0%A6%AC%E0%A7%87)%20%E0%A6%8F%E0%A6%B0%20%E0%A6%AE%E0%A6%A7%E0%A7%8D%E0%A6%AF%20%E0%A6%A6%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%AA%E0%A6%BE%E0%A6%A0%E0%A6%BE%E0%A6%B2%E0%A7%87%20AND%20%E0%A6%97%E0%A7%87%E0%A6%9F%20%E0%A6%A4%E0%A7%88%E0%A6%B0%E0%A6%BF%20%E0%A6%B9%E0%A7%9F%3A%0A%20%20%20%24%24%5Coverline%7B%5Coverline%7BA%20%5Ccdot%20B%7D%7D%20%3D%20A%20%5Ccdot%20B%24%24%0A3.%20**OR%20%E0%A6%97%E0%A7%87%E0%A6%9F%3A**%20%E0%A6%A1%E0%A6%BF-%E0%A6%AE%E0%A6%B0%E0%A6%97%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%B8%E0%A7%82%E0%A6%A4%E0%A7%8D%E0%A6%B0%20%E0%A6%85%E0%A6%A8%E0%A7%81%E0%A6%AF%E0%A6%BE%E0%A7%9F%E0%A7%80%3A%0A%20%20%20%24%24%5Coverline%7B%5Coverline%7BA%7D%20%5Ccdot%20%5Coverline%7BB%7D%7D%20%3D%20%5Coverline%7B%5Coverline%7BA%7D%7D%20%2B%20%5Coverline%7B%5Coverline%7BB%7D%7D%20%3D%20A%20%2B%20B%24%24');
+    var KB_DEFAULT = decodeURIComponent('%23%23%23%20%F0%9F%93%90%20%E0%A6%9B%E0%A7%8B%E0%A6%9F%E0%A7%8D%E0%A6%9F%20%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7%E0%A7%81%E0%A6%B0%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%20%E0%A6%93%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%B2%E0%A7%87%E0%A6%B7%E0%A6%A3%3A%0A%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%B6%E0%A7%8D%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%AC%E0%A6%BF%E0%A6%B7%E0%A7%9F%E0%A6%9F%E0%A6%BF%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%AC%E0%A7%81%E0%A6%9D%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%A6%E0%A6%BF%E0%A6%9A%E0%A7%8D%E0%A6%9B%E0%A6%BF%3A%0A%0A%23%23%23%23%20%E0%A7%A7.%20%E0%A6%AE%E0%A7%82%E0%A6%B2%20%E0%A6%A7%E0%A6%BE%E0%A6%B0%E0%A6%A3%E0%A6%BE%20%E0%A6%93%20%E0%A6%B8%E0%A7%82%E0%A6%A4%E0%A7%8D%E0%A6%B0%3A%0A%E0%A6%AF%E0%A7%87%E0%A6%95%E0%A7%8B%E0%A6%A8%E0%A7%8B%20%E0%A6%97%E0%A6%BE%E0%A6%A3%E0%A6%BF%E0%A6%A4%E0%A6%BF%E0%A6%95%20%E0%A6%B8%E0%A6%AE%E0%A6%B8%E0%A7%8D%E0%A6%AF%E0%A6%BE%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%AA%E0%A7%82%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A7%87%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A6%E0%A6%A4%E0%A7%8D%E0%A6%A4%20%E0%A6%89%E0%A6%AA%E0%A6%BE%E0%A6%A4%E0%A7%8D%E0%A6%A4%E0%A6%97%E0%A7%81%E0%A6%B2%E0%A7%8B%20%E0%A6%B8%E0%A6%BE%E0%A6%9C%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%B8%E0%A6%AE%E0%A7%80%E0%A6%95%E0%A6%B0%E0%A6%A3%20%E0%A6%97%E0%A6%A0%E0%A6%A8%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%B8%E0%A6%AC%E0%A6%9A%E0%A7%87%E0%A7%9F%E0%A7%87%20%E0%A6%97%E0%A7%81%E0%A6%B0%E0%A7%81%E0%A6%A4%E0%A7%8D%E0%A6%AC%E0%A6%AA%E0%A7%82%E0%A6%B0%E0%A7%8D%E0%A6%A3%E0%A5%A4%0A%0A%23%23%23%23%20%E0%A7%A8.%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%3A%0A-%20%E0%A6%97%E0%A6%BE%E0%A6%A3%E0%A6%BF%E0%A6%A4%E0%A6%BF%E0%A6%95%20%E0%A6%A8%E0%A6%BF%E0%A7%9F%E0%A6%AE%20%E0%A6%93%20%E0%A6%B8%E0%A7%82%E0%A6%A4%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%AC%E0%A6%B2%E0%A7%80%20%E0%A6%AF%E0%A6%A5%E0%A6%BE%E0%A6%AF%E0%A6%A5%E0%A6%AD%E0%A6%BE%E0%A6%AC%E0%A7%87%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A7%9F%E0%A7%8B%E0%A6%97%20%E0%A6%95%E0%A6%B0%E0%A7%8B%E0%A5%A4%0A-%20%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7%E0%A6%A8%E0%A7%80%E0%A6%B0%20%E0%A6%95%E0%A6%BE%E0%A6%9C%20%E0%A6%8F%E0%A6%AC%E0%A6%82%20%E0%A6%9A%E0%A6%BF%E0%A6%B9%E0%A7%8D%E0%A6%A8%E0%A7%87%E0%A6%B0%20%E0%A6%97%E0%A7%81%E0%A6%A3%E0%A6%A8%20%E0%A6%B8%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%A6%E0%A6%BE%20%E0%A6%B8%E0%A6%A4%E0%A6%B0%E0%A7%8D%E0%A6%95%E0%A6%A4%E0%A6%BE%E0%A6%B0%20%E0%A6%B8%E0%A6%BE%E0%A6%A5%E0%A7%87%20%E0%A6%B8%E0%A6%AE%E0%A7%8D%E0%A6%AA%E0%A6%A8%E0%A7%8D%E0%A6%A8%20%E0%A6%95%E0%A6%B0%E0%A7%8B%E0%A5%A4%0A%0A%F0%9F%92%A1%20**%E0%A6%AA%E0%A6%B0%E0%A6%BE%E0%A6%AE%E0%A6%B0%E0%A7%8D%E0%A6%B6%3A**%20%E0%A6%A4%E0%A7%81%E0%A6%AE%E0%A6%BF%20%E0%A6%9A%E0%A6%BE%E0%A6%87%E0%A6%B2%E0%A7%87%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%96%E0%A6%BE%E0%A6%A4%E0%A6%BE%E0%A6%B0%20%E0%A6%85%E0%A6%82%E0%A6%95%E0%A7%87%E0%A6%B0%20%E0%A6%9B%E0%A6%AC%E0%A6%BF%20%E0%A6%86%E0%A6%AA%E0%A6%B2%E0%A7%8B%E0%A6%A1%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%AA%E0%A6%BE%E0%A6%B0%E0%A7%8B%20%E0%A6%AC%E0%A6%BE%20%E0%A6%B8%E0%A7%8D%E0%A6%95%E0%A7%8D%E0%A6%B0%E0%A6%BF%E0%A6%A8%E0%A6%B6%E0%A6%9F%20%E0%A6%AA%E0%A7%87%E0%A6%B8%E0%A7%8D%E0%A6%9F%20(Ctrl%2BV)%20%E0%A6%95%E0%A6%B0%E0%A6%A4%E0%A7%87%20%E0%A6%AA%E0%A6%BE%E0%A6%B0%E0%A7%8B%2C%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%B8%E0%A6%B0%E0%A6%BE%E0%A6%B8%E0%A6%B0%E0%A6%BF%20%E0%A6%A6%E0%A7%87%E0%A6%96%E0%A7%87%20%E0%A6%95%E0%A7%8B%E0%A6%A8%20%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%A8%E0%A7%87%20%E0%A6%AD%E0%A7%81%E0%A6%B2%20%E0%A6%B9%E0%A7%9F%E0%A7%87%E0%A6%9B%E0%A7%87%20%E0%A6%A4%E0%A6%BE%20%E0%A6%AE%E0%A6%BE%E0%A6%B0%E0%A7%8D%E0%A6%95%20%E0%A6%95%E0%A6%B0%E0%A7%87%20%E0%A6%A6%E0%A7%87%E0%A6%AC!');
+
     // Intelligent Local Engine for Bangladesh SSC/HSC & Insight Academia
     function generateLocalIntelligentSolution(query, imageObj) {
-      const q = (query || '').toLowerCase();
+      var q = (query || '').toLowerCase();
 
       // Case 1: Image provided (Math problem error analysis)
       if (imageObj) {
-        return '### 🔍 অংকের খাতার ছবি বিশ্লেষণ ও সমাধান:
-' +
-          'বন্ধু, তোমার আপলোড করা ছবিটি আমি মনোযোগ দিয়ে দেখেছি!
-
-' +
-          '#### ১. ⚠️ কোথায় ভুল হয়েছিল (Error Analysis):
-' +
-          '- তোমার খাতার সমাধানের **৩য় লাইনে** ব্র্যাকেট তোলার সময় চিহ্ন পরিবর্তনের ক্ষেত্রে অসাবধানতাবশত একটি ভুল হয়েছিল।
-' +
-          '- নিয়ম অনুযায়ী, ব্র্যাকেটের বাইরে যদি মাইনাস (-) চিহ্ন থাকে, তবে ভেতরের প্রতিটি পদের চিহ্ন পরিবর্তন করতে হয় (+ থাকলে -, এবং - থাকলে +)।
-' +
-          '- সেখানে মাইনাসে মাইনাসে প্লাস (+) না লিখে মাইনাস (-) রেখে দেওয়ার কারণে পরবর্তী মানগুলোতে অমিল এসেছে।
-
-' +
-          '#### ২. 💡 সঠিক সূত্র ও নিয়ম (Concept & Formula):
-' +
-          '- সমীকরণের নিয়ম: $(a - b)^2 = a^2 - 2ab + b^2$
-' +
-          '- দ্বিঘাত সমীকরণ: $ax^2 + bx + c = 0$ হলে, মূলদ্বয় $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
-
-' +
-          '#### ৩. ✅ ধাপে ধাপে নির্ভুল সমাধান (Step-by-Step Solution):
-' +
-          '১. প্রদত্ত সমীকরণটি সাজিয়ে পাই:
-' +
-          '   $$2x^2 - 5x + 2 = 0$$
-' +
-          '২. মিডল টার্ম (Middle Term) বিশ্লেষণ করে:
-' +
-          '   $$2x^2 - 4x - x + 2 = 0$$
-' +
-          '৩. কমন নিয়ে পাই:
-' +
-          '   $$2x(x - 2) - 1(x - 2) = 0$$
-' +
-          '   $$(x - 2)(2x - 1) = 0$$
-' +
-          '৪. সুতরাং:
-' +
-          '   $$x - 2 = 0 \implies x = 2$$
-' +
-          '   অথবা,
-' +
-          '   $$2x - 1 = 0 \implies x = \frac{1}{2}$$
-
-' +
-          '**উত্তর:** নির্ণেয় সমাধান $x = 2$ অথবা $x = \frac{1}{2}$
-
-' +
-          '---
-' +
-          '🎯 **ছোট্ট বন্ধুর টিপস:** পরীক্ষায় ক্যালকুলেশনে ব্র্যাকেট ব্যবহারের সময় সবসময় চিহ্নের দিকে সতর্ক থাকবে!';
+        return KB_MATH;
       }
 
       // Case 2: Inquiries about Insight Academia
-      if (q.includes('ইনসাইট') || q.includes('insight') || q.includes('ব্যাচ') || q.includes('কোর্স') || q.includes('শিক্ষক') || q.includes('হেল্পলাইন')) {
-        return '### 🏢 ইনসাইট একাডেমিয়া (Insight Academia) সম্পর্কিত তথ্য:
-' +
-          'ইনসাইট একাডেমিয়া বাংলাদেশের এসএসসি ও এইচএসসি শিক্ষার্থীদের জন্য একটি শীর্ষস্থানীয় নির্ভরযোগ্য শিক্ষামূলক প্রতিষ্ঠান।
-
-' +
-          '- **প্রতিষ্ঠা:** ০৪ অক্টোবর ২০১৫।
-' +
-          '- **প্রতিষ্ঠাতা ও সিইও:** তারেকুল ইসলাম রাজিব (Tarequl Islam Rajib, ঢাকা বিশ্ববিদ্যালয়)।
-' +
-          '- **সহ-প্রতিষ্ঠাতা:** ফারুকুল ইসলাম নয়ন (Farukul Islam Noyon)।
-' +
-          '- **সিস্টেম আর্কিটেক্ট ও লিড ইঞ্জিনিয়ার:** মোঃ সাকিবুর রহমান (Md. Sakibur Rahman, Code Cafe by Sakib)।
-
-' +
-          '#### 👨‍🏫 শিক্ষক প্যানেল:
-' +
-          '১. **তারেকুল ইসলাম রাজিব** - উচ্চতর গণিত (Higher Mathematics)
-' +
-          '২. **মোঃ সাকিবুর রহমান স্বাধীন** - তথ্য ও যোগাযোগ প্রযুক্তি (ICT)
-' +
-          '৩. **আব্দুল আজিজ অনিক** - ইংরেজি (English)
-' +
-          '৪. **ইকরা ইসলাম** - বাংলা ও মানবিক (Bangla & Humanities)
-' +
-          '৫. **সিরাজুল ইসলাম নূর রিফাত** - পদার্থবিজ্ঞান (Physics)
-
-' +
-          '#### 🏫 ব্রাঞ্চসমূহ ও হেল্পলাইন:
-' +
-          '- **অফলাইন ব্রাঞ্চ:** ধানমন্ডি, মৌচাক ও মিরপুর-১০, ঢাকা।
-' +
-          '- **অনলাইন ব্যাচ:** স্মার্ট ইন্টারঅ্যাক্টিভ ডিজিটাল ক্লাসরুম।
-' +
-          '- **হেল্পলাইন:** 📞 **01748470620**';
+      if (q.indexOf('ইনসাইট') !== -1 || q.indexOf('insight') !== -1 || q.indexOf('ব্যাচ') !== -1 || q.indexOf('কোর্স') !== -1 || q.indexOf('শিক্ষক') !== -1 || q.indexOf('হেল্পলাইন') !== -1) {
+        return KB_INSIGHT;
       }
 
       // Case 3: Physics queries
-      if (q.includes('পদার্থ') || q.includes('ফিজিক্স') || q.includes('গতি') || q.includes('বল') || q.includes('ত্বরণ')) {
-        return '### ⚡ পদার্থবিজ্ঞান: গতির সমীকরণ ও সমাধান
-' +
-          'গতির মৌলিক চারটি সমীকরণ:
-' +
-          '1. $v = u + at$
-' +
-          '2. $s = \frac{u + v}{2} \times t$
-' +
-          '3. $s = ut + \frac{1}{2}at^2$
-' +
-          '4. $v^2 = u^2 + 2as$
-
-' +
-          '**উদাহরণ সমস্যা:** একটি গাড়ি স্থির অবস্থান থেকে $2 \text{ m/s}^2$ সুষম ত্বরণে চলা শুরু করলে $5$ সেকেন্ড পর বেগ ও অতিক্রান্ত দূরত্ব কত হবে?
-' +
-          '- আদিবেগ $u = 0$
-' +
-          '- ত্বরণ $a = 2 \text{ m/s}^2$
-' +
-          '- সময় $t = 5 \text{ s}$
-
-' +
-          '**সমাধান:**
-' +
-          '- শেষবেগ $v = u + at = 0 + (2 \times 5) = 10 \text{ m/s}$
-' +
-          '- দূরত্ব $s = ut + \frac{1}{2}at^2 = 0 + \frac{1}{2}(2)(5^2) = 25 \text{ m}$';
+      if (q.indexOf('পদার্থ') !== -1 || q.indexOf('ফিজিক্স') !== -1 || q.indexOf('গতি') !== -1 || q.indexOf('বল') !== -1 || q.indexOf('ত্বরণ') !== -1) {
+        return KB_PHYSICS;
       }
 
       // Case 4: ICT queries
-      if (q.includes('ict') || q.includes('আইসিটি') || q.includes('গেট') || q.includes('বুলিয়ান')) {
-        return '### 💻 ICT: সার্বজনীন গেট (Universal Gates)
-' +
-          'আইসিটিতে **NAND** এবং **NOR** গেটকে সার্বজনীন গেট বলা হয়, কারণ এদের সাহায্যে যেকোনো মৌলিক গেট (AND, OR, NOT) তৈরি করা সম্ভব।
-
-' +
-          '#### NAND গেট দিয়ে মৌলিক গেট বাস্তবায়ন:
-' +
-          '1. **NOT গেট:** NAND গেটের দুটি ইনপুট একসাথে যুক্ত করলে NOT গেট পাওয়া যায়:
-' +
-          '   $$A \cdot A = A \implies \overline{A \cdot A} = \overline{A}$$
-' +
-          '2. **AND গেট:** একটি NAND গেটের আউটপুটকে আরেকটি NAND (NOT হিসেবে) এর মধ্য দিয়ে পাঠালে AND গেট তৈরি হয়:
-' +
-          '   $$\overline{\overline{A \cdot B}} = A \cdot B$$
-' +
-          '3. **OR গেট:** ডি-মরগ্যানের সূত্র অনুযায়ী:
-' +
-          '   $$\overline{\overline{A} \cdot \overline{B}} = \overline{\overline{A}} + \overline{\overline{B}} = A + B$$';
+      if (q.indexOf('ict') !== -1 || q.indexOf('আইসিটি') !== -1 || q.indexOf('গেট') !== -1 || q.indexOf('বুলিয়ান') !== -1) {
+        return KB_ICT;
       }
 
       // Default General Math Response
-      return '### 📐 ছোট্ট বন্ধুর সমাধান ও বিশ্লেষণ:
-' +
-        'তোমার প্রশ্নের বিষয়টি আমি ধাপে ধাপে বুঝিয়ে দিচ্ছি:
-
-' +
-        '#### ১. মূল ধারণা ও সূত্র:
-' +
-        'যেকোনো গাণিতিক সমস্যা সমাধানের পূর্বে প্রদত্ত উপাত্তগুলো সাজিয়ে সমীকরণ গঠন করা সবচেয়ে গুরুত্বপূর্ণ।
-
-' +
-        '#### ২. ধাপে ধাপে সমাধান:
-' +
-        '- গাণিতিক নিয়ম ও সূত্রাবলী যথাযথভাবে প্রয়োগ করো।
-' +
-        '- বন্ধনীর কাজ এবং চিহ্নের গুণন সর্বদা সতর্কতার সাথে সম্পন্ন করো।
-
-' +
-        '💡 **পরামর্শ:** তুমি চাইলে তোমার খাতার অংকের ছবি আপলোড করতে পারো বা স্ক্রিনশট পেস্ট (Ctrl+V) করতে পারো, আমি সরাসরি দেখে কোন লাইনে ভুল হয়েছে তা মার্ক করে দেব!';
+      return KB_DEFAULT;
     }
   </script>
-
 </body>
 </html>
