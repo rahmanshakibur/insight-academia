@@ -14,3 +14,7 @@
 !favicon.ico
 !google*.html
 !.gitignore
+
+# Whitelist Vercel Serverless API Functions
+!api/
+!api/**

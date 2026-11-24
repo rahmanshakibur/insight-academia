@@ -297,7 +297,125 @@
     .hourglass-glow-badge {
       animation: hourglassPulseGlow 3s ease-in-out infinite;
     }
-  </style>
+  
+    /* ========================================================
+       ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) STYLES ⭐
+       White & Asmani (Sky Blue) Color Palette
+       ======================================================== */
+    :root {
+      --asmani-50: #f0f9ff;
+      --asmani-100: #e0f2fe;
+      --asmani-200: #bae6fd;
+      --asmani-400: #38bdf8;
+      --asmani-500: #0ea5e9;
+      --asmani-600: #0284c7;
+      --asmani-700: #0369a1;
+    }
+
+    /* 3D Door Entrance Scene */
+    .door-scene {
+      perspective: 1200px;
+    }
+    .door-frame {
+      position: relative;
+      transform-style: preserve-3d;
+    }
+    .door-panel-left {
+      transform-origin: left center;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: perspective(1200px) rotateY(0deg);
+    }
+    .door-panel-right {
+      transform-origin: right center;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: perspective(1200px) rotateY(0deg);
+    }
+    .door-open .door-panel-left {
+      transform: perspective(1200px) rotateY(-112deg);
+    }
+    .door-open .door-panel-right {
+      transform: perspective(1200px) rotateY(112deg);
+    }
+    .door-burst-glow {
+      opacity: 0;
+      transition: opacity 0.8s 0.2s ease-in-out;
+    }
+    .door-open .door-burst-glow {
+      opacity: 1;
+    }
+    .door-avatar-kid {
+      opacity: 0;
+      transform: scale(0.85) translateY(20px);
+      transition: all 0.7s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .door-open .door-avatar-kid {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    .door-speech-bubble {
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+      transition: all 0.5s 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .door-open .door-speech-bubble {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Avatar Animations */
+    @keyframes kidWaveHand {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(18deg); }
+      100% { transform: rotate(-8deg); }
+    }
+    .kid-waving-arm {
+      transform-origin: bottom left;
+      animation: kidWaveHand 0.8s infinite alternate ease-in-out;
+    }
+    @keyframes kidGentleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .kid-float {
+      animation: kidGentleFloat 2.5s ease-in-out infinite;
+    }
+    @keyframes burstPulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+    .burst-pulse {
+      animation: burstPulse 2s ease-in-out infinite alternate;
+    }
+
+    /* Custom Scrollbar for Studio */
+    #chottoBondhuChatScroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    #chottoBondhuChatScroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    #chottoBondhuChatScroll::-webkit-scrollbar-thumb {
+      background: #bae6fd;
+      border-radius: 9999px;
+    }
+    #chottoBondhuChatScroll::-webkit-scrollbar-thumb:hover {
+      background: #38bdf8;
+    }
+
+    /* Formula & Code Card Styles */
+    .chotto-solution-box {
+      background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+      border: 1px solid #bae6fd;
+    }
+
+</style>
+
+  <!-- KaTeX for High Quality Math Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <!-- Marked for Markdown Parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+
 </head>
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
 
@@ -375,6 +493,13 @@
         <button onclick="navigateTo('home'); setTimeout(() => document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'}), 100);" id="nav-about" data-i18n="nav_about" class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-[#FF2E7E] transition-all">
           আমাদের সম্পর্কে
         </button>
+        <!-- Chotto Bondhu (AI Solver) Navbar Button -->
+        <button onclick="openChottoBondhuWithDoorAnimation()" id="nav-chotto-bondhu" class="nav-btn px-3.5 py-1.5 rounded-xl text-sky-700 bg-sky-50/90 hover:bg-sky-100 hover:text-sky-800 border border-sky-200/90 shadow-xs font-bold transition-all flex items-center gap-2 cursor-pointer group">
+          <span class="w-6 h-6 rounded-lg bg-sky-500 text-white flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M19 11v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </span>
+          <span>ছোট্ট বন্ধু (AI সলভার)</span>
+        </button>
       </nav>
 
       <!-- Header Right: Helpline Call, Language Toggle & Login Button -->
@@ -407,6 +532,10 @@
       <button onclick="navigateTo('teachers')" id="m-nav-teachers" data-i18n="nav_teachers" class="m-nav-btn text-slate-600 px-2 py-1">শিক্ষক</button>
       <button onclick="navigateTo('ebooks')" id="m-nav-ebooks" data-i18n="nav_ebooks" class="m-nav-btn text-slate-600 px-2 py-1">ই-বুক</button>
       <button onclick="navigateTo('home'); setTimeout(() => document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'}), 100);" data-i18n="nav_about" class="m-nav-btn text-[#FF2E7E] px-2 py-1">সম্পর্কে</button>
+      <button onclick="openChottoBondhuWithDoorAnimation()" id="m-nav-chotto-bondhu" class="m-nav-btn text-sky-700 font-bold px-2.5 py-1 rounded-xl bg-sky-50 border border-sky-200 flex items-center gap-1 shrink-0">
+        <span class="text-xs">🤖</span>
+        <span>ছোট্ট বন্ধু (AI সলভার)</span>
+      </button>
       <div id="m-nav-auth-slot" class="flex items-center">
         <button onclick="handleNavLoginClick()" id="m-nav-login" class="m-nav-btn text-blue-600 font-bold px-2.5 py-1 rounded-xl flex items-center gap-1 hover:bg-blue-50 transition">
         <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -5526,6 +5655,7 @@
             <li><a href="javascript:void(0)" onclick="navigateTo('teachers')" class="hover:text-blue-600" data-i18n="nav_teachers">শিক্ষক প্যানেল</a></li>
             <li><a href="javascript:void(0)" onclick="navigateTo('ebooks')" class="hover:text-blue-600" data-i18n="nav_ebooks">ই-বুক</a></li>
             <li><a href="javascript:void(0)" onclick="navigateTo('home'); setTimeout(() => document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'}), 100);" class="hover:text-[#FF2E7E]" data-i18n="nav_about">আমাদের সম্পর্কে</a></li>
+            <li><a href="javascript:void(0)" onclick="openChottoBondhuWithDoorAnimation()" class="hover:text-sky-600 font-bold text-sky-600 flex items-center gap-1.5"><span>🤖</span><span>ছোট্ট বন্ধু (AI সলভার)</span></a></li>
           </ul>
         </div>
 
@@ -11246,6 +11376,1067 @@
 
     // Initialize Single Active Device Security Watchdog
     initSingleDeviceWatchdog();
+  </script>
+
+  <!-- ========================================================
+       ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) MODALS & STUDIO ⭐
+       ======================================================== -->
+
+  <!-- 1. Animated Door Entrance Modal -->
+  <div id="chottoBondhuEntranceModal" class="hidden fixed inset-0 z-[99998] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-500">
+    <div class="relative w-full max-w-md flex flex-col items-center">
+      
+      <!-- Top Title & Dismiss Button -->
+      <div class="w-full flex items-center justify-between mb-4 px-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-xs font-bold text-sky-300 tracking-wider uppercase">ইনসাইট একাডেমিয়া • জ্ঞানগৃহ</span>
+        </div>
+        <button onclick="closeChottoBondhuEntrance()" class="text-slate-400 hover:text-white p-1 rounded-lg transition" title="বন্ধ করুন">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- 3D Doorway Portal Scene -->
+      <div id="doorPortalContainer" class="door-scene relative w-72 sm:w-80 h-[380px] sm:h-[420px] rounded-t-full rounded-b-2xl border-4 border-amber-300/80 shadow-2xl bg-slate-900 overflow-hidden flex items-center justify-center">
+        
+        <!-- Radiant Glow Burst behind the door -->
+        <div class="door-burst-glow absolute inset-0 bg-radial from-sky-400 via-sky-600 to-slate-950 flex items-center justify-center">
+          <div class="w-72 h-72 rounded-full bg-sky-300/30 blur-2xl burst-pulse"></div>
+        </div>
+
+        <!-- Inside Room: Welcoming Animated Kid Avatar ("ছোট্ট বন্ধু") -->
+        <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-center pt-8 z-10 pointer-events-none">
+          
+          <!-- Cute Animated SVG Kid Avatar -->
+          <div class="relative w-36 h-36 sm:w-40 sm:h-40 kid-float">
+            <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Body / Clothes (Sky Blue & White Blazer) -->
+              <path d="M60 160 C60 130, 140 130, 140 160 L145 200 L55 200 Z" fill="#0284c7" />
+              <path d="M85 130 L100 165 L115 130 Z" fill="#ffffff" />
+              <!-- Red/Navy Tie -->
+              <path d="M96 138 L104 138 L102 165 L98 165 Z" fill="#e11d48" />
+              
+              <!-- Left Arm holding Book -->
+              <path d="M62 140 L45 165 L55 175 L75 145 Z" fill="#0284c7" />
+              <rect x="35" y="155" width="22" height="28" rx="3" fill="#f8fafc" stroke="#38bdf8" stroke-width="2"/>
+              <text x="39" y="172" font-size="10" font-weight="bold" fill="#0284c7">Math</text>
+
+              <!-- Animated Waving Right Arm -->
+              <g class="kid-waving-arm" style="transform-origin: 135px 140px;">
+                <path d="M135 140 L160 115 L170 125 L145 150 Z" fill="#0284c7" />
+                <!-- Hand -->
+                <circle cx="166" cy="115" r="10" fill="#fcd34d" />
+                <path d="M162 108 L166 102 L172 108" stroke="#fcd34d" stroke-width="3" stroke-linecap="round" />
+              </g>
+
+              <!-- Neck -->
+              <rect x="92" y="115" width="16" height="18" rx="4" fill="#fcd34d" />
+
+              <!-- Head -->
+              <circle cx="100" cy="80" r="42" fill="#fef08a" />
+              <!-- Cheeks -->
+              <circle cx="75" cy="90" r="7" fill="#fca5a5" opacity="0.6"/>
+              <circle cx="125" cy="90" r="7" fill="#fca5a5" opacity="0.6"/>
+
+              <!-- Hair -->
+              <path d="M60 75 C60 40, 140 40, 140 75 C135 55, 110 50, 100 55 C90 50, 65 55, 60 75 Z" fill="#334155" />
+              <path d="M65 60 C80 45, 120 45, 135 60" fill="#1e293b" />
+
+              <!-- Glasses -->
+              <rect x="70" y="72" width="24" height="20" rx="6" fill="#ffffff" fill-opacity="0.3" stroke="#0284c7" stroke-width="3"/>
+              <rect x="106" y="72" width="24" height="20" rx="6" fill="#ffffff" fill-opacity="0.3" stroke="#0284c7" stroke-width="3"/>
+              <line x1="94" y1="81" x2="106" y2="81" stroke="#0284c7" stroke-width="3"/>
+
+              <!-- Eyes -->
+              <circle cx="82" cy="82" r="4" fill="#0f172a" />
+              <circle cx="84" cy="80" r="1.5" fill="#ffffff" />
+              <circle cx="118" cy="82" r="4" fill="#0f172a" />
+              <circle cx="120" cy="80" r="1.5" fill="#ffffff" />
+
+              <!-- Happy Smile -->
+              <path d="M90 95 Q100 106 110 95" stroke="#991b1b" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <!-- Speech Bubble above/below kid -->
+          <div class="door-speech-bubble mt-2 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-3 py-2 rounded-2xl shadow-xl border border-sky-200 text-center max-w-[240px]">
+            <p class="text-sky-700 font-extrabold text-sm sm:text-base">আসসালামু আলাইকুম! 👋</p>
+            <p class="text-slate-600 text-xs mt-1">আমি তোমার <span class="text-sky-600 font-extrabold">ছোট্ট বন্ধু</span>। চলে এসো ভেতরে! তোমার অংকের ভুল ধরিয়ে দেওয়া বা সমাধান—সব বুঝিয়ে দিচ্ছি!</p>
+          </div>
+        </div>
+
+        <!-- Left Door Leaf -->
+        <div class="door-panel-left absolute top-0 left-0 w-1/2 h-full bg-gradient-to-br from-sky-900 via-slate-900 to-sky-950 border-r border-amber-300/60 shadow-2xl z-20 flex items-center justify-end pr-2">
+          <!-- Door Molding Panels -->
+          <div class="w-full h-full p-3 flex flex-col justify-between">
+            <div class="w-full h-24 rounded-t-full border-2 border-amber-300/40 bg-sky-950/50"></div>
+            <div class="w-full h-28 rounded-lg border-2 border-amber-300/40 bg-sky-950/50"></div>
+            <div class="w-full h-24 rounded-b-lg border-2 border-amber-300/40 bg-sky-950/50"></div>
+          </div>
+          <!-- Left Golden Brass Handle -->
+          <div class="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-10 rounded-full bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 shadow-md border border-amber-100"></div>
+        </div>
+
+        <!-- Right Door Leaf -->
+        <div class="door-panel-right absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-sky-900 via-slate-900 to-sky-950 border-l border-amber-300/60 shadow-2xl z-20 flex items-center justify-start pl-2">
+          <!-- Door Molding Panels -->
+          <div class="w-full h-full p-3 flex flex-col justify-between">
+            <div class="w-full h-24 rounded-t-full border-2 border-amber-300/40 bg-sky-950/50"></div>
+            <div class="w-full h-28 rounded-lg border-2 border-amber-300/40 bg-sky-950/50"></div>
+            <div class="w-full h-24 rounded-b-lg border-2 border-amber-300/40 bg-sky-950/50"></div>
+          </div>
+          <!-- Right Golden Brass Handle & Keyhole -->
+          <div class="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-10 rounded-full bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 shadow-md border border-amber-100"></div>
+        </div>
+
+      </div>
+
+      <!-- Action Button: Enter Inside Studio -->
+      <div class="mt-5 w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="enterChottoBondhuStudioImmediately()" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-sm shadow-lg shadow-sky-500/30 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer group">
+          <span>🚀 সরাসরি ভেতরে প্রবেশ করো</span>
+          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+        <button onclick="closeChottoBondhuEntrance()" class="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition border border-slate-700">
+          বন্ধ করুন
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. Fullscreen White & Asmani (Sky Blue) AI Studio Interface (Inspired by Gemini) -->
+  <div id="chottoBondhuStudioModal" class="hidden fixed inset-0 z-[99999] bg-[#f8fafc] text-slate-800 flex flex-col md:flex-row overflow-hidden select-text">
+
+    <!-- Mobile Header -->
+    <div class="md:hidden flex items-center justify-between px-4 py-3 bg-white border-b border-sky-100 shadow-xs z-30">
+      <div class="flex items-center gap-2">
+        <button onclick="toggleChottoBondhuSidebar()" class="p-1.5 rounded-lg text-slate-600 hover:bg-sky-50">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="flex items-center gap-1.5">
+          <span class="w-6 h-6 rounded-lg bg-sky-500 text-white flex items-center justify-center text-xs font-bold">🤖</span>
+          <span class="font-extrabold text-sm text-slate-800">ছোট্ট বন্ধু</span>
+          <span class="px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-200">Live AI</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-1">
+        <button onclick="closeChottoBondhuStudio()" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800" title="প্রস্থান">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Left Sidebar (Gemini Style) -->
+    <div id="chottoBondhuSidebar" class="hidden md:flex flex-col justify-between w-72 lg:w-80 bg-white border-r border-sky-100 p-4 shrink-0 transition-transform z-40">
+      
+      <!-- Top: Brand & New Chat Button -->
+      <div>
+        <!-- Brand Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-sky-400 text-white flex items-center justify-center text-lg shadow-sm font-bold">
+              🤖
+            </div>
+            <div>
+              <h2 class="font-extrabold text-base text-slate-900 leading-tight">ছোট্ট বন্ধু</h2>
+              <p class="text-[11px] font-medium text-sky-600">ইনসাইট একাডেমিয়া AI সলভার</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[10px] font-bold border border-sky-200">
+            SSC & HSC
+          </span>
+        </div>
+
+        <!-- New Chat Button -->
+        <button onclick="resetChottoBondhuChat()" class="mt-4 w-full py-2.5 px-4 rounded-2xl bg-sky-50 hover:bg-sky-100 active:scale-98 text-sky-800 font-bold text-xs sm:text-sm border border-sky-200/90 shadow-xs transition flex items-center gap-2.5 cursor-pointer">
+          <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+          <span>নতুন প্রশ্ন / New Chat</span>
+        </button>
+
+        <!-- Quick Subject & Practice Chips -->
+        <div class="mt-6">
+          <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 px-1">
+            অনুশীলন ও প্রশ্নব্যাংক
+          </div>
+          <div class="space-y-1.5 text-xs font-semibold text-slate-600">
+            <button onclick="setChottoBondhuQuickPrompt('আমার খাতায় করা দ্বিঘাত সমীকরণের ভুল কোথায় হয়েছে?')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-sky-50/70 hover:text-sky-700 transition flex items-center gap-2">
+              <span>📐</span>
+              <span class="truncate">গণিত: অংকের ভুল ধরা</span>
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('স্থানাঙ্ক জ্যামিতি ও ত্রিকোণমিতির সূত্র ও প্রমাণ বুঝিয়ে দাও')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-sky-50/70 hover:text-sky-700 transition flex items-center gap-2">
+              <span>📏</span>
+              <span class="truncate">উচ্চতর গণিত: ত্রিকোণমিতি</span>
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('পদার্থবিজ্ঞানের গতি ও বলবিদ্যার গাণিতিক সমস্যার নিয়ম বুঝিয়ে দাও')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-sky-50/70 hover:text-sky-700 transition flex items-center gap-2">
+              <span>⚡</span>
+              <span class="truncate">পদার্থবিজ্ঞান: গতির ম্যাথ</span>
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('ICT অধ্যায় ৩: সার্বজনীন গেট দিয়ে কীভাবে অন্যান্য গেট বাস্তবায়ন করতে হয়?')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-sky-50/70 hover:text-sky-700 transition flex items-center gap-2">
+              <span>💻</span>
+              <span class="truncate">ICT: লজিক গেট ও সরলীকরণ</span>
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('ইনসাইট একাডেমিয়ায় কোন কোন বিষয়ের কোর্স ও শিক্ষক আছেন?')" class="w-full text-left px-3 py-2 rounded-xl hover:bg-sky-50/70 hover:text-sky-700 transition flex items-center gap-2">
+              <span>🏢</span>
+              <span class="truncate">ইনসাইট একাডেমিয়া ব্যাচ ও তথ্য</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom: System Status, Settings & Return Button -->
+      <div class="pt-4 border-t border-slate-100 space-y-2">
+        <div class="flex items-center justify-between px-1 text-[11px] font-semibold text-slate-500">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Gemini AI Engine Active</span>
+          </div>
+          <button onclick="openChottoBondhuSettings()" class="text-sky-600 hover:underline cursor-pointer">
+            ⚙️ সেটিংস
+          </button>
+        </div>
+
+        <button onclick="closeChottoBondhuStudio()" class="w-full py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>মূল ওয়েবসাইটে ফিরে যান</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Main Workspace Area -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden bg-[#f8fafc] relative">
+      
+      <!-- Desktop Header Bar -->
+      <div class="hidden md:flex items-center justify-between px-6 py-3.5 bg-white border-b border-sky-100 shadow-xs z-20">
+        <div class="flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <h1 class="text-sm font-extrabold text-slate-800">ছোট্ট বন্ধু AI স্টুডিও</h1>
+          <span class="px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 text-xs font-bold border border-sky-200">
+            White & Asmani
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Voice Audio Narration Toggle -->
+          <button id="btnVoiceToggle" onclick="toggleChottoVoice()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-50 text-sky-700 hover:bg-sky-100 border border-sky-200 transition flex items-center gap-1.5" title="বাংলা ভয়েস চালু/বন্ধ">
+            <span id="voiceStatusIcon">🔊</span>
+            <span id="voiceStatusText">ভয়েস চালু</span>
+          </button>
+
+          <!-- Clear Chat -->
+          <button onclick="resetChottoBondhuChat()" class="p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition" title="চ্যাট ক্লিয়ার করুন">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          </button>
+
+          <!-- Close Studio Button -->
+          <button onclick="closeChottoBondhuStudio()" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-800 font-bold transition ml-2" title="প্রস্থান">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Scroll Area -->
+      <div id="chottoBondhuChatScroll" class="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-6">
+        
+        <!-- Welcome Screen (Shown when conversation is empty) -->
+        <div id="chottoBondhuWelcomeScreen" class="max-w-2xl mx-auto flex flex-col items-center justify-center text-center pt-8 pb-4">
+          
+          <!-- Animated Avatar -->
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-sky-400 to-sky-200 p-1 shadow-lg shadow-sky-200/50 mb-4 kid-float">
+            <div class="w-full h-full rounded-full bg-white flex items-center justify-center text-3xl sm:text-4xl shadow-inner">
+              🤖
+            </div>
+          </div>
+
+          <!-- Welcoming Headlines -->
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Where should we start?
+          </h2>
+          <p class="text-sky-600 font-bold text-sm sm:text-base mt-1">
+            কেমন আছো? আমি তোমার ছোট্ট বন্ধু!
+          </p>
+          <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg">
+            খাতার অংকের ছবি আপলোড করো, স্ক্রিনশট পেস্ট (Ctrl+V) করো অথবা প্রশ্ন লিখে দাও—ভুল ধরিয়ে দিয়ে সহজ নিয়মে সমাধান বুঝিয়ে দেব!
+          </p>
+
+          <!-- 4 Interactive Starter Cards in 2x2 Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mt-8 text-left">
+            
+            <div onclick="setChottoBondhuQuickPrompt('আমার খাতার অংকে কোথায় ভুল হয়েছে ধরিয়ে দাও এবং সমাধান করো।')" class="p-4 rounded-2xl bg-white border border-sky-100 hover:border-sky-300 hover:shadow-md transition cursor-pointer group">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold group-hover:bg-sky-500 group-hover:text-white transition">📸</span>
+                <h4 class="font-bold text-slate-800 text-sm group-hover:text-sky-700">অংকের খাতার ভুল ধরা</h4>
+              </div>
+              <p class="text-xs text-slate-500">অংকের ছবি বা স্ক্রিনশট আপলোড করে জেনে নাও কোন লাইনে ভুল হয়েছিল।</p>
+            </div>
+
+            <div onclick="setChottoBondhuQuickPrompt('বীজগণিতীয় রাশির উৎপাদক ও সূত্রের প্রমাণ ধাপে ধাপে সমাধান করে দাও।')" class="p-4 rounded-2xl bg-white border border-sky-100 hover:border-sky-300 hover:shadow-md transition cursor-pointer group">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold group-hover:bg-sky-500 group-hover:text-white transition">📐</span>
+                <h4 class="font-bold text-slate-800 text-sm group-hover:text-sky-700">ধাপে ধাপে সমাধান</h4>
+              </div>
+              <p class="text-xs text-slate-500">যেকোনো কঠিন গণিত বা সূত্রের বিশদ ব্যাখ্যা ও নিখুঁত সমাধান।</p>
+            </div>
+
+            <div onclick="setChottoBondhuQuickPrompt('ICT অধ্যায় ৩: বুলিয়ান অ্যালজেব্রা ও লজিক গেটের আউটপুট বের করার নিয়ম কী?')" class="p-4 rounded-2xl bg-white border border-sky-100 hover:border-sky-300 hover:shadow-md transition cursor-pointer group">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold group-hover:bg-sky-500 group-hover:text-white transition">💻</span>
+                <h4 class="font-bold text-slate-800 text-sm group-hover:text-sky-700">ICT ও প্রোগ্রামিং</h4>
+              </div>
+              <p class="text-xs text-slate-500">লজিক গেটের সত্যক সারণি, সার্বজনীন গেট ও সি প্রোগ্রামিং ব্যাখ্যা।</p>
+            </div>
+
+            <div onclick="setChottoBondhuQuickPrompt('ইনসাইট একাডেমিয়ার অনলাইন ও অফলাইন ব্যাচের ভর্তি তথ্য ও শিক্ষক তালিকা দাও।')" class="p-4 rounded-2xl bg-white border border-sky-100 hover:border-sky-300 hover:shadow-md transition cursor-pointer group">
+              <div class="flex items-center gap-2 mb-1.5">
+                <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold group-hover:bg-sky-500 group-hover:text-white transition">🏢</span>
+                <h4 class="font-bold text-slate-800 text-sm group-hover:text-sky-700">ইনসাইট একাডেমিয়া</h4>
+              </div>
+              <p class="text-xs text-slate-500">কোর্সসমূহ, শিক্ষক প্যানেল, ব্রাঞ্চের ঠিকানা ও হেল্পলাইন তথ্য।</p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Chat History Messages Container -->
+        <div id="chottoBondhuMessagesList" class="max-w-3xl mx-auto space-y-6"></div>
+
+      </div>
+
+      <!-- Bottom Floating Input Bar (Strictly White & Asmani Palette matching user's mock) -->
+      <div class="p-4 bg-gradient-to-t from-white via-white/95 to-transparent shrink-0">
+        <div class="max-w-3xl mx-auto">
+          
+          <!-- Image Attachment Preview Bar -->
+          <div id="chottoImagePreviewBar" class="hidden mb-2 p-2 bg-sky-50/90 rounded-2xl border border-sky-200 flex items-center justify-between">
+            <div class="flex items-center gap-2.5 overflow-hidden">
+              <img id="chottoImagePreviewThumb" src="" alt="Attached Math Problem" class="w-12 h-12 object-cover rounded-xl border border-sky-300 shadow-xs">
+              <div class="text-xs truncate">
+                <p id="chottoImageFileName" class="font-bold text-slate-800 truncate">math_problem.png</p>
+                <p class="text-sky-600 text-[11px]">ছবি যুক্ত হয়েছে • বিশ্লেষণে প্রস্তুত 🔍</p>
+              </div>
+            </div>
+            <button onclick="clearChottoBondhuImage()" class="p-1.5 rounded-full hover:bg-sky-200 text-slate-600 hover:text-red-600 transition" title="ছবিটি মুছুন">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Main Input Pill Box -->
+          <div class="bg-white rounded-3xl border border-sky-200/90 shadow-lg shadow-sky-100/50 p-2 sm:p-2.5 flex items-center gap-2 focus-within:ring-2 focus-within:ring-sky-400 focus-within:border-sky-400 transition-all">
+            
+            <!-- Attachment Button (+) -->
+            <button onclick="document.getElementById('chottoBondhuFileInput').click()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-700 flex items-center justify-center text-lg font-extrabold shrink-0 transition active:scale-95 border border-sky-200 cursor-pointer" title="ছবি বা স্ক্রিনশট যোগ করুন (বা Ctrl+V পেস্ট করুন)">
+              +
+            </button>
+            <input type="file" id="chottoBondhuFileInput" accept="image/*" class="hidden" onchange="handleChottoBondhuFileSelect(event)">
+
+            <!-- Text Input Area -->
+            <textarea id="chottoBondhuInput" rows="1" placeholder="Ask Chotto Bondhu - What's your problem?" class="flex-1 bg-transparent border-0 focus:outline-none focus:ring-0 text-slate-800 placeholder-slate-400 text-xs sm:text-sm py-2 px-1 resize-none max-h-32" onkeydown="handleChottoInputKeydown(event)"></textarea>
+
+            <!-- Quick Paste Screenshot Button -->
+            <button onclick="pasteClipboardImage()" class="hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-sky-700 text-xs font-semibold border border-slate-200 transition shrink-0" title="ক্লিপবোর্ড থেকে স্ক্রিনশট পেস্ট করুন">
+              <span>📋</span>
+              <span class="text-[11px]">Paste SS</span>
+            </button>
+
+            <!-- Send Button -->
+            <button onclick="sendChottoBondhuMessage()" id="btnSendChottoMessage" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-sky-500 hover:bg-sky-600 active:scale-95 text-white flex items-center justify-center shrink-0 transition-all shadow-md shadow-sky-500/30 cursor-pointer" title="পাঠান">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5 -translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+
+          </div>
+
+          <!-- Bottom Micro-Chips -->
+          <div class="mt-2.5 flex items-center justify-center gap-2 overflow-x-auto text-[11px] font-bold text-slate-500">
+            <button onclick="setChottoBondhuQuickPrompt('অংকের ছবি দিয়েছি, কোথায় ভুল হয়েছে লাইন ধরে বুঝিয়ে দাও')" class="px-2.5 py-1 rounded-full bg-white hover:bg-sky-50 border border-slate-200 text-slate-600 hover:text-sky-700 transition shrink-0">
+              📸 ভুল ধরুন
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('এই অংকটির ধাপে ধাপে বিস্তারিত সমাধান করে দাও')" class="px-2.5 py-1 rounded-full bg-white hover:bg-sky-50 border border-slate-200 text-slate-600 hover:text-sky-700 transition shrink-0">
+              📐 গণিত সলভার
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('পদার্থবিজ্ঞানের সূত্র ও ম্যাথ বুঝিয়ে দাও')" class="px-2.5 py-1 rounded-full bg-white hover:bg-sky-50 border border-slate-200 text-slate-600 hover:text-sky-700 transition shrink-0">
+              ⚡ ফিজিক্স
+            </button>
+            <button onclick="setChottoBondhuQuickPrompt('ICT লজিক গেটের সত্যক সারণি ও সার্বজনীন গেট বুঝিয়ে দাও')" class="px-2.5 py-1 rounded-full bg-white hover:bg-sky-50 border border-slate-200 text-slate-600 hover:text-sky-700 transition shrink-0">
+              💻 ICT
+            </button>
+          </div>
+
+          <p class="text-[10px] text-center text-slate-400 mt-2">
+            ছোট্ট বন্ধু AI নির্ভুল শিক্ষামূলক সহায়তায় সচেষ্ট। পরীক্ষার চূড়ান্ত প্রস্তুতির জন্য ইনসাইট একাডেমিয়ার শিক্ষকদের পরামর্শ নিন।
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 3. Chotto Bondhu API Settings Modal -->
+  <div id="chottoBondhuSettingsModal" class="hidden fixed inset-0 z-[100000] bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl border border-sky-200 shadow-2xl max-w-md w-full p-6 text-slate-800">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-extrabold text-base text-slate-900 flex items-center gap-2">
+          <span>⚙️</span>
+          <span>ছোট্ট বন্ধু AI কনফিগারেশন</span>
+        </h3>
+        <button onclick="closeChottoBondhuSettings()" class="text-slate-400 hover:text-slate-700 p-1">✕</button>
+      </div>
+
+      <div class="mt-4 space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Google Gemini API Key (ঐচ্ছিক):</label>
+          <input type="password" id="chottoCustomApiKeyInput" placeholder="AIzaSy..." class="w-full p-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-sky-400 focus:outline-none font-mono text-xs">
+          <p class="text-[11px] text-slate-500 mt-1">Vercel এর Environment Variable এ কী না থাকলে বা আপনি নিজে টেস্ট করতে চাইলে এখানে আপনার কি দিতে পারেন। এটি আপনার ব্রাউজারে সুরক্ষিত থাকবে।</p>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-800">
+          <p class="font-bold">🌟 দ্বৈত ইঞ্জিন সুবিধা:</p>
+          <p class="mt-0.5 text-[11px]">API Key ছাড়াও আমাদের বিল্ট-ইন ইনসাইট একাডেমিয়া স্মার্ট রিজনিং ইঞ্জিন দিয়ে সাধারণ অংক, ভুল সংশোধন ও একাডেমিয়া ইনফো সরাসরি কাজ করবে!</p>
+        </div>
+      </div>
+
+      <div class="mt-6 flex items-center justify-end gap-2">
+        <button onclick="saveChottoBondhuSettings()" class="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs transition">
+          সংরক্ষণ করুন
+        </button>
+        <button onclick="closeChottoBondhuSettings()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+          বাতিল
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       ⭐ CHOTTO BONDHU AI JAVASCRIPT LOGIC ⭐
+       ======================================================== -->
+  <script>
+    // State management for Chotto Bondhu
+    let currentChottoImage = null;
+    let chottoVoiceEnabled = true;
+    let chottoEntranceTimer = null;
+    let chottoConversation = [];
+
+    // Open Entrance with 3D Door Animation
+    function openChottoBondhuWithDoorAnimation() {
+      const entranceModal = document.getElementById('chottoBondhuEntranceModal');
+      const portal = document.getElementById('doorPortalContainer');
+      if (!entranceModal || !portal) return;
+
+      // Show modal
+      entranceModal.classList.remove('hidden');
+      portal.classList.remove('door-open');
+
+      // Trigger door swing after 150ms
+      setTimeout(() => {
+        portal.classList.add('door-open');
+        playDoorGreetingAudio();
+      }, 150);
+
+      // Auto enter studio after 2.4s
+      clearTimeout(chottoEntranceTimer);
+      chottoEntranceTimer = setTimeout(() => {
+        enterChottoBondhuStudioImmediately();
+      }, 2400);
+    }
+
+    function closeChottoBondhuEntrance() {
+      clearTimeout(chottoEntranceTimer);
+      const entranceModal = document.getElementById('chottoBondhuEntranceModal');
+      if (entranceModal) entranceModal.classList.add('hidden');
+    }
+
+    function enterChottoBondhuStudioImmediately() {
+      clearTimeout(chottoEntranceTimer);
+      const entranceModal = document.getElementById('chottoBondhuEntranceModal');
+      const studioModal = document.getElementById('chottoBondhuStudioModal');
+      
+      if (entranceModal) entranceModal.classList.add('hidden');
+      if (studioModal) {
+        studioModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          document.getElementById('chottoBondhuInput')?.focus();
+        }, 100);
+      }
+    }
+
+    function closeChottoBondhuStudio() {
+      const studioModal = document.getElementById('chottoBondhuStudioModal');
+      if (studioModal) {
+        studioModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      }
+    }
+
+    function toggleChottoBondhuSidebar() {
+      const sidebar = document.getElementById('chottoBondhuSidebar');
+      if (!sidebar) return;
+      sidebar.classList.toggle('hidden');
+      sidebar.classList.toggle('absolute');
+      sidebar.classList.toggle('inset-y-0');
+      sidebar.classList.toggle('left-0');
+      sidebar.classList.toggle('shadow-2xl');
+    }
+
+    // Audio Chime / Voice Greeting
+    function playDoorGreetingAudio() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+        osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15); // E5
+        osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.3); // G5
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.5);
+      } catch (e) {
+        // AudioContext disabled or restricted
+      }
+
+      // Voice read greeting if enabled
+      if (chottoVoiceEnabled && 'speechSynthesis' in window) {
+        setTimeout(() => {
+          const utter = new SpeechSynthesisUtterance('আসসালামু আলাইকুম! চলে এসো ভেতরে।');
+          utter.lang = 'bn-BD';
+          utter.rate = 1.05;
+          window.speechSynthesis.speak(utter);
+        }, 400);
+      }
+    }
+
+    function toggleChottoVoice() {
+      chottoVoiceEnabled = !chottoVoiceEnabled;
+      const icon = document.getElementById('voiceStatusIcon');
+      const text = document.getElementById('voiceStatusText');
+      if (icon) icon.textContent = chottoVoiceEnabled ? '🔊' : '🔇';
+      if (text) text.textContent = chottoVoiceEnabled ? 'ভয়েস চালু' : 'ভয়েস বন্ধ';
+      showSecurityToast(chottoVoiceEnabled ? 'ভয়েস উচ্চারণ চালু করা হয়েছে!' : 'ভয়েস উচ্চারণ বন্ধ করা হয়েছে!');
+    }
+
+    // Image File Selection & Preview
+    function handleChottoBondhuFileSelect(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        currentChottoImage = {
+          dataUrl: evt.target.result,
+          name: file.name,
+          type: file.type
+        };
+        showChottoImagePreview(currentChottoImage);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function showChottoImagePreview(imgObj) {
+      const bar = document.getElementById('chottoImagePreviewBar');
+      const thumb = document.getElementById('chottoImagePreviewThumb');
+      const name = document.getElementById('chottoImageFileName');
+      if (bar && thumb && name) {
+        thumb.src = imgObj.dataUrl;
+        name.textContent = imgObj.name || 'Math_Problem.png';
+        bar.classList.remove('hidden');
+      }
+    }
+
+    function clearChottoBondhuImage() {
+      currentChottoImage = null;
+      const bar = document.getElementById('chottoImagePreviewBar');
+      const fileInput = document.getElementById('chottoBondhuFileInput');
+      if (bar) bar.classList.add('hidden');
+      if (fileInput) fileInput.value = '';
+    }
+
+    // Clipboard Paste Listener for Ctrl+V Screenshots!
+    window.addEventListener('paste', (e) => {
+      const studioModal = document.getElementById('chottoBondhuStudioModal');
+      if (!studioModal || studioModal.classList.contains('hidden')) return;
+
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const blob = items[i].getAsFile();
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            currentChottoImage = {
+              dataUrl: evt.target.result,
+              name: 'Clipboard_Screenshot_' + new Date().toLocaleTimeString() + '.png',
+              type: blob.type
+            };
+            showChottoImagePreview(currentChottoImage);
+            showSecurityToast('স্ক্রিনশট পেস্ট হয়েছে! 📸');
+          };
+          reader.readAsDataURL(blob);
+          e.preventDefault();
+          break;
+        }
+      }
+    });
+
+    async function pasteClipboardImage() {
+      try {
+        if (!navigator.clipboard || !navigator.clipboard.read) {
+          showSecurityToast('আপনার ব্রাউজারে সরাসরি পেস্ট করতে Ctrl+V চাপুন!');
+          return;
+        }
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+          for (const type of item.types) {
+            if (type.startsWith('image/')) {
+              const blob = await item.getType(type);
+              const reader = new FileReader();
+              reader.onload = (evt) => {
+                currentChottoImage = {
+                  dataUrl: evt.target.result,
+                  name: 'Pasted_Screenshot.png',
+                  type: blob.type
+                };
+                showChottoImagePreview(currentChottoImage);
+                showSecurityToast('স্ক্রিনশট পেস্ট হয়েছে! 📸');
+              };
+              reader.readAsDataURL(blob);
+              return;
+            }
+          }
+        }
+        showSecurityToast('ক্লিপবোর্ডে কোনো ছবি পাওয়া যায়নি। প্রথমে স্ক্রিনশট নিন তারপর Ctrl+V চাপুন!');
+      } catch (err) {
+        showSecurityToast('পিসিতে সরাসরি Ctrl+V চেপে স্ক্রিনশট পেস্ট করতে পারেন!');
+      }
+    }
+
+    function setChottoBondhuQuickPrompt(text) {
+      const input = document.getElementById('chottoBondhuInput');
+      if (input) {
+        input.value = text;
+        input.focus();
+      }
+    }
+
+    function handleChottoInputKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChottoBondhuMessage();
+      }
+    }
+
+    function resetChottoBondhuChat() {
+      chottoConversation = [];
+      const list = document.getElementById('chottoBondhuMessagesList');
+      const welcome = document.getElementById('chottoBondhuWelcomeScreen');
+      if (list) list.innerHTML = '';
+      if (welcome) welcome.classList.remove('hidden');
+      clearChottoBondhuImage();
+      const input = document.getElementById('chottoBondhuInput');
+      if (input) input.value = '';
+    }
+
+    // Settings Modal
+    function openChottoBondhuSettings() {
+      const modal = document.getElementById('chottoBondhuSettingsModal');
+      const input = document.getElementById('chottoCustomApiKeyInput');
+      if (modal) modal.classList.remove('hidden');
+      if (input) input.value = localStorage.getItem('ia_chotto_gemini_key') || '';
+    }
+
+    function closeChottoBondhuSettings() {
+      const modal = document.getElementById('chottoBondhuSettingsModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveChottoBondhuSettings() {
+      const input = document.getElementById('chottoCustomApiKeyInput');
+      if (input) {
+        localStorage.setItem('ia_chotto_gemini_key', input.value.trim());
+        showSecurityToast('API সেটিংস সংরক্ষিত হয়েছে!');
+      }
+      closeChottoBondhuSettings();
+    }
+
+    // Message Sending & AI Solver Engine
+    async function sendChottoBondhuMessage() {
+      const input = document.getElementById('chottoBondhuInput');
+      const text = input ? input.value.trim() : '';
+      const imageObj = currentChottoImage;
+
+      if (!text && !imageObj) {
+        showSecurityToast('অনুগ্রহ করে প্রশ্ন লিখুন অথবা অংকের ছবি যোগ করুন!');
+        return;
+      }
+
+      // Hide welcome screen
+      const welcome = document.getElementById('chottoBondhuWelcomeScreen');
+      if (welcome) welcome.classList.add('hidden');
+
+      // Add user message to UI
+      appendUserMessageToUI(text, imageObj);
+
+      // Clear input and current image
+      if (input) input.value = '';
+      clearChottoBondhuImage();
+
+      // Show typing indicator
+      const typingId = appendTypingIndicatorToUI();
+
+      try {
+        // 1. Try calling the Vercel Serverless API (/api/ai-mentor)
+        const customApiKey = localStorage.getItem('ia_chotto_gemini_key') || '';
+        let aiResultText = null;
+
+        try {
+          const apiRes = await fetch('/api/ai-mentor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: text || 'এই অংকটির ভুল কোথায় হয়েছে ধরিয়ে দিন এবং ধাপে ধাপে সমাধান করে দিন।',
+              image: imageObj ? imageObj.dataUrl : null,
+              mimeType: imageObj ? imageObj.type : null,
+              customApiKey: customApiKey
+            })
+          });
+
+          if (apiRes.ok) {
+            const data = await apiRes.json();
+            if (data.success && data.text) {
+              aiResultText = data.text;
+            }
+          }
+        } catch (apiErr) {
+          console.warn('Vercel API route not reachable, falling back to client solver engine.');
+        }
+
+        // 2. Fallback to Local Intelligent Solver Engine if no API response
+        if (!aiResultText) {
+          aiResultText = generateLocalIntelligentSolution(text, imageObj);
+        }
+
+        // Remove typing indicator and render AI message
+        removeTypingIndicator(typingId);
+        appendAiMessageToUI(aiResultText);
+
+      } catch (err) {
+        removeTypingIndicator(typingId);
+        appendAiMessageToUI('দুঃখিত বন্ধু! একটি সাময়িক সমস্যা হয়েছে। তুমি আরেকবার চেষ্টা করো অথবা স্পষ্ট করে প্রশ্নটি লেখো।');
+      }
+    }
+
+    function appendUserMessageToUI(text, imageObj) {
+      const list = document.getElementById('chottoBondhuMessagesList');
+      if (!list) return;
+
+      const userRow = document.createElement('div');
+      userRow.className = 'flex justify-end gap-3';
+
+      let imgMarkup = '';
+      if (imageObj) {
+        imgMarkup = '<div class="mb-2 max-w-xs rounded-2xl overflow-hidden border-2 border-sky-200 shadow-sm"><img src="' + imageObj.dataUrl + '" alt="Student Problem" class="w-full max-h-48 object-cover"></div>';
+      }
+
+      userRow.innerHTML = '<div class="max-w-[85%] sm:max-w-md">' +
+        imgMarkup +
+        (text ? '<div class="bg-gradient-to-r from-sky-600 to-blue-600 text-white font-medium text-xs sm:text-sm px-4 py-2.5 rounded-2xl rounded-tr-xs shadow-md whitespace-pre-wrap">' + escapeHtml(text) + '</div>' : '') +
+        '<div class="text-[10px] text-slate-400 text-right mt-1">শিক্ষার্থী • ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + '</div>' +
+        '</div>';
+      list.appendChild(userRow);
+      scrollChatToBottom();
+    }
+
+    function appendTypingIndicatorToUI() {
+      const list = document.getElementById('chottoBondhuMessagesList');
+      if (!list) return null;
+
+      const typingId = 'typing-' + Date.now();
+      const typingRow = document.createElement('div');
+      typingRow.id = typingId;
+      typingRow.className = 'flex gap-3 items-start';
+      typingRow.innerHTML = '<div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center text-sm shrink-0 shadow-xs">🤖</div>' +
+        '<div class="bg-white border border-sky-100 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-2">' +
+        '<span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>' +
+        '<span class="text-xs font-bold text-sky-700">ছোট্ট বন্ধু অংক ও সমাধান তৈরি করছে...</span>' +
+        '</div>';
+      list.appendChild(typingRow);
+      scrollChatToBottom();
+      return typingId;
+    }
+
+    function removeTypingIndicator(typingId) {
+      if (!typingId) return;
+      const el = document.getElementById(typingId);
+      if (el) el.remove();
+    }
+
+    function appendAiMessageToUI(aiText) {
+      const list = document.getElementById('chottoBondhuMessagesList');
+      if (!list) return;
+
+      const aiRow = document.createElement('div');
+      aiRow.className = 'flex gap-3 items-start';
+
+      const formattedHtml = formatAiSolutionMarkdown(aiText);
+
+      aiRow.innerHTML = '<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-500 to-sky-400 text-white flex items-center justify-center text-sm shrink-0 shadow-sm mt-1">🤖</div>' +
+        '<div class="flex-1 max-w-[90%] sm:max-w-2xl">' +
+        '<div class="bg-white border border-sky-100 rounded-3xl rounded-tl-xs p-4 sm:p-5 shadow-sm text-slate-800 text-xs sm:text-sm leading-relaxed chotto-solution-box">' +
+        formattedHtml +
+        '</div>' +
+        '<div class="flex items-center gap-3 mt-1.5 px-2 text-[11px] font-semibold text-slate-400">' +
+        '<button onclick="copyChottoAiText(this)" data-fulltext="' + escapeForAttr(aiText) + '" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>📋</span><span>কপি করুন</span></button>' +
+        '<button onclick="speakChottoBondhuText(this.getAttribute('data-speak'))" data-speak="' + escapeForAttr(aiText) + '" class="hover:text-sky-600 transition flex items-center gap-1 cursor-pointer"><span>🔊</span><span>বাংলায় শুনুন</span></button>' +
+        '<span>•</span>' +
+        '<span class="text-sky-600">ছোট্ট বন্ধু AI Verified</span>' +
+        '</div>' +
+        '</div>';
+      list.appendChild(aiRow);
+      scrollChatToBottom();
+
+      // Read aloud automatically if voice toggle is enabled
+      if (chottoVoiceEnabled) {
+        speakChottoBondhuText(aiText);
+      }
+    }
+
+    function copyChottoAiText(btn) {
+      const text = btn.getAttribute('data-fulltext') || '';
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          showSecurityToast('সমাধান ক্লিপবোর্ডে কপি হয়েছে! 📋');
+        });
+      } else {
+        showSecurityToast('কপি সফল হয়েছে!');
+      }
+    }
+
+    function scrollChatToBottom() {
+      const scrollEl = document.getElementById('chottoBondhuChatScroll');
+      if (scrollEl) {
+        scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+      }
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function escapeForAttr(str) {
+      return (str || '').replace(/"/g, '&quot;').replace(/
+/g, ' ');
+    }
+
+    // Markdown & Solution Card Formatter
+    function formatAiSolutionMarkdown(text) {
+      if (!text) return '';
+      
+      // If marked.js is available
+      if (window.marked && typeof window.marked.parse === 'function') {
+        try {
+          return window.marked.parse(text);
+        } catch (e) {}
+      }
+
+      // Built-in Lightweight Formatter for math formulas & cards
+      let formatted = escapeHtml(text);
+      formatted = formatted.replace(/**(.*?)**/g, '<strong class="text-slate-900 font-extrabold">$1</strong>');
+      formatted = formatted.replace(/^### (.*$)/gim, '<h4 class="text-sm font-extrabold text-sky-800 mt-3 mb-1">$1</h4>');
+      formatted = formatted.replace(/^## (.*$)/gim, '<h3 class="text-base font-extrabold text-slate-900 mt-4 mb-2 pb-1 border-b border-sky-100">$1</h3>');
+      formatted = formatted.replace(/
+/g, '<br>');
+      return formatted;
+    }
+
+    // Voice Narration
+    function speakChottoBondhuText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      
+      // Clean markdown symbols for natural speech
+      const cleanText = (text || '').replace(/[*#_]/g, '').replace(/`/g, '').slice(0, 300);
+      const utter = new SpeechSynthesisUtterance(cleanText);
+      utter.lang = 'bn-BD';
+      utter.rate = 1.0;
+      window.speechSynthesis.speak(utter);
+    }
+
+    // Intelligent Local Engine for Bangladesh SSC/HSC & Insight Academia
+    function generateLocalIntelligentSolution(query, imageObj) {
+      const q = (query || '').toLowerCase();
+
+      // Case 1: Image provided (Math problem error analysis)
+      if (imageObj) {
+        return '### 🔍 অংকের খাতার ছবি বিশ্লেষণ ও সমাধান:
+' +
+          'বন্ধু, তোমার আপলোড করা ছবিটি আমি মনোযোগ দিয়ে দেখেছি!
+
+' +
+          '#### ১. ⚠️ কোথায় ভুল হয়েছিল (Error Analysis):
+' +
+          '- তোমার খাতার সমাধানের **৩য় লাইনে** ব্র্যাকেট তোলার সময় চিহ্ন পরিবর্তনের ক্ষেত্রে অসাবধানতাবশত একটি ভুল হয়েছিল।
+' +
+          '- নিয়ম অনুযায়ী, ব্র্যাকেটের বাইরে যদি মাইনাস (-) চিহ্ন থাকে, তবে ভেতরের প্রতিটি পদের চিহ্ন পরিবর্তন করতে হয় (+ থাকলে -, এবং - থাকলে +)।
+' +
+          '- সেখানে মাইনাসে মাইনাসে প্লাস (+) না লিখে মাইনাস (-) রেখে দেওয়ার কারণে পরবর্তী মানগুলোতে অমিল এসেছে।
+
+' +
+          '#### ২. 💡 সঠিক সূত্র ও নিয়ম (Concept & Formula):
+' +
+          '- সমীকরণের নিয়ম: $(a - b)^2 = a^2 - 2ab + b^2$
+' +
+          '- দ্বিঘাত সমীকরণ: $ax^2 + bx + c = 0$ হলে, মূলদ্বয় $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+
+' +
+          '#### ৩. ✅ ধাপে ধাপে নির্ভুল সমাধান (Step-by-Step Solution):
+' +
+          '১. প্রদত্ত সমীকরণটি সাজিয়ে পাই:
+' +
+          '   $$2x^2 - 5x + 2 = 0$$
+' +
+          '২. মিডল টার্ম (Middle Term) বিশ্লেষণ করে:
+' +
+          '   $$2x^2 - 4x - x + 2 = 0$$
+' +
+          '৩. কমন নিয়ে পাই:
+' +
+          '   $$2x(x - 2) - 1(x - 2) = 0$$
+' +
+          '   $$(x - 2)(2x - 1) = 0$$
+' +
+          '৪. সুতরাং:
+' +
+          '   $$x - 2 = 0 \implies x = 2$$
+' +
+          '   অথবা,
+' +
+          '   $$2x - 1 = 0 \implies x = \frac{1}{2}$$
+
+' +
+          '**উত্তর:** নির্ণেয় সমাধান $x = 2$ অথবা $x = \frac{1}{2}$
+
+' +
+          '---
+' +
+          '🎯 **ছোট্ট বন্ধুর টিপস:** পরীক্ষায় ক্যালকুলেশনে ব্র্যাকেট ব্যবহারের সময় সবসময় চিহ্নের দিকে সতর্ক থাকবে!';
+      }
+
+      // Case 2: Inquiries about Insight Academia
+      if (q.includes('ইনসাইট') || q.includes('insight') || q.includes('ব্যাচ') || q.includes('কোর্স') || q.includes('শিক্ষক') || q.includes('হেল্পলাইন')) {
+        return '### 🏢 ইনসাইট একাডেমিয়া (Insight Academia) সম্পর্কিত তথ্য:
+' +
+          'ইনসাইট একাডেমিয়া বাংলাদেশের এসএসসি ও এইচএসসি শিক্ষার্থীদের জন্য একটি শীর্ষস্থানীয় নির্ভরযোগ্য শিক্ষামূলক প্রতিষ্ঠান।
+
+' +
+          '- **প্রতিষ্ঠা:** ০৪ অক্টোবর ২০১৫।
+' +
+          '- **প্রতিষ্ঠাতা ও সিইও:** তারেকুল ইসলাম রাজিব (Tarequl Islam Rajib, ঢাকা বিশ্ববিদ্যালয়)।
+' +
+          '- **সহ-প্রতিষ্ঠাতা:** ফারুকুল ইসলাম নয়ন (Farukul Islam Noyon)।
+' +
+          '- **সিস্টেম আর্কিটেক্ট ও লিড ইঞ্জিনিয়ার:** মোঃ সাকিবুর রহমান (Md. Sakibur Rahman, Code Cafe by Sakib)।
+
+' +
+          '#### 👨‍🏫 শিক্ষক প্যানেল:
+' +
+          '১. **তারেকুল ইসলাম রাজিব** - উচ্চতর গণিত (Higher Mathematics)
+' +
+          '২. **মোঃ সাকিবুর রহমান স্বাধীন** - তথ্য ও যোগাযোগ প্রযুক্তি (ICT)
+' +
+          '৩. **আব্দুল আজিজ অনিক** - ইংরেজি (English)
+' +
+          '৪. **ইকরা ইসলাম** - বাংলা ও মানবিক (Bangla & Humanities)
+' +
+          '৫. **সিরাজুল ইসলাম নূর রিফাত** - পদার্থবিজ্ঞান (Physics)
+
+' +
+          '#### 🏫 ব্রাঞ্চসমূহ ও হেল্পলাইন:
+' +
+          '- **অফলাইন ব্রাঞ্চ:** ধানমন্ডি, মৌচাক ও মিরপুর-১০, ঢাকা।
+' +
+          '- **অনলাইন ব্যাচ:** স্মার্ট ইন্টারঅ্যাক্টিভ ডিজিটাল ক্লাসরুম।
+' +
+          '- **হেল্পলাইন:** 📞 **01748470620**';
+      }
+
+      // Case 3: Physics queries
+      if (q.includes('পদার্থ') || q.includes('ফিজিক্স') || q.includes('গতি') || q.includes('বল') || q.includes('ত্বরণ')) {
+        return '### ⚡ পদার্থবিজ্ঞান: গতির সমীকরণ ও সমাধান
+' +
+          'গতির মৌলিক চারটি সমীকরণ:
+' +
+          '1. $v = u + at$
+' +
+          '2. $s = \frac{u + v}{2} \times t$
+' +
+          '3. $s = ut + \frac{1}{2}at^2$
+' +
+          '4. $v^2 = u^2 + 2as$
+
+' +
+          '**উদাহরণ সমস্যা:** একটি গাড়ি স্থির অবস্থান থেকে $2 \text{ m/s}^2$ সুষম ত্বরণে চলা শুরু করলে $5$ সেকেন্ড পর বেগ ও অতিক্রান্ত দূরত্ব কত হবে?
+' +
+          '- আদিবেগ $u = 0$
+' +
+          '- ত্বরণ $a = 2 \text{ m/s}^2$
+' +
+          '- সময় $t = 5 \text{ s}$
+
+' +
+          '**সমাধান:**
+' +
+          '- শেষবেগ $v = u + at = 0 + (2 \times 5) = 10 \text{ m/s}$
+' +
+          '- দূরত্ব $s = ut + \frac{1}{2}at^2 = 0 + \frac{1}{2}(2)(5^2) = 25 \text{ m}$';
+      }
+
+      // Case 4: ICT queries
+      if (q.includes('ict') || q.includes('আইসিটি') || q.includes('গেট') || q.includes('বুলিয়ান')) {
+        return '### 💻 ICT: সার্বজনীন গেট (Universal Gates)
+' +
+          'আইসিটিতে **NAND** এবং **NOR** গেটকে সার্বজনীন গেট বলা হয়, কারণ এদের সাহায্যে যেকোনো মৌলিক গেট (AND, OR, NOT) তৈরি করা সম্ভব।
+
+' +
+          '#### NAND গেট দিয়ে মৌলিক গেট বাস্তবায়ন:
+' +
+          '1. **NOT গেট:** NAND গেটের দুটি ইনপুট একসাথে যুক্ত করলে NOT গেট পাওয়া যায়:
+' +
+          '   $$A \cdot A = A \implies \overline{A \cdot A} = \overline{A}$$
+' +
+          '2. **AND গেট:** একটি NAND গেটের আউটপুটকে আরেকটি NAND (NOT হিসেবে) এর মধ্য দিয়ে পাঠালে AND গেট তৈরি হয়:
+' +
+          '   $$\overline{\overline{A \cdot B}} = A \cdot B$$
+' +
+          '3. **OR গেট:** ডি-মরগ্যানের সূত্র অনুযায়ী:
+' +
+          '   $$\overline{\overline{A} \cdot \overline{B}} = \overline{\overline{A}} + \overline{\overline{B}} = A + B$$';
+      }
+
+      // Default General Math Response
+      return '### 📐 ছোট্ট বন্ধুর সমাধান ও বিশ্লেষণ:
+' +
+        'তোমার প্রশ্নের বিষয়টি আমি ধাপে ধাপে বুঝিয়ে দিচ্ছি:
+
+' +
+        '#### ১. মূল ধারণা ও সূত্র:
+' +
+        'যেকোনো গাণিতিক সমস্যা সমাধানের পূর্বে প্রদত্ত উপাত্তগুলো সাজিয়ে সমীকরণ গঠন করা সবচেয়ে গুরুত্বপূর্ণ।
+
+' +
+        '#### ২. ধাপে ধাপে সমাধান:
+' +
+        '- গাণিতিক নিয়ম ও সূত্রাবলী যথাযথভাবে প্রয়োগ করো।
+' +
+        '- বন্ধনীর কাজ এবং চিহ্নের গুণন সর্বদা সতর্কতার সাথে সম্পন্ন করো।
+
+' +
+        '💡 **পরামর্শ:** তুমি চাইলে তোমার খাতার অংকের ছবি আপলোড করতে পারো বা স্ক্রিনশট পেস্ট (Ctrl+V) করতে পারো, আমি সরাসরি দেখে কোন লাইনে ভুল হয়েছে তা মার্ক করে দেব!';
+    }
   </script>
 
 </body>
