@@ -54,19 +54,20 @@ const html = `<!DOCTYPE html>
   <link rel="apple-touch-icon" href="data:image/png;base64,${faviconB64}">
 
   <!-- Primary SEO Meta Tags -->
-  <title>Insight Academia</title>
-  <meta name="title" content="Insight Academia">
+  <title>Insight Academia | ইনসাইট একাডেমিয়া - সহজ শেখা, সেরা প্রস্তুতি</title>
+  <meta name="title" content="Insight Academia | ইনসাইট একাডেমিয়া - সহজ শেখা, সেরা প্রস্তুতি">
   <meta name="description" content="ইনসাইট একাডেমিয়া (Insight Academia) - সহজ শেখা, সেরা প্রস্তুতি। প্রতিষ্ঠিত: ০৪ অক্টোবর ২০১৫। প্রতিষ্ঠাতা ও সিইও: তারেকুল ইসলাম রাজিব, সহ-প্রতিষ্ঠাতা: ফারুকুল ইসলাম নয়ন। প্ল্যাটফর্ম আর্কিটেক্ট ও ডেভেলপার: মোঃ সাকিবুর রহমান (Code Cafe by Sakib)।">
   <meta name="keywords" content="Insight Academia, ইনসাইট একাডেমিয়া, Tarequl Islam Rajib, তারেকুল ইসলাম রাজিব, Farukul Islam Noyon, ফারুকুল ইসলাম নয়ন, Md. Sakibur Rahman, মোঃ সাকিবুর রহমান, Code Cafe by Sakib, SSC Math, HSC ICT, এসএসসি ও এইচএসসি প্রস্তুতি">
   <meta name="author" content="Tarequl Islam Rajib (Founder), Farukul Islam Noyon (Co-Founder), Md. Sakibur Rahman (Lead Software Engineer)">
   <meta name="designer" content="Md. Sakibur Rahman">
   <meta name="developer" content="Md. Sakibur Rahman">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <link rel="canonical" href="https://insightacademia.com/">
+  <link rel="canonical" href="https://insight-academia-alpha.vercel.app/">
+  <!-- Google Search Console Verification Meta Tag Placeholder -->
 
   <!-- Open Graph / Facebook / WhatsApp Preview -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://insightacademia.com/">
+  <meta property="og:url" content="https://insight-academia-alpha.vercel.app/">
   <meta property="og:site_name" content="Insight Academia">
   <meta property="og:title" content="Insight Academia - সহজ শেখা, সেরা প্রস্তুতি">
   <meta property="og:description" content="ইনসাইট একাডেমিয়া - প্রতিষ্ঠিত: ০৪ অক্টোবর ২০১৫। প্রতিষ্ঠাতা ও সিইও: তারেকুল ইসলাম রাজিব, সহ-প্রতিষ্ঠাতা: ফারুকুল ইসলাম নয়ন। সিস্টেম আর্কিটেক্ট ও সফটওয়্যার ইঞ্জিনিয়ার: মোঃ সাকিবুর রহমান (Code Cafe by Sakib)।">
@@ -74,7 +75,7 @@ const html = `<!DOCTYPE html>
 
   <!-- Twitter / X Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://insightacademia.com/">
+  <meta name="twitter:url" content="https://insight-academia-alpha.vercel.app/">
   <meta name="twitter:title" content="Insight Academia - সহজ শেখা, সেরা প্রস্তুতি">
   <meta name="twitter:description" content="প্রতিষ্ঠিত: ০৪ অক্টোবর ২০১৫। প্রতিষ্ঠাতা ও সিইও: তারেকুল ইসলাম রাজিব, সহ-প্রতিষ্ঠাতা: ফারুকুল ইসলাম নয়ন। সফটওয়্যার ইঞ্জিনিয়ার: মোঃ সাকিবুর রহমান।">
 
@@ -85,10 +86,10 @@ const html = `<!DOCTYPE html>
     "@graph": [
       {
         "@type": "EducationalOrganization",
-        "@id": "https://insightacademia.com/#organization",
+        "@id": "https://insight-academia-alpha.vercel.app/#organization",
         "name": "Insight Academia",
         "alternateName": "ইনসাইট একাডেমিয়া",
-        "url": "https://insightacademia.com",
+        "url": "https://insight-academia-alpha.vercel.app",
         "slogan": "সহজ শেখা, সেরা প্রস্তুতি",
         "foundingDate": "2015-10-04",
         "description": "০৪ অক্টোবর ২০১৫ তারিখে ইনসাইট একাডেমিয়া (Insight Academia) প্রতিষ্ঠিত হয়। এটি এসএসসি ও এইচএসসি শিক্ষার্থীদের জন্য একটি নির্ভরযোগ্য শিক্ষামূলক প্ল্যাটফর্ম।",
@@ -107,13 +108,13 @@ const html = `<!DOCTYPE html>
         "founder": [
           {
             "@type": "Person",
-            "@id": "https://insightacademia.com/#founder-rajib",
+            "@id": "https://insight-academia-alpha.vercel.app/#founder-rajib",
             "name": "Tarequl Islam Rajib",
             "alternateName": "তারেকুল ইসলাম রাজিব",
             "jobTitle": "Founder & CEO",
             "url": "https://www.facebook.com/tarequl.islam.71619533",
             "worksFor": {
-              "@id": "https://insightacademia.com/#organization"
+              "@id": "https://insight-academia-alpha.vercel.app/#organization"
             },
             "alumniOf": "University of Dhaka",
             "sameAs": [
@@ -123,23 +124,23 @@ const html = `<!DOCTYPE html>
           },
           {
             "@type": "Person",
-            "@id": "https://insightacademia.com/#cofounder-noyon",
+            "@id": "https://insight-academia-alpha.vercel.app/#cofounder-noyon",
             "name": "Farukul Islam Noyon",
             "alternateName": "ফারুকুল ইসলাম নয়ন",
             "jobTitle": "Co-Founder",
             "worksFor": {
-              "@id": "https://insightacademia.com/#organization"
+              "@id": "https://insight-academia-alpha.vercel.app/#organization"
             }
           }
         ],
         "creator": {
           "@type": "Person",
-          "@id": "https://insightacademia.com/#developer-sakib",
+          "@id": "https://insight-academia-alpha.vercel.app/#developer-sakib",
           "name": "Md. Sakibur Rahman",
           "alternateName": ["মোঃ সাকিবুর রহমান", "Sakib", "Shadhin"],
           "jobTitle": "Lead Software Engineer & Instructor (ICT)",
           "worksFor": {
-            "@id": "https://insightacademia.com/#organization"
+            "@id": "https://insight-academia-alpha.vercel.app/#organization"
           },
           "alumniOf": "Southeast University",
           "founder": {
@@ -163,40 +164,40 @@ const html = `<!DOCTYPE html>
       },
       {
         "@type": "WebSite",
-        "@id": "https://insightacademia.com/#website",
-        "url": "https://insightacademia.com",
+        "@id": "https://insight-academia-alpha.vercel.app/#website",
+        "url": "https://insight-academia-alpha.vercel.app",
         "name": "Insight Academia",
         "publisher": {
-          "@id": "https://insightacademia.com/#organization"
+          "@id": "https://insight-academia-alpha.vercel.app/#organization"
         },
         "creator": {
-          "@id": "https://insightacademia.com/#developer-sakib"
+          "@id": "https://insight-academia-alpha.vercel.app/#developer-sakib"
         }
       },
       {
         "@type": "SiteNavigationElement",
-        "@id": "https://insightacademia.com/#navigation",
+        "@id": "https://insight-academia-alpha.vercel.app/#navigation",
         "name": "Insight Academia Main Navigation",
         "hasPart": [
           {
             "@type": "WebPage",
             "name": "কোর্স ও ব্যাচসমূহ",
-            "url": "https://insightacademia.com/#courses"
+            "url": "https://insight-academia-alpha.vercel.app/#courses"
           },
           {
             "@type": "WebPage",
             "name": "শিক্ষক প্যানেল",
-            "url": "https://insightacademia.com/#teachers"
+            "url": "https://insight-academia-alpha.vercel.app/#teachers"
           },
           {
             "@type": "WebPage",
             "name": "ই-বুক ও লাইব্রেরি",
-            "url": "https://insightacademia.com/#ebooks"
+            "url": "https://insight-academia-alpha.vercel.app/#ebooks"
           },
           {
             "@type": "WebPage",
             "name": "আমাদের সম্পর্কে",
-            "url": "https://insightacademia.com/#about-section"
+            "url": "https://insight-academia-alpha.vercel.app/#about-section"
           }
         ]
       }
