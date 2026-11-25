@@ -11621,7 +11621,7 @@ const html = `<!DOCTYPE html>
             কেমন আছো? আমি তোমার ছোট্ট বন্ধু!
           </p>
           <p class="text-slate-500 text-xs sm:text-sm mt-1 max-w-lg">
-            খাতার অংকের ছবি আপলোড করো, স্ক্রিনশট পেস্ট (Ctrl+V) করো অথবা প্রশ্ন লিখে দাও—ভুল ধরিয়ে দিয়ে সহজ নিয়মে সমাধান বুঝিয়ে দেব!
+            যেকোনো পড়া বা প্রশ্নের ছবি আপলোড করো, স্ক্রিনশট পেস্ট (Ctrl+V) করো অথবা প্রশ্ন লিখে দাও—ভুল ধরিয়ে দিয়ে সহজ নিয়মে সমাধান বুঝিয়ে দেব!
           </p>
 
           
@@ -11992,7 +11992,7 @@ const html = `<!DOCTYPE html>
       const imageObj = currentChottoImage;
 
       if (!text && !imageObj) {
-        showSecurityToast('অনুগ্রহ করে প্রশ্ন লিখুন অথবা অংকের ছবি যোগ করুন!');
+        showSecurityToast('অনুগ্রহ করে প্রশ্ন লিখুন অথবা ছবি যোগ করুন!');
         return;
       }
 
@@ -12020,7 +12020,7 @@ const html = `<!DOCTYPE html>
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: text || 'এই অংকটির ভুল কোথায় হয়েছে ধরিয়ে দিন এবং ধাপে ধাপে সমাধান করে দিন।',
+              prompt: text || 'এই প্রশ্নের নির্ভুল ও সহজ সমাধান বুঝিয়ে দিন।',
               image: imageObj ? imageObj.dataUrl : null,
               mimeType: imageObj ? imageObj.type : null,
               customApiKey: customApiKey
@@ -12101,7 +12101,7 @@ const html = `<!DOCTYPE html>
       typingRow.innerHTML = '<img src="' + SAKIB_AVATAR_B64 + '" class="w-8 h-8 rounded-full object-cover border border-sky-300 shrink-0 shadow-xs" />' +
         '<div class="bg-white border border-sky-100 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-2">' +
         '<span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>' +
-        '<span class="text-xs font-bold text-sky-700">ছোট্ট বন্ধু অংক ও সমাধান তৈরি করছে...</span>' +
+        '<span class="text-xs font-bold text-sky-700">ছোট্ট বন্ধু সমাধান তৈরি করছে...</span>' +
         '</div>';
       list.appendChild(typingRow);
       scrollChatToBottom();
@@ -12217,9 +12217,14 @@ const html = `<!DOCTYPE html>
     function generateLocalIntelligentSolution(query, imageObj) {
       var q = (query || '').toLowerCase();
 
-      // Case 1: Image provided (Math problem error analysis)
-      if (imageObj || q.indexOf('2x^2') !== -1 || q.indexOf('দ্বিঘাত') !== -1 || q.indexOf('অংক') !== -1 || q.indexOf('ভুল') !== -1) {
+      // Case 1: Math problem analysis
+      if (q.indexOf('2x^2') !== -1 || q.indexOf('দ্বিঘাত') !== -1 || q.indexOf('সমীকরণ') !== -1 || q.indexOf('অংক') !== -1) {
         return KB_MATH;
+      }
+
+      // Case 1b: Image provided without text
+      if (imageObj && !q) {
+        return decodeURIComponent('%23%23%23%20%F0%9F%94%8D%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%86%E0%A6%AA%E0%A6%B2%E0%A7%8B%E0%A6%A1%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%9B%E0%A6%AC%E0%A6%BF%E0%A6%B0%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%B2%E0%A7%87%E0%A6%B7%E0%A6%A3%20%E0%A6%93%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%3A%0A%0A%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7%E0%A7%81%2C%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%86%E0%A6%AA%E0%A6%B2%E0%A7%8B%E0%A6%A1%20%E0%A6%95%E0%A6%B0%E0%A6%BE%20%E0%A6%9B%E0%A6%AC%E0%A6%BF%E0%A6%9F%E0%A6%BF%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%AA%E0%A7%87%E0%A7%9F%E0%A7%87%E0%A6%9B%E0%A6%BF!%20%E0%A6%A4%E0%A7%8B%E0%A6%AE%E0%A6%BE%E0%A6%B0%20%E0%A6%A6%E0%A7%87%E0%A6%93%E0%A7%9F%E0%A6%BE%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%B6%E0%A7%8D%E0%A6%A8%20%E0%A6%AC%E0%A6%BE%20%E0%A6%96%E0%A6%BE%E0%A6%A4%E0%A6%BE%E0%A6%B0%20%E0%A6%A8%E0%A7%8B%E0%A6%9F%20%E0%A6%AC%E0%A6%BF%E0%A6%B6%E0%A7%8D%E0%A6%B2%E0%A7%87%E0%A6%B7%E0%A6%A3%20%E0%A6%95%E0%A6%B0%E0%A7%87%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%A7%E0%A6%BE%E0%A6%AA%E0%A7%87%20%E0%A6%B8%E0%A6%B9%E0%A6%9C%20%E0%A6%B8%E0%A6%AE%E0%A6%BE%E0%A6%A7%E0%A6%BE%E0%A6%A8%20%E0%A6%AC%E0%A7%81%E0%A6%9D%E0%A6%BF%E0%A7%9F%E0%A7%87%20%E0%A6%A6%E0%A6%BF%E0%A6%A4%E0%A7%87%20%E0%A6%86%E0%A6%AE%E0%A6%BF%20%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%B8%E0%A7%8D%E0%A6%A4%E0%A7%81%E0%A6%A4%E0%A5%A4%20%E0%A6%95%E0%A7%8B%E0%A6%A8%E0%A7%8B%20%E0%A6%A8%E0%A6%BF%E0%A6%B0%E0%A7%8D%E0%A6%A6%E0%A6%BF%E0%A6%B7%E0%A7%8D%E0%A6%9F%20%E0%A6%AA%E0%A7%9F%E0%A7%87%E0%A6%A8%E0%A7%8D%E0%A6%9F%E0%A7%87%20%E0%A6%B8%E0%A6%A8%E0%A7%8D%E0%A6%A6%E0%A7%87%E0%A6%B9%20%E0%A6%A5%E0%A6%BE%E0%A6%95%E0%A6%B2%E0%A7%87%20%E0%A6%B2%E0%A6%BF%E0%A6%96%E0%A7%87%20%E0%A6%9C%E0%A6%BE%E0%A6%A8%E0%A6%BE%E0%A6%93!');
       }
 
       // Case 2: Von Neumann Architecture
