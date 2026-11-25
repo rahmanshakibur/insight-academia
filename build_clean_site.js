@@ -42,6 +42,7 @@ const gallery04B64 = fs.readFileSync(path.join(dir, 'gallery_04_base64.txt'), 'u
 const gallery05B64 = fs.readFileSync(path.join(dir, 'gallery_05_base64.txt'), 'utf8').trim();
 const gallery06B64 = fs.readFileSync(path.join(dir, 'gallery_06_base64.txt'), 'utf8').trim();
 const sakibCartoonB64 = fs.readFileSync(path.join(dir, 'sakib_cartoon_base64.txt'), 'utf8').trim();
+const sakibWavingDoorB64 = fs.readFileSync(path.join(dir, 'sakib_waving_door_base64.txt'), 'utf8').trim();
 
 const html = `<!DOCTYPE html>
 <html lang="bn">
@@ -11457,49 +11458,11 @@ const html = `<!DOCTYPE html>
         </div>
 
         <!-- Inside Room: Welcoming Animated Kid Avatar ("ছোট্ট বন্ধু") -->
-        <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-between pt-6 pb-4 px-3 z-10 pointer-events-none">
+        <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-between pt-4 pb-3 px-3 z-10 pointer-events-none">
           
-          <!-- Character Container (Standing naturally inside doorway, no circle border, calling students) -->
-          <div class="relative w-52 sm:w-56 h-56 sm:h-60 flex items-end justify-center kid-float">
-            
-            <!-- Exact Sakib Cartoon Cutout (Transparent, No yellow marks, No circle) -->
-            <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই কার্টুন অবতার" class="relative z-10 max-h-full w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
-
-            <!-- Dynamic Beckoning Arm ("ডাকতেছি" / Calling Hand Gesture) -->
-            <div class="absolute -right-2 top-10 sm:top-12 z-20 kid-beckon-arm">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" class="w-24 sm:w-28 h-auto" style="overflow: visible;">
-                <defs>
-                  <filter id="sakibStickerOutline" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="1" />
-                    <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.9" />
-                  </filter>
-                </defs>
-                <g class="beckon-arm-group" filter="url(#sakibStickerOutline)">
-                  <!-- Suit Blazer Upper Arm / Shoulder Connection -->
-                  <path d="M 20 145 C 25 115, 38 95, 55 80 C 65 72, 78 68, 88 72 C 92 74, 94 82, 90 92 C 82 110, 68 135, 50 155 Z" fill="#1c1924" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" />
-                  <!-- Suit Fabric Highlight Curve -->
-                  <path d="M 32 135 C 42 110, 56 92, 72 82" stroke="#2d2938" stroke-width="2.5" stroke-linecap="round" fill="none" />
-                  <!-- Light Sky-Blue Shirt Cuff -->
-                  <path d="M 72 70 L 88 64 L 94 76 L 78 82 Z" fill="#93c5fd" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <path d="M 75 72 L 89 67" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none" />
-                  <!-- Forearm wrist skin -->
-                  <path d="M 80 65 C 82 55, 85 45, 86 38 C 88 35, 93 36, 95 40 C 97 48, 95 60, 92 70 Z" fill="#e29b76" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <!-- Palm Base -->
-                  <ellipse cx="88" cy="38" rx="14" ry="12" fill="#f0ad88" stroke="#000000" stroke-width="2" />
-                  <!-- Thumb (relaxed, gesturing inward) -->
-                  <path d="M 76 44 C 70 42, 65 38, 64 34 C 63 30, 67 29, 71 31 C 76 34, 80 39, 82 43 Z" fill="#f0ad88" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <!-- Beckoning Fingers (Index, Middle, Ring, Pinky curled inward in welcoming wave) -->
-                  <path d="M 84 28 C 84 18, 86 10, 90 8 C 94 6, 96 10, 95 18 C 94 24, 92 28, 90 32 Z" fill="#f5b894" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <path d="M 91 28 C 93 17, 96 9, 100 8 C 104 7, 105 11, 103 20 C 101 26, 99 30, 97 34 Z" fill="#f0ad88" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <path d="M 97 30 C 100 22, 104 15, 108 15 C 111 15, 111 19, 109 25 C 107 30, 104 33, 101 36 Z" fill="#e89f7a" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <path d="M 101 35 C 105 28, 109 23, 113 24 C 116 25, 115 29, 112 35 C 110 39, 107 42, 104 43 Z" fill="#e09470" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
-                  <!-- Welcoming motion lines / beckon breeze accents (subtle gold/sky) -->
-                  <path d="M 68 18 C 64 24, 64 30, 66 34" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.8" />
-                  <path d="M 60 20 C 56 27, 56 34, 59 40" stroke="#facc15" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
-                </g>
-              </svg>
-            </div>
-
+          <!-- Character Container (Sakib smiling and waving) -->
+          <div class="relative w-full h-[265px] sm:h-[285px] flex items-end justify-center kid-float overflow-hidden rounded-t-full">
+            <img src="${sakibWavingDoorB64}" alt="স্বাধীন ভাই কার্টুন অবতার" class="w-full h-full object-cover object-top drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)]" />
           </div>
 
           <!-- Speech Bubble directly below character -->
