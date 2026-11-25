@@ -12,6 +12,8 @@
 !build_clean_site.js
 !favicon.png
 !favicon.ico
+!sakib_avatar_base64.txt
+!sakib_avatar_close.jpg
 !google*.html
 !.gitignore
 
