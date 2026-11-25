@@ -396,6 +396,17 @@ const html = `<!DOCTYPE html>
       opacity: 1;
       transform: scale(1) translateY(0);
     }
+    
+    .door-enter-btn-wrap {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.6s 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .door-open .door-enter-btn-wrap {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .door-speech-bubble {
       opacity: 0;
       transform: scale(0.8) translateY(10px);
@@ -11422,7 +11433,7 @@ const html = `<!DOCTYPE html>
     initSingleDeviceWatchdog();
   </script>
 
-            <!-- ========================================================
+              <!-- ========================================================
        ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) MODALS & STUDIO ⭐
        ======================================================== -->
 
@@ -11504,9 +11515,11 @@ const html = `<!DOCTYPE html>
           </div>
 
           <!-- Speech Bubble above/below kid -->
-          <div class="door-speech-bubble mt-2 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-3 py-2 rounded-2xl shadow-xl border border-sky-200 text-center max-w-[240px]">
+          <div class="door-speech-bubble mt-3 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-4 py-3 rounded-2xl shadow-2xl border border-sky-200 text-center max-w-[280px]">
             <p class="text-sky-700 font-extrabold text-sm sm:text-base">আসসালামু আলাইকুম! 👋</p>
-            <p class="text-slate-600 text-xs mt-1">আমি তোমার <span class="text-sky-600 font-extrabold">ছোট্ট বন্ধু</span>। চলে এসো ভেতরে! তোমার অংকের ভুল ধরিয়ে দেওয়া বা সমাধান—সব বুঝিয়ে দিচ্ছি!</p>
+            <p class="text-slate-700 text-xs sm:text-sm mt-1.5 font-bold leading-relaxed">
+              আপনি কি <span class="text-sky-600">problem face</span> করছেন? তাহলে <span class="text-blue-600">enter</span> করুন <span class="text-sky-600 font-extrabold underline decoration-sky-300">ছোট্ট বন্ধুর দুনিয়ায়</span>!
+            </p>
           </div>
         </div>
 
@@ -11537,12 +11550,12 @@ const html = `<!DOCTYPE html>
       </div>
 
       <!-- Action Button: Enter Inside Studio -->
-      <div class="mt-5 w-full flex flex-col sm:flex-row items-center justify-center gap-3">
-        <button onclick="enterChottoBondhuStudioImmediately()" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-sm shadow-lg shadow-sky-500/30 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer group">
-          <span>🚀 সরাসরি ভেতরে প্রবেশ করো</span>
-          <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      <div class="door-enter-btn-wrap mt-5 w-full flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="enterChottoBondhuStudioImmediately()" class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-sky-500/35 active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer group">
+          <span>🚀 ছোট্ট বন্ধুর দুনিয়ায় প্রবেশ করুন (Enter)</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
-        <button onclick="closeChottoBondhuEntrance()" class="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition border border-slate-700">
+        <button onclick="closeChottoBondhuEntrance()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition border border-slate-700 cursor-pointer">
           বন্ধ করুন
         </button>
       </div>
@@ -11766,7 +11779,7 @@ const html = `<!DOCTYPE html>
     let chottoEntranceTimer = null;
     let chottoConversation = [];
 
-    // Open Entrance with 3D Door Animation
+    // Open Entrance with 3D Door Animation (Window stays open until user clicks Enter)
     function openChottoBondhuWithDoorAnimation() {
       const entranceModal = document.getElementById('chottoBondhuEntranceModal');
       const portal = document.getElementById('doorPortalContainer');
@@ -11782,11 +11795,8 @@ const html = `<!DOCTYPE html>
         playDoorGreetingAudio();
       }, 150);
 
-      // Auto enter studio after 2.4s
+      // Door stays open! No automatic transition timer.
       clearTimeout(chottoEntranceTimer);
-      chottoEntranceTimer = setTimeout(() => {
-        enterChottoBondhuStudioImmediately();
-      }, 2400);
     }
 
     function closeChottoBondhuEntrance() {
@@ -11851,7 +11861,7 @@ const html = `<!DOCTYPE html>
       // Voice read greeting if enabled
       if (chottoVoiceEnabled && 'speechSynthesis' in window) {
         setTimeout(() => {
-          const utter = new SpeechSynthesisUtterance('আসসালামু আলাইকুম! চলে এসো ভেতরে।');
+          const utter = new SpeechSynthesisUtterance('আপনি কি প্রবলেম ফেস করছেন? তাহলে এন্টার করুন ছোট্ট বন্ধুর দুনিয়ায়!');
           utter.lang = 'bn-BD';
           utter.rate = 1.05;
           window.speechSynthesis.speak(utter);
