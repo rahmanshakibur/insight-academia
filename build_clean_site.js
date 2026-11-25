@@ -539,11 +539,8 @@ const html = `<!DOCTYPE html>
           আমাদের সম্পর্কে
         </button>
         <!-- Chotto Bondhu (AI Solver) Navbar Button -->
-        <button onclick="openChottoBondhuWithDoorAnimation()" id="nav-chotto-bondhu" class="nav-btn px-3.5 py-1.5 rounded-xl text-sky-700 bg-sky-50/90 hover:bg-sky-100 hover:text-sky-800 border border-sky-200/90 shadow-xs font-bold transition-all flex items-center gap-2 cursor-pointer group">
-          <span class="w-6 h-6 rounded-lg bg-sky-500 text-white flex items-center justify-center text-xs shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5v2a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/><path d="M19 11v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-          </span>
-          <span>ছোট্ট বন্ধু (AI সলভার)</span>
+        <button onclick="openChottoBondhuWithDoorAnimation()" id="nav-chotto-bondhu" class="nav-btn px-4 py-2 rounded-xl text-sky-700 bg-sky-50 hover:bg-sky-100 hover:text-sky-800 border border-sky-200/80 shadow-xs font-bold transition-all cursor-pointer">
+          ছোট্ট বন্ধু (AI সলভার)
         </button>
       </nav>
 
@@ -577,9 +574,8 @@ const html = `<!DOCTYPE html>
       <button onclick="navigateTo('teachers')" id="m-nav-teachers" data-i18n="nav_teachers" class="m-nav-btn text-slate-600 px-2 py-1">শিক্ষক</button>
       <button onclick="navigateTo('ebooks')" id="m-nav-ebooks" data-i18n="nav_ebooks" class="m-nav-btn text-slate-600 px-2 py-1">ই-বুক</button>
       <button onclick="navigateTo('home'); setTimeout(() => document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'}), 100);" data-i18n="nav_about" class="m-nav-btn text-[#FF2E7E] px-2 py-1">সম্পর্কে</button>
-      <button onclick="openChottoBondhuWithDoorAnimation()" id="m-nav-chotto-bondhu" class="m-nav-btn text-sky-700 font-bold px-2.5 py-1 rounded-xl bg-sky-50 border border-sky-200 flex items-center gap-1 shrink-0">
-        <span class="text-xs">🤖</span>
-        <span>ছোট্ট বন্ধু (AI সলভার)</span>
+      <button onclick="openChottoBondhuWithDoorAnimation()" id="m-nav-chotto-bondhu" class="m-nav-btn text-sky-700 font-bold px-3 py-1 rounded-xl bg-sky-50 border border-sky-200 shrink-0">
+        ছোট্ট বন্ধু (AI সলভার)
       </button>
       <div id="m-nav-auth-slot" class="flex items-center">
         <button onclick="handleNavLoginClick()" id="m-nav-login" class="m-nav-btn text-blue-600 font-bold px-2.5 py-1 rounded-xl flex items-center gap-1 hover:bg-blue-50 transition">
@@ -11423,24 +11419,15 @@ const html = `<!DOCTYPE html>
     initSingleDeviceWatchdog();
   </script>
 
-                <!-- ========================================================
+                  <!-- ========================================================
        ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) MODALS & STUDIO ⭐
        ======================================================== -->
 
   <!-- 1. Animated Door Entrance Modal -->
-  <div id="chottoBondhuEntranceModal" class="hidden fixed inset-0 z-[99998] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-500">
+  <div id="chottoBondhuEntranceModal" onclick="if(event.target===this) closeChottoBondhuEntrance()" class="hidden fixed inset-0 z-[99998] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-500 cursor-pointer">
     <div class="relative w-full max-w-md flex flex-col items-center">
       
-      <!-- Top Title & Dismiss Button -->
-      <div class="w-full flex items-center justify-between mb-4 px-2">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span class="text-xs font-bold text-sky-300 tracking-wider uppercase">ইনসাইট একাডেমিয়া • জ্ঞানগৃহ</span>
-        </div>
-        <button onclick="closeChottoBondhuEntrance()" class="text-slate-400 hover:text-white p-1 rounded-lg transition" title="বন্ধ করুন">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
+      
 
       <!-- 3D Doorway Portal Scene -->
       <div id="doorPortalContainer" class="door-scene relative w-72 sm:w-80 h-[380px] sm:h-[420px] rounded-t-full rounded-b-2xl border-4 border-amber-300/80 shadow-2xl bg-slate-900 overflow-hidden flex items-center justify-center">
@@ -11540,13 +11527,10 @@ const html = `<!DOCTYPE html>
       </div>
 
       <!-- Action Button: Enter Inside Studio -->
-      <div class="mt-6 w-full flex flex-col sm:flex-row items-center justify-center gap-3 relative z-30">
-        <button onclick="enterChottoBondhuStudioImmediately()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-sm sm:text-base shadow-2xl shadow-sky-500/50 active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer group border border-sky-300/40">
-          <span>🚀 ছোট্ট বন্ধুর দুনিয়ায় প্রবেশ করুন (Enter)</span>
+      <div class="mt-6 w-full flex items-center justify-center relative z-30">
+        <button onclick="enterChottoBondhuStudioImmediately()" class="w-full sm:w-56 py-3.5 px-8 rounded-2xl bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-extrabold text-base sm:text-lg shadow-2xl shadow-sky-500/50 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer group border border-sky-300/40">
+          <span>Enter</span>
           <svg class="w-5 h-5 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-        </button>
-        <button onclick="closeChottoBondhuEntrance()" class="w-full sm:w-auto px-5 py-3 rounded-2xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition border border-slate-700 cursor-pointer">
-          বন্ধ করুন
         </button>
       </div>
 
