@@ -11422,7 +11422,7 @@ const html = `<!DOCTYPE html>
     initSingleDeviceWatchdog();
   </script>
 
-        <!-- ========================================================
+          <!-- ========================================================
        ⭐ CHOTTO BONDHU (AI MENTOR & SOLVER) MODALS & STUDIO ⭐
        ======================================================== -->
 
@@ -12278,7 +12278,7 @@ const html = `<!DOCTYPE html>
       }
     }
 
-        function escapeHtml(str) {
+            function escapeHtml(str) {
       return (str || '').split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;');
     }
     function escapeForAttr(str) {
@@ -12321,7 +12321,7 @@ const html = `<!DOCTYPE html>
       var q = (query || '').toLowerCase();
 
       // Case 1: Image provided (Math problem error analysis)
-      if (imageObj) {
+      if (imageObj || q.indexOf('2x^2') !== -1 || q.indexOf('দ্বিঘাত') !== -1 || q.indexOf('ভুল') !== -1) {
         return KB_MATH;
       }
 
