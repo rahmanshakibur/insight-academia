@@ -41,8 +41,7 @@ const gallery03B64 = fs.readFileSync(path.join(dir, 'gallery_03_base64.txt'), 'u
 const gallery04B64 = fs.readFileSync(path.join(dir, 'gallery_04_base64.txt'), 'utf8').trim();
 const gallery05B64 = fs.readFileSync(path.join(dir, 'gallery_05_base64.txt'), 'utf8').trim();
 const gallery06B64 = fs.readFileSync(path.join(dir, 'gallery_06_base64.txt'), 'utf8').trim();
-const sakibCartoonSvg = fs.readFileSync(path.join(dir, 'sakib_cartoon_svg.txt'), 'utf8').trim();
-const sakibCartoonB64 = fs.readFileSync(path.join(dir, 'sakib_cartoon_svg_base64.txt'), 'utf8').trim();
+const sakibCartoonB64 = fs.readFileSync(path.join(dir, 'sakib_cartoon_base64.txt'), 'utf8').trim();
 
 const html = `<!DOCTYPE html>
 <html lang="bn">
@@ -5698,7 +5697,7 @@ const html = `<!DOCTYPE html>
             <li><a href="javascript:void(0)" onclick="navigateTo('teachers')" class="hover:text-blue-600" data-i18n="nav_teachers">শিক্ষক প্যানেল</a></li>
             <li><a href="javascript:void(0)" onclick="navigateTo('ebooks')" class="hover:text-blue-600" data-i18n="nav_ebooks">ই-বুক</a></li>
             <li><a href="javascript:void(0)" onclick="navigateTo('home'); setTimeout(() => document.getElementById('about-section')?.scrollIntoView({behavior:'smooth'}), 100);" class="hover:text-[#FF2E7E]" data-i18n="nav_about">আমাদের সম্পর্কে</a></li>
-            <li><a href="javascript:void(0)" onclick="openChottoBondhuWithDoorAnimation()" class="hover:text-sky-600 font-bold text-sky-600 flex items-center gap-1.5"><img src="${sakibCartoonB64}" class="w-5 h-5 rounded-md bg-slate-900 border border-sky-300 p-0.5 inline-block object-contain" /><span>ছোট্ট বন্ধু (AI সলভার)</span></a></li>
+            <li><a href="javascript:void(0)" onclick="openChottoBondhuWithDoorAnimation()" class="hover:text-sky-600 font-bold text-sky-600 flex items-center gap-1.5"><img src="${sakibCartoonB64}" class="w-5 h-5 rounded-full object-cover border border-sky-300 inline-block" /><span>ছোট্ট বন্ধু (AI সলভার)</span></a></li>
           </ul>
         </div>
 
@@ -11442,13 +11441,29 @@ const html = `<!DOCTYPE html>
         <!-- Inside Room: Welcoming Animated Kid Avatar ("ছোট্ট বন্ধু") -->
         <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-center pt-2 z-10 pointer-events-none">
           
-          <!-- Animated Cartoon Character (Sakib Shadhin) -->
-          <div class="relative w-44 h-44 sm:w-48 sm:h-48 flex items-center justify-center kid-float">
-            ${sakibCartoonSvg}
+          <!-- Animated Avatar Container with Sakib User Cartoon & Waving Arm -->
+          <div class="relative w-40 h-40 flex items-center justify-center kid-float">
+            <!-- Glowing Gradient Halo Ring -->
+            <div class="absolute -inset-2.5 rounded-full bg-gradient-to-tr from-sky-400 via-indigo-400 to-purple-500 opacity-80 blur-md animate-pulse"></div>
+            
+            <!-- Circular Avatar Image Container -->
+            <div class="relative w-36 h-36 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-white to-purple-400 shadow-2xl overflow-visible">
+              <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই কার্টুন অবতার" class="w-full h-full rounded-full object-cover object-center border-2 border-white shadow-inner" />
+              
+              <!-- Floating Animated Waving Hand Badge -->
+              <div class="absolute -top-1 -right-1 w-11 h-11 rounded-full bg-white shadow-xl border-2 border-sky-300 flex items-center justify-center text-2xl kid-waving-arm" style="transform-origin: bottom left;">
+                👋
+              </div>
+              
+              <!-- Live AI Mentor Status Pill -->
+              <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 text-white text-[11px] font-extrabold tracking-wide shadow-lg border border-white/70 whitespace-nowrap">
+                স্বাধীন ভাই
+              </div>
+            </div>
           </div>
 
           <!-- Speech Bubble above/below avatar -->
-          <div class="door-speech-bubble mt-2 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-4 py-3 rounded-2xl shadow-2xl border border-sky-200 text-center max-w-[280px]">
+          <div class="door-speech-bubble mt-4 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-4 py-3 rounded-2xl shadow-2xl border border-sky-200 text-center max-w-[275px]">
             <p class="text-sky-700 font-extrabold text-sm sm:text-base">আসসালামু আলাইকুম! 👋</p>
             <p class="text-slate-700 text-xs sm:text-sm mt-1.5 font-bold leading-relaxed">
               আপনি কি <span class="text-sky-600">problem face</span> করছেন? তাহলে <span class="text-blue-600">enter</span> করুন <span class="text-sky-600 font-extrabold underline decoration-sky-300">ছোট্ট বন্ধুর দুনিয়ায়</span>!
@@ -11503,7 +11518,7 @@ const html = `<!DOCTYPE html>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
         <div class="flex items-center gap-1.5">
-          <img src="${sakibCartoonB64}" alt="ছোট্ট বন্ধু" class="w-7 h-7 rounded-lg bg-slate-900 border border-sky-300 shadow-xs p-0.5 object-contain" />
+          <img src="${sakibCartoonB64}" alt="ছোট্ট বন্ধু" class="w-7 h-7 rounded-lg object-cover border border-sky-300 shadow-xs" />
           <span class="font-extrabold text-sm text-slate-800">ছোট্ট বন্ধু</span>
           <span class="px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-200">Live AI</span>
         </div>
@@ -11523,8 +11538,8 @@ const html = `<!DOCTYPE html>
         <!-- Brand Header -->
         <div class="flex items-center justify-between pb-4 border-b border-slate-100">
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-sky-300 overflow-hidden flex items-center justify-center shrink-0 p-0.5 shadow-sm">
-              <img src="${sakibCartoonB64}" alt="ছোট্ট বন্ধু" class="w-full h-full object-contain" />
+            <div class="w-9 h-9 rounded-xl p-0.5 bg-gradient-to-tr from-sky-400 to-purple-500 overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
+              <img src="${sakibCartoonB64}" alt="ছোট্ট বন্ধু" class="w-full h-full rounded-[10px] object-cover" />
             </div>
             <div>
               <h2 class="font-extrabold text-base text-slate-900 leading-tight">ছোট্ট বন্ধু</h2>
@@ -11588,10 +11603,8 @@ const html = `<!DOCTYPE html>
         <div id="chottoBondhuWelcomeScreen" class="max-w-2xl mx-auto flex flex-col items-center justify-center text-center pt-8 pb-4">
           
           <!-- Animated Avatar -->
-          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-cyan-300 to-blue-500 shadow-xl shadow-sky-300/50 mb-4 kid-float">
-            <div class="w-full h-full rounded-full bg-slate-950 overflow-hidden border-2 border-white flex items-center justify-center p-1">
-              <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই (ছোট্ট বন্ধু)" class="w-full h-full object-contain" />
-            </div>
+          <div class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-indigo-400 to-purple-500 shadow-xl shadow-sky-300/50 mb-4 kid-float">
+            <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই (ছোট্ট বন্ধু)" class="w-full h-full rounded-full object-cover object-top border-2 border-white shadow-inner" />
             <div class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-white shadow-md border border-sky-200 flex items-center justify-center text-xs">
               ✨
             </div>
@@ -12065,7 +12078,7 @@ const html = `<!DOCTYPE html>
       const typingRow = document.createElement('div');
       typingRow.id = typingId;
       typingRow.className = 'flex gap-3 items-start';
-      typingRow.innerHTML = '<img src="' + SAKIB_AVATAR_B64 + '" class="w-8 h-8 rounded-full bg-slate-900 border border-sky-300 p-0.5 object-contain shrink-0 shadow-xs" />' +
+      typingRow.innerHTML = '<img src="' + SAKIB_AVATAR_B64 + '" class="w-8 h-8 rounded-full object-cover border border-sky-300 shrink-0 shadow-xs" />' +
         '<div class="bg-white border border-sky-100 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs flex items-center gap-2">' +
         '<span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>' +
         '<span class="text-xs font-bold text-sky-700">ছোট্ট বন্ধু অংক ও সমাধান তৈরি করছে...</span>' +
@@ -12095,7 +12108,7 @@ const html = `<!DOCTYPE html>
 
       const formattedHtml = formatAiSolutionMarkdown(aiText);
 
-      aiRow.innerHTML = '<img src="' + SAKIB_AVATAR_B64 + '" class="w-8 h-8 rounded-full bg-slate-900 border border-sky-300 p-0.5 object-contain shrink-0 shadow-sm mt-1" />' +
+      aiRow.innerHTML = '<img src="' + SAKIB_AVATAR_B64 + '" class="w-8 h-8 rounded-full object-cover border border-sky-300 shrink-0 shadow-sm mt-1" />' +
         '<div class="flex-1 max-w-[90%] sm:max-w-2xl">' +
         '<div class="bg-white border border-sky-100 rounded-3xl rounded-tl-xs p-4 sm:p-5 shadow-sm text-slate-800 text-xs sm:text-sm leading-relaxed chotto-solution-box">' +
         formattedHtml +
