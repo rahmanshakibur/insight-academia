@@ -88,7 +88,7 @@ module.exports = async (req, res) => {
     if (!responseText) {
       try {
         const fullPrompt = `${systemInstruction}\n\nশিক্ষার্থীর প্রশ্ন: ${prompt || 'নমস্কার'}\n\nউত্তর (সহজ বাংলায় বুঝিয়ে দাও):`;
-        const polUrl = `https://text.pollinations.ai/${encodeURIComponent(fullPrompt)}`;
+        const polUrl = `https://text.pollinations.ai/${encodeURIComponent(fullPrompt)}?model=openai`;
         const polRes = await fetch(polUrl, { method: 'GET' });
         if (polRes.ok) {
           const polText = await polRes.text();

@@ -11996,7 +11996,7 @@
           try {
             const systemPrompt = "তুমি ইনসাইট একাডেমিয়ার বন্ধুসুলভ এআই মেন্টর 'ছোট্ট বন্ধু'। তুমি যেকোনো প্রশ্ন (গণিত, আইসিটি, বিজ্ঞান, পদার্থবিজ্ঞান, প্রোগ্রামিং, কম্পিউটার আর্কিটেকচার, বা সাধারণ জ্ঞান)-এর সহজ, প্রাঞ্জল ও আকর্ষণীয় বাংলায় উত্তর দাও।";
             const fullPrompt = [systemPrompt, 'শিক্ষার্থীর প্রশ্ন: ' + text, 'উত্তর:'].join(String.fromCharCode(10) + String.fromCharCode(10));
-            const polRes = await fetch('https://text.pollinations.ai/' + encodeURIComponent(fullPrompt));
+            const polRes = await fetch('https://text.pollinations.ai/' + encodeURIComponent(fullPrompt) + '?model=openai');
             if (polRes.ok) {
               const polText = await polRes.text();
               if (polText && polText.trim().length > 10) {
