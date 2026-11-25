@@ -414,6 +414,24 @@ const html = `<!DOCTYPE html>
       50% { transform: rotate(18deg); }
       100% { transform: rotate(-8deg); }
     }
+    @keyframes kidBeckonArm {
+      0%, 100% {
+        transform: rotate(0deg) translateY(0);
+      }
+      30% {
+        transform: rotate(-12deg) translateY(-4px) translateX(2px);
+      }
+      60% {
+        transform: rotate(5deg) translateY(1px) translateX(-1px);
+      }
+      80% {
+        transform: rotate(-8deg) translateY(-2px);
+      }
+    }
+    .kid-beckon-arm {
+      transform-origin: 20% 90%;
+      animation: kidBeckonArm 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    }
     .kid-waving-arm {
       transform-origin: bottom left;
       animation: kidWaveHand 0.8s infinite alternate ease-in-out;
@@ -11431,7 +11449,7 @@ const html = `<!DOCTYPE html>
       
 
       <!-- 3D Doorway Portal Scene -->
-      <div id="doorPortalContainer" class="door-scene relative w-72 sm:w-80 h-[380px] sm:h-[420px] rounded-t-full rounded-b-2xl border-4 border-amber-300/80 shadow-2xl bg-slate-900 overflow-hidden flex items-center justify-center">
+      <div id="doorPortalContainer" class="door-scene relative w-72 sm:w-80 h-[400px] sm:h-[430px] rounded-t-full rounded-b-2xl border-4 border-amber-300/80 shadow-2xl bg-slate-900 overflow-hidden flex items-center justify-center">
         
         <!-- Radiant Glow Burst behind the door -->
         <div class="door-burst-glow absolute inset-0 bg-radial from-sky-400 via-sky-600 to-slate-950 flex items-center justify-center">
@@ -11439,33 +11457,55 @@ const html = `<!DOCTYPE html>
         </div>
 
         <!-- Inside Room: Welcoming Animated Kid Avatar ("ছোট্ট বন্ধু") -->
-        <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-center pt-2 z-10 pointer-events-none">
+        <div class="door-avatar-kid absolute inset-0 flex flex-col items-center justify-between pt-6 pb-4 px-3 z-10 pointer-events-none">
           
-          <!-- Animated Avatar Container with Sakib User Cartoon & Waving Arm -->
-          <div class="relative w-40 h-40 flex items-center justify-center kid-float">
-            <!-- Glowing Gradient Halo Ring -->
-            <div class="absolute -inset-2.5 rounded-full bg-gradient-to-tr from-sky-400 via-indigo-400 to-purple-500 opacity-80 blur-md animate-pulse"></div>
+          <!-- Character Container (Standing naturally inside doorway, no circle border, calling students) -->
+          <div class="relative w-52 sm:w-56 h-56 sm:h-60 flex items-end justify-center kid-float">
             
-            <!-- Circular Avatar Image Container -->
-            <div class="relative w-36 h-36 rounded-full p-1 bg-gradient-to-tr from-sky-400 via-white to-purple-400 shadow-2xl overflow-visible">
-              <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই কার্টুন অবতার" class="w-full h-full rounded-full object-cover object-center border-2 border-white shadow-inner" />
-              
-              <!-- Floating Animated Waving Hand Badge -->
-              <div class="absolute -top-1 -right-1 w-11 h-11 rounded-full bg-white shadow-xl border-2 border-sky-300 flex items-center justify-center text-2xl kid-waving-arm" style="transform-origin: bottom left;">
-                👋
-              </div>
-              
-              <!-- Live AI Mentor Status Pill -->
-              <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 text-white text-[11px] font-extrabold tracking-wide shadow-lg border border-white/70 whitespace-nowrap">
-                স্বাধীন ভাই
-              </div>
+            <!-- Exact Sakib Cartoon Cutout (Transparent, No yellow marks, No circle) -->
+            <img src="${sakibCartoonB64}" alt="স্বাধীন ভাই কার্টুন অবতার" class="relative z-10 max-h-full w-auto object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.6)]" />
+
+            <!-- Dynamic Beckoning Arm ("ডাকতেছি" / Calling Hand Gesture) -->
+            <div class="absolute -right-2 top-10 sm:top-12 z-20 kid-beckon-arm">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" class="w-24 sm:w-28 h-auto" style="overflow: visible;">
+                <defs>
+                  <filter id="sakibStickerOutline" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" flood-opacity="1" />
+                    <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.9" />
+                  </filter>
+                </defs>
+                <g class="beckon-arm-group" filter="url(#sakibStickerOutline)">
+                  <!-- Suit Blazer Upper Arm / Shoulder Connection -->
+                  <path d="M 20 145 C 25 115, 38 95, 55 80 C 65 72, 78 68, 88 72 C 92 74, 94 82, 90 92 C 82 110, 68 135, 50 155 Z" fill="#1c1924" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" />
+                  <!-- Suit Fabric Highlight Curve -->
+                  <path d="M 32 135 C 42 110, 56 92, 72 82" stroke="#2d2938" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                  <!-- Light Sky-Blue Shirt Cuff -->
+                  <path d="M 72 70 L 88 64 L 94 76 L 78 82 Z" fill="#93c5fd" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M 75 72 L 89 67" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" fill="none" />
+                  <!-- Forearm wrist skin -->
+                  <path d="M 80 65 C 82 55, 85 45, 86 38 C 88 35, 93 36, 95 40 C 97 48, 95 60, 92 70 Z" fill="#e29b76" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <!-- Palm Base -->
+                  <ellipse cx="88" cy="38" rx="14" ry="12" fill="#f0ad88" stroke="#000000" stroke-width="2" />
+                  <!-- Thumb (relaxed, gesturing inward) -->
+                  <path d="M 76 44 C 70 42, 65 38, 64 34 C 63 30, 67 29, 71 31 C 76 34, 80 39, 82 43 Z" fill="#f0ad88" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <!-- Beckoning Fingers (Index, Middle, Ring, Pinky curled inward in welcoming wave) -->
+                  <path d="M 84 28 C 84 18, 86 10, 90 8 C 94 6, 96 10, 95 18 C 94 24, 92 28, 90 32 Z" fill="#f5b894" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M 91 28 C 93 17, 96 9, 100 8 C 104 7, 105 11, 103 20 C 101 26, 99 30, 97 34 Z" fill="#f0ad88" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M 97 30 C 100 22, 104 15, 108 15 C 111 15, 111 19, 109 25 C 107 30, 104 33, 101 36 Z" fill="#e89f7a" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M 101 35 C 105 28, 109 23, 113 24 C 116 25, 115 29, 112 35 C 110 39, 107 42, 104 43 Z" fill="#e09470" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                  <!-- Welcoming motion lines / beckon breeze accents (subtle gold/sky) -->
+                  <path d="M 68 18 C 64 24, 64 30, 66 34" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.8" />
+                  <path d="M 60 20 C 56 27, 56 34, 59 40" stroke="#facc15" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.9" />
+                </g>
+              </svg>
             </div>
+
           </div>
 
-          <!-- Speech Bubble above/below avatar -->
-          <div class="door-speech-bubble mt-4 bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-4 py-3 rounded-2xl shadow-2xl border border-sky-200 text-center max-w-[275px]">
+          <!-- Speech Bubble directly below character -->
+          <div class="door-speech-bubble bg-white/95 text-slate-800 text-xs sm:text-sm font-bold px-4 py-2.5 rounded-2xl shadow-2xl border border-sky-200 text-center max-w-[280px] pointer-events-auto">
             <p class="text-sky-700 font-extrabold text-sm sm:text-base">আসসালামু আলাইকুম! 👋</p>
-            <p class="text-slate-700 text-xs sm:text-sm mt-1.5 font-bold leading-relaxed">
+            <p class="text-slate-700 text-xs sm:text-sm mt-1 font-bold leading-relaxed">
               আপনি কি <span class="text-sky-600">problem face</span> করছেন? তাহলে <span class="text-blue-600">enter</span> করুন <span class="text-sky-600 font-extrabold underline decoration-sky-300">ছোট্ট বন্ধুর দুনিয়ায়</span>!
             </p>
           </div>
